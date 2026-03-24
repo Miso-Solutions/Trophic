@@ -1,0 +1,196 @@
+<Window x:Class="Trophic.Views.FileBrowserDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:props="clr-namespace:Trophic.Properties"
+        Title="{x:Static props:Strings.BrowseTitle}"
+        Height="520" Width="680"
+        MinHeight="350" MinWidth="450"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        FontFamily="Segoe UI Variable Display, Segoe UI"
+        AutomationProperties.Name="File browser">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="36" CornerRadius="8" GlassFrameThickness="0"
+                      ResizeBorderThickness="6"/>
+    </WindowChrome.WindowChrome>
+    <Border Background="{StaticResource SurfaceBrush}" CornerRadius="8"
+            BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Grid Grid.Row="0" Background="{StaticResource MenuBarBrush}">
+                <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
+                    <Image Source="pack://application:,,,/Resources/app.ico" Width="16" Height="16" Margin="0,0,8,0"
+                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <TextBlock x:Name="TitleText" Text="{x:Static props:Strings.BrowseTitle}" FontSize="12"
+                               Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button Style="{StaticResource DialogCloseButton}" HorizontalAlignment="Right" Margin="0,3,4,3"
+                        Click="CancelButton_Click" AutomationProperties.Name="Close">
+                    <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10"/>
+                </Button>
+            </Grid>
+
+            <!-- Content -->
+            <Grid Grid.Row="1" Margin="16,12,16,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Navigation bar -->
+                <Grid Grid.Row="0" Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BackButton" Grid.Column="0" Click="BackButton_Click"
+                            Width="32" Height="32" Cursor="Hand"
+                            ToolTip="{x:Static props:Strings.GoUpOneLevel}" IsEnabled="False"
+                            WindowChrome.IsHitTestVisibleInChrome="True"
+                            AutomationProperties.Name="Go up one level">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="Bg" Background="Transparent" CornerRadius="6"
+                                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                                    <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Bg" Property="Background" Value="{StaticResource CardHoverBrush}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="Bg" Property="Background" Value="{StaticResource BorderBrush}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.4"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="RefreshButton" Grid.Column="1" Click="RefreshButton_Click"
+                            Width="32" Height="32" Cursor="Hand" Margin="4,0,0,0"
+                            ToolTip="{x:Static props:Strings.Refresh}"
+                            WindowChrome.IsHitTestVisibleInChrome="True"
+                            AutomationProperties.Name="Refresh">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="Bg" Background="Transparent" CornerRadius="6"
+                                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                                    <TextBlock Text="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Bg" Property="Background" Value="{StaticResource CardHoverBrush}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="Bg" Property="Background" Value="{StaticResource BorderBrush}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Disabled" Margin="8,0,0,0"
+                                  VerticalAlignment="Center">
+                        <StackPanel x:Name="BreadcrumbPanel" Orientation="Horizontal"/>
+                    </ScrollViewer>
+                </Grid>
+
+                <!-- File/Folder list -->
+                <Border Grid.Row="1" Background="{StaticResource CardBrush}" CornerRadius="6"
+                        BorderBrush="{StaticResource BorderSubtleBrush}" BorderThickness="1">
+                    <ListView x:Name="FileListView" Background="Transparent" BorderThickness="0"
+                              Padding="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              MouseDoubleClick="FileListView_MouseDoubleClick"
+                              SelectionChanged="FileListView_SelectionChanged"
+                              KeyboardNavigation.TabNavigation="Continue"
+                              AutomationProperties.Name="File and folder list">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0,1"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="AutomationProperties.Name" Value="{Binding Name}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListViewItem">
+                                            <Border x:Name="Bg" Background="Transparent" CornerRadius="4" Padding="8,5">
+                                                <ContentPresenter/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Bg" Property="Background" Value="{StaticResource CardHoverBrush}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Bg" Property="Background" Value="{StaticResource AccentLightBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Icon}" FontFamily="Segoe MDL2 Assets" FontSize="15"
+                                               Foreground="{Binding IconBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="13"
+                                               Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Modified}" FontSize="11"
+                                               Foreground="{StaticResource TextTertiaryBrush}" VerticalAlignment="Center"
+                                               Margin="12,0,4,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+
+                <!-- Filter & format hint -->
+                <StackPanel x:Name="HintPanel" Grid.Row="2" Margin="0,6,0,0" Visibility="Collapsed">
+                    <TextBlock x:Name="FilterText" FontSize="11"
+                               Foreground="{StaticResource TextTertiaryBrush}"/>
+                    <TextBlock x:Name="FormatHintText" FontSize="11" TextWrapping="Wrap"
+                               Foreground="{StaticResource TextTertiaryBrush}" Margin="0,2,0,0"
+                               Visibility="Collapsed"/>
+                </StackPanel>
+
+                <!-- Buttons -->
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+                    <Button x:Name="SelectButton" Content="{x:Static props:Strings.Select}" MinWidth="80" Padding="16,0" Margin="0,0,10,0"
+                            Click="SelectButton_Click" IsDefault="True" IsEnabled="False"
+                            Style="{StaticResource DialogPrimaryButton}"
+                            AutomationProperties.Name="Select"/>
+                    <Button Content="{x:Static props:Strings.Cancel}" Width="80"
+                            Click="CancelButton_Click" IsCancel="True"
+                            Style="{StaticResource DialogSecondaryButton}"
+                            AutomationProperties.Name="Cancel"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Window -->
+  <data name="AppTitle" xml:space="preserve"><value>Trophic</value></data>
+
+  <!-- Toolbar buttons -->
+  <data name="Open" xml:space="preserve"><value>פתח</value></data>
+  <data name="Save" xml:space="preserve"><value>שמור</value></data>
+  <data name="Saved" xml:space="preserve"><value>!נשמר</value></data>
+  <data name="Close" xml:space="preserve"><value>סגור</value></data>
+  <data name="Import" xml:space="preserve"><value>ייבוא</value></data>
+  <data name="UnlockAll" xml:space="preserve"><value>פתיחת הכל</value></data>
+  <data name="ClearAll" xml:space="preserve"><value>ניקוי הכל</value></data>
+  <data name="Exit" xml:space="preserve"><value>יציאה</value></data>
+  <data name="Donate" xml:space="preserve"><value>תרומה</value></data>
+  <data name="ShowHidden" xml:space="preserve"><value>הצגת מוסתרים</value></data>
+
+  <!-- Toolbar tooltips -->
+  <data name="TooltipOpen" xml:space="preserve"><value>Ctrl+O</value></data>
+  <data name="TooltipSave" xml:space="preserve"><value>Ctrl+S</value></data>
+  <data name="TooltipClose" xml:space="preserve"><value>Ctrl+W</value></data>
+  <data name="TooltipImport" xml:space="preserve"><value>ייבוא חותמות זמן מאתר גביעים</value></data>
+  <data name="TooltipMoreImport" xml:space="preserve"><value>אפשרויות ייבוא נוספות</value></data>
+  <data name="TooltipUnlockAll" xml:space="preserve"><value>פתיחת כל הגביעים בזמן הנוכחי</value></data>
+  <data name="TooltipMoreUnlock" xml:space="preserve"><value>אפשרויות פתיחה נוספות</value></data>
+  <data name="TooltipClearAll" xml:space="preserve"><value>ניקוי כל הגביעים שלא סונכרנו</value></data>
+  <data name="TooltipMoreClear" xml:space="preserve"><value>אפשרויות ניקוי נוספות</value></data>
+  <data name="TooltipExit" xml:space="preserve"><value>Alt+F4</value></data>
+  <data name="TooltipDonate" xml:space="preserve"><value>תמכו בפרויקט הזה</value></data>
+  <data name="TooltipShowHidden" xml:space="preserve"><value>חשיפת פרטי גביעים מוסתרים</value></data>
+
+  <!-- Import submenu -->
+  <data name="FromWebsite" xml:space="preserve"><value>...מאתר אינטרנט</value></data>
+  <data name="FromTextFile" xml:space="preserve"><value>...מקובץ טקסט</value></data>
+  <data name="FromTextFileTooltip" xml:space="preserve"><value>פורמט: שם גביע | YYYY-MM-DD HH:MM:SS (שורה אחת לכל ערך). ניתן גם לגרור קובץ .txt לחלון.</value></data>
+
+  <!-- Unlock submenu -->
+  <data name="AtTimestamp" xml:space="preserve"><value>...בחותמת זמן</value></data>
+  <data name="Randomized" xml:space="preserve"><value>אקראי</value></data>
+
+  <!-- Clear submenu -->
+  <data name="ClearAllIncludingSynced" xml:space="preserve"><value>ניקוי הכל (כולל מסונכרנים)</value></data>
+
+  <!-- Profile -->
+  <data name="ProfileLabel" xml:space="preserve"><value>:פרופיל</value></data>
+  <data name="TooltipProfileSelector" xml:space="preserve"><value>בחרו פרופיל להחתמה מחדש של הגביעים בשמירה. השאירו ריק ללא החתמה.</value></data>
+  <data name="TooltipAddProfile" xml:space="preserve"><value>הוספת פרופיל (בחירת קובץ PARAM.SFO)</value></data>
+  <data name="TooltipRemoveProfile" xml:space="preserve"><value>הסרת הפרופיל הנבחר</value></data>
+
+  <!-- Timezone -->
+  <data name="DST" xml:space="preserve"><value>שעון קיץ</value></data>
+  <data name="TooltipTimezone" xml:space="preserve"><value>אזור זמן לחותמות הגביעים</value></data>
+  <data name="TooltipDst" xml:space="preserve"><value>הכללת הסטת שעון קיץ בתצוגת חותמות הזמן (משפיע רק על גביעים שנצברו בתקופת שעון קיץ)</value></data>
+
+  <!-- EXP -->
+  <data name="EXP" xml:space="preserve"><value>EXP</value></data>
+
+  <!-- Language -->
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Hebrew" xml:space="preserve"><value>עברית</value></data>
+  <data name="TooltipLanguage" xml:space="preserve"><value>שפה</value></data>
+  <data name="LanguageOnlyEnglish" xml:space="preserve"><value>Only English is available. More languages coming soon.</value></data>
+
+  <!-- Search and filters -->
+  <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+F לחיפוש</value></data>
+  <data name="ClearFilters" xml:space="preserve"><value>ניקוי מסננים</value></data>
+  <data name="FilterLabel" xml:space="preserve"><value>:סינון</value></data>
+  <data name="FilterEarned" xml:space="preserve"><value>נצברו</value></data>
+  <data name="FilterNotEarned" xml:space="preserve"><value>לא נצברו</value></data>
+  <data name="FilterSynced" xml:space="preserve"><value>מסונכרנים</value></data>
+  <data name="FilterPlatinum" xml:space="preserve"><value>פלטינום</value></data>
+  <data name="FilterGold" xml:space="preserve"><value>זהב</value></data>
+  <data name="FilterSilver" xml:space="preserve"><value>כסף</value></data>
+  <data name="FilterBronze" xml:space="preserve"><value>ארד</value></data>
+  <data name="TooltipFilterEarned" xml:space="preserve"><value>הצגת גביעים שנצברו בלבד</value></data>
+  <data name="TooltipFilterNotEarned" xml:space="preserve"><value>הצגת גביעים שלא נצברו בלבד</value></data>
+  <data name="TooltipFilterSynced" xml:space="preserve"><value>הצגת גביעים מסונכרנים ל-PSN בלבד</value></data>
+  <data name="TooltipFilterPlatinum" xml:space="preserve"><value>הצגת גביעי פלטינום בלבד</value></data>
+  <data name="TooltipFilterGold" xml:space="preserve"><value>הצגת גביעי זהב בלבד</value></data>
+  <data name="TooltipFilterSilver" xml:space="preserve"><value>הצגת גביעי כסף בלבד</value></data>
+  <data name="TooltipFilterBronze" xml:space="preserve"><value>הצגת גביעי ארד בלבד</value></data>
+
+  <!-- Column headers -->
+  <data name="ColumnType" xml:space="preserve"><value>סוג</value></data>
+  <data name="ColumnIcon" xml:space="preserve"><value>סמל</value></data>
+  <data name="ColumnTrophy" xml:space="preserve"><value>גביע</value></data>
+
+  <!-- Empty state -->
+  <data name="EmptyStateDrop" xml:space="preserve"><value>גררו תיקיית גביעים לכאן כדי לפתוח אותה</value></data>
+  <data name="EmptyStateBrowse" xml:space="preserve"><value>או לחצו Ctrl+O לעיון</value></data>
+
+  <!-- Recent -->
+  <data name="Recent" xml:space="preserve"><value>אחרונים</value></data>
+  <data name="TooltipRemoveRecent" xml:space="preserve"><value>הסרה מהאחרונים</value></data>
+
+  <!-- Context menu -->
+  <data name="UnlockSelected" xml:space="preserve"><value>פתיחת הנבחרים</value></data>
+  <data name="LockSelected" xml:space="preserve"><value>נעילת הנבחרים</value></data>
+  <data name="ClearSelected" xml:space="preserve"><value>ניקוי הנבחרים</value></data>
+  <data name="EditTime" xml:space="preserve"><value>...עריכת זמן</value></data>
+  <data name="Clear" xml:space="preserve"><value>ניקוי</value></data>
+  <data name="CopyName" xml:space="preserve"><value>העתקת שם</value></data>
+
+  <!-- Common -->
+  <data name="Yes" xml:space="preserve"><value>כן</value></data>
+  <data name="No" xml:space="preserve"><value>לא</value></data>
+  <data name="Copy" xml:space="preserve"><value>העתקה</value></data>
+  <data name="OK" xml:space="preserve"><value>אישור</value></data>
+  <data name="Cancel" xml:space="preserve"><value>ביטול</value></data>
+  <data name="Copied" xml:space="preserve"><value>!הועתק</value></data>
+
+  <!-- Date/time picker -->
+  <data name="SelectDateTimeTitle" xml:space="preserve"><value>בחירת תאריך ושעה</value></data>
+  <data name="SelectDateTimePrompt" xml:space="preserve"><value>:בחרו תאריך ושעת פתיחת הגביע</value></data>
+  <data name="HourLabel" xml:space="preserve"><value>:שעה</value></data>
+  <data name="MinLabel" xml:space="preserve"><value>:דקה</value></data>
+  <data name="SecLabel" xml:space="preserve"><value>:שנייה</value></data>
+  <data name="Now" xml:space="preserve"><value>עכשיו</value></data>
+  <data name="FutureDateWarning" xml:space="preserve"><value>תאריכים עתידיים לא ניתנים לסנכרון ל-PSN ועלולים לסמן את החשבון שלכם.</value></data>
+
+  <!-- Import dialog -->
+  <data name="ImportTimestampsTitle" xml:space="preserve"><value>ייבוא חותמות זמן</value></data>
+  <data name="TrophyPageUrl" xml:space="preserve"><value>:כתובת עמוד הגביעים</value></data>
+  <data name="InvalidUrlError" xml:space="preserve"><value>.(https://...) נא להזין כתובת תקינה</value></data>
+  <data name="SupportedSites" xml:space="preserve"><value>PSN Trophy Leaders, TrueTrophies, PSNProfiles :אתרים נתמכים</value></data>
+  <data name="ImportAsIs" xml:space="preserve"><value>ייבוא כמות שהוא</value></data>
+  <data name="WithOffset" xml:space="preserve"><value>עם הסטה</value></data>
+  <data name="FixedValues" xml:space="preserve"><value>ערכים קבועים</value></data>
+  <data name="StartTime" xml:space="preserve"><value>זמן התחלה</value></data>
+  <data name="ImportAsIsDesc" xml:space="preserve"><value>.חותמות הזמן ייובאו בדיוק כפי שהן מופיעות בפרופיל המקור</value></data>
+  <data name="OffsetDesc" xml:space="preserve"><value>:הוספה או הפחתה של זמן מכל חותמות הזמן המיובאות</value></data>
+  <data name="OffsetHint" xml:space="preserve"><value>.(השתמשו בערכים שליליים להפחתה (למשל 2- שנים</value></data>
+  <data name="FixedValuesDesc" xml:space="preserve"><value>:דריסת חלקים מסוימים בכל חותמת זמן מיובאת</value></data>
+  <data name="FixedValuesHint" xml:space="preserve"><value>.רק שדות מסומנים יידרסו. שדות לא מסומנים ישמרו את ערכם המקורי</value></data>
+  <data name="StartTimeDesc" xml:space="preserve"><value>.קבעו מתי הגביע הראשון צריך להיצבר. כל שאר הגביעים שומרים על המרווחים המקוריים</value></data>
+  <data name="StartTimeExample" xml:space="preserve"><value>לדוגמה: אם הגביע הראשון במקור הוא 1 ינואר 2020 ואתם מגדירים התחלה ל-10 מאי 2005, כל הגביעים יוזזו ~15 שנה אחורה תוך שמירה על אותם פערים ביניהם.</value></data>
+
+  <!-- Time units -->
+  <data name="Years" xml:space="preserve"><value>:שנים</value></data>
+  <data name="Months" xml:space="preserve"><value>:חודשים</value></data>
+  <data name="Weeks" xml:space="preserve"><value>:שבועות</value></data>
+  <data name="Days" xml:space="preserve"><value>:ימים</value></data>
+  <data name="Hours" xml:space="preserve"><value>:שעות</value></data>
+  <data name="Minutes" xml:space="preserve"><value>:דקות</value></data>
+  <data name="Seconds" xml:space="preserve"><value>:שניות</value></data>
+  <data name="Year" xml:space="preserve"><value>:שנה</value></data>
+  <data name="Month" xml:space="preserve"><value>:חודש</value></data>
+  <data name="Day" xml:space="preserve"><value>:יום</value></data>
+  <data name="Hour" xml:space="preserve"><value>:שעה</value></data>
+  <data name="Minute" xml:space="preserve"><value>:דקה</value></data>
+  <data name="Second" xml:space="preserve"><value>:שנייה</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>:תאריך</value></data>
+
+  <!-- Automation / accessibility -->
+  <data name="AutoSearchTrophies" xml:space="preserve"><value>חיפוש גביעים</value></data>
+  <data name="AutoClearSearch" xml:space="preserve"><value>ניקוי חיפוש</value></data>
+  <data name="AutoAddProfile" xml:space="preserve"><value>הוספת פרופיל</value></data>
+  <data name="AutoRemoveProfile" xml:space="preserve"><value>הסרת הפרופיל הנבחר</value></data>
+  <data name="AutoProfileResigning" xml:space="preserve"><value>פרופיל להחתמה מחדש</value></data>
+  <data name="AutoImportFromWebsite" xml:space="preserve"><value>ייבוא חותמות זמן מאתר אינטרנט</value></data>
+  <data name="AutoImportFromFile" xml:space="preserve"><value>ייבוא חותמות זמן מקובץ טקסט</value></data>
+  <data name="AutoUnlockAtTimestamp" xml:space="preserve"><value>פתיחת הכל בחותמת זמן מסוימת</value></data>
+  <data name="AutoUnlockRandomized" xml:space="preserve"><value>פתיחת הכל עם חותמות זמן אקראיות</value></data>
+  <data name="AutoClearIncludingSynced" xml:space="preserve"><value>ניקוי כל הגביעים כולל מסונכרנים</value></data>
+
+  <!-- Browse dialog -->
+  <data name="BrowseTitle" xml:space="preserve"><value>עיון</value></data>
+  <data name="Select" xml:space="preserve"><value>בחירה</value></data>
+  <data name="SelectFolder" xml:space="preserve"><value>בחירת תיקייה</value></data>
+  <data name="SelectTrophyFolder" xml:space="preserve"><value>בחירת תיקיית גביעים</value></data>
+  <data name="SelectFile" xml:space="preserve"><value>בחירת קובץ</value></data>
+  <data name="GoUpOneLevel" xml:space="preserve"><value>מעלה רמה אחת</value></data>
+  <data name="ThisPC" xml:space="preserve"><value>מחשב זה</value></data>
+  <data name="ShowingFiles" xml:space="preserve"><value>קבצים {0} :מציג</value></data>
+
+  <!-- Trophy actions -->
+  <data name="SetTime" xml:space="preserve"><value>קביעת זמן</value></data>
+  <data name="HiddenTrophy" xml:space="preserve"><value>גביע מוסתר</value></data>
+  <data name="HiddenTrophyDesc" xml:space="preserve"><value>.גביע זה מוסתר</value></data>
+  <data name="Unlock" xml:space="preserve"><value>פתיחה</value></data>
+  <data name="Lock" xml:space="preserve"><value>נעילה</value></data>
+  <data name="SelectedCount" xml:space="preserve"><value>{0} נבחרו</value></data>
+
+  <!-- Busy states -->
+  <data name="BusyDecrypting" xml:space="preserve"><value>...מפענח וטוען גביעים</value></data>
+  <data name="BusyEncrypting" xml:space="preserve"><value>...מצפין ושומר גביעים</value></data>
+  <data name="BusyInitBrowser" xml:space="preserve"><value>...מאתחל דפדפן</value></data>
+  <data name="BusyFetching" xml:space="preserve"><value>...מאחזר חותמות זמן</value></data>
+
+  <!-- Confirmations -->
+  <data name="UnsavedChangesConfirm" xml:space="preserve"><value>?יש שינויים שלא נשמרו. לסגור בכל זאת</value></data>
+
+  <!-- Errors -->
+  <data name="ErrorOpenFailed" xml:space="preserve"><value>:פתיחת תיקיית הגביעים נכשלה</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>:השמירה נכשלה</value></data>
+  <data name="ErrorAddProfile" xml:space="preserve"><value>:הוספת הפרופיל נכשלה</value></data>
+  <data name="ErrorRemoveProfile" xml:space="preserve"><value>:הסרת הפרופיל נכשלה</value></data>
+
+  <!-- Profile management -->
+  <data name="SelectProfileSFO" xml:space="preserve"><value>בחירת קובץ PARAM.SFO של פרופיל</value></data>
+  <data name="EnterProfileName" xml:space="preserve"><value>:הזינו שם לפרופיל זה</value></data>
+  <data name="AddProfile" xml:space="preserve"><value>הוספת פרופיל</value></data>
+  <data name="DefaultProfileName" xml:space="preserve"><value>הפרופיל שלי</value></data>
+  <data name="ProfileAdded" xml:space="preserve"><value>'{0}' הפרופיל נוסף</value></data>
+  <data name="ProfileRemoved" xml:space="preserve"><value>הפרופיל הוסר</value></data>
+  <data name="RemoveProfileConfirm" xml:space="preserve"><value>?'{0}' להסיר את הפרופיל</value></data>
+
+  <!-- Keyboard shortcuts -->
+  <data name="KeyboardShortcuts" xml:space="preserve"><value>קיצורי מקלדת</value></data>
+  <data name="ShortcutsCloseHint" xml:space="preserve"><value>F1 או Esc לסגירה</value></data>
+  <data name="ShortcutCatFile" xml:space="preserve"><value>קובץ</value></data>
+  <data name="ShortcutCatNavigation" xml:space="preserve"><value>ניווט</value></data>
+  <data name="ShortcutCatTrophyActions" xml:space="preserve"><value>פעולות גביעים</value></data>
+  <data name="ShortcutCatHelp" xml:space="preserve"><value>עזרה</value></data>
+  <data name="ShortcutOpenFolder" xml:space="preserve"><value>פתיחת תיקיית גביעים</value></data>
+  <data name="ShortcutSave" xml:space="preserve"><value>שמירה</value></data>
+  <data name="ShortcutCloseFile" xml:space="preserve"><value>סגירת קובץ</value></data>
+  <data name="ShortcutSearch" xml:space="preserve"><value>חיפוש גביעים</value></data>
+  <data name="ShortcutEscape" xml:space="preserve"><value>ניקוי חיפוש / סגירת שכבת-על</value></data>
+  <data name="ShortcutSelectAll" xml:space="preserve"><value>בחירת כל הגביעים הגלויים</value></data>
+  <data name="ShortcutToggle" xml:space="preserve"><value>מיתוג פתיחה / נעילה</value></data>
+  <data name="ShortcutEditTime" xml:space="preserve"><value>עריכת חותמת זמן</value></data>
+  <data name="ShortcutClearSelected" xml:space="preserve"><value>ניקוי חותמות זמן נבחרות</value></data>
+  <data name="ShortcutHelp" xml:space="preserve"><value>הצגה / הסתרה של שכבת-על זו</value></data>
+
+  <!-- Operation errors -->
+  <data name="ErrorPlatinumFailed" xml:space="preserve"><value>:פלטינום מיידי נכשל</value></data>
+  <data name="ErrorUnlockFailed" xml:space="preserve"><value>:פתיחה מיידית נכשלה</value></data>
+  <data name="ErrorImportFailed" xml:space="preserve"><value>:הייבוא נכשל</value></data>
+  <data name="ErrorFileImportFailed" xml:space="preserve"><value>:ייבוא הקובץ נכשל</value></data>
+
+  <!-- Confirmation dialogs -->
+  <data name="ConfirmClearNonSynced" xml:space="preserve"><value>?לנקות את כל הגביעים שלא סונכרנו</value></data>
+  <data name="ConfirmClearIncludingSynced" xml:space="preserve"><value>?לנקות את כל הגביעים כולל מסונכרנים
+
+אזהרה: פעולה זו תסיר גם גביעים שסונכרנו עם PSN.</value></data>
+  <data name="ConfirmUnlockAll" xml:space="preserve"><value>?לפתוח את כל הגביעים בזמן הנוכחי</value></data>
+  <data name="ConfirmClearBatch" xml:space="preserve"><value>?גביע(ים) נבחר(ים) {0} לנקות</value></data>
+
+  <!-- Status messages -->
+  <data name="NoTimestampsFound" xml:space="preserve"><value>לא נמצאו חותמות זמן של גביעים בדף זה.
+
+ודאו שהכתובת נכונה ושלמשתמש יש גביעים שנצברו עבור המשחק הזה.</value></data>
+  <data name="NoDataFound" xml:space="preserve"><value>לא נמצאו נתונים</value></data>
+  <data name="ImportedTimestamps" xml:space="preserve"><value>חותמות זמן יובאו {0}</value></data>
+  <data name="ImportedFromFile" xml:space="preserve"><value>חותמות זמן יובאו מקובץ {0}</value></data>
+  <data name="UnmatchedSuffix" xml:space="preserve"><value>(לא תואמים {0})</value></data>
+  <data name="UnlockedCount" xml:space="preserve"><value>גביע(ים) נפתחו {0}</value></data>
+  <data name="LockedCount" xml:space="preserve"><value>גביע(ים) ננעלו {0}</value></data>
+  <data name="ClearedCount" xml:space="preserve"><value>גביע(ים) נוקו {0}</value></data>
+  <data name="CopiedName" xml:space="preserve"><value>{0} :הועתק</value></data>
+  <data name="FolderNoLongerExists" xml:space="preserve"><value>התיקייה לא קיימת יותר</value></data>
+  <data name="SyncedCannotClear" xml:space="preserve"><value>גביע זה מסונכרן עם PSN ולא ניתן לנקותו.
+השתמשו ב'ניקוי הכל כולל מסונכרנים' לניקוי כפוי של גביעים מסונכרנים.</value></data>
+
+  <!-- File import -->
+  <data name="SelectTrophyImportFile" xml:space="preserve"><value>בחירת קובץ ייבוא גביעים</value></data>
+  <data name="ImportFormatHint" xml:space="preserve"><value>פורמט צפוי: שם גביע | YYYY-MM-DD HH:MM:SS (שורה אחת לכל ערך, שורות שמתחילות ב-# מתעלמות)</value></data>
+  <data name="NoValidTimestampsInFile" xml:space="preserve"><value>לא נמצאו חותמות זמן תקינות בקובץ זה.
+
+פורמט צפוי (שורה אחת, מופרד בקו אנכי או טאב):
+שם גביע | YYYY-MM-DD HH:MM:SS
+
+דוגמה:
+First Blood | 2024-06-15 18:30:00
+Speed Demon | 2024-06-15 19:45:22
+
+שורות שמתחילות ב-# מתעלמות.</value></data>
+  <data name="ImportComplete" xml:space="preserve"><value>הייבוא הושלם</value></data>
+  <data name="ImportCompleteMessage" xml:space="preserve"><value>חותמות זמן יובאו בהצלחה {0}.
+
+ערכים לא תואמים: {1}</value></data>
+
+  <!-- Status bar formats -->
+  <data name="EarnedFormat" xml:space="preserve"><value>נצברו {1} / {0}</value></data>
+  <data name="UserFormat" xml:space="preserve"><value>{0} :משתמש</value></data>
+  <data name="TrophiesFormat" xml:space="preserve"><value>גביעים {1} / {0}</value></data>
+  <data name="FilteredFormat" xml:space="preserve"><value>מתוך {1} {0}</value></data>
+
+  <!-- Trophy types -->
+  <data name="AutoPlatinum" xml:space="preserve"><value>פלטינום</value></data>
+  <data name="AutoGold" xml:space="preserve"><value>זהב</value></data>
+  <data name="AutoSilver" xml:space="preserve"><value>כסף</value></data>
+  <data name="AutoBronze" xml:space="preserve"><value>ארד</value></data>
+  <data name="AutoPlatinumCount" xml:space="preserve"><value>מספר גביעי פלטינום</value></data>
+  <data name="AutoGoldCount" xml:space="preserve"><value>מספר גביעי זהב</value></data>
+  <data name="AutoSilverCount" xml:space="preserve"><value>מספר גביעי כסף</value></data>
+  <data name="AutoBronzeCount" xml:space="preserve"><value>מספר גביעי ארד</value></data>
+
+</root>

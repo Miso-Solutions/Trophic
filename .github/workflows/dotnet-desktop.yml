@@ -1,0 +1,44 @@
+name: .NET Desktop Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Release]
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration ${{ matrix.configuration }} --no-restore
+
+    - name: Test
+      run: dotnet test --configuration ${{ matrix.configuration }} --no-build
+
+    - name: Publish
+      run: dotnet publish src/Trophic/Trophic.csproj --configuration ${{ matrix.configuration }} --output publish
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Trophic
+        path: publish/
+        retention-days: 30

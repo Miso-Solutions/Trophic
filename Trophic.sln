@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9361884B-4541-40CC-9937-F282795D6B31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trophic.TrophyFormat", "src\Trophic.TrophyFormat\Trophic.TrophyFormat.csproj", "{31EF00A5-BDA4-4A24-ACB0-C214124D8EBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trophic.Core", "src\Trophic.Core\Trophic.Core.csproj", "{3F11C03C-C625-43E3-B322-A70C09AE26E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trophic", "src\Trophic\Trophic.csproj", "{54287C48-4D6C-4471-93C0-C0F469AC6D9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trophic.TrophyFormat.Tests", "src\Trophic.TrophyFormat.Tests\Trophic.TrophyFormat.Tests.csproj", "{425A067F-46F1-4F7A-9A8D-5F247DF932E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trophic.Core.Tests", "src\Trophic.Core.Tests\Trophic.Core.Tests.csproj", "{3EB585B1-73D9-45C2-A5BB-57F1EFDEB22D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31EF00A5-BDA4-4A24-ACB0-C214124D8EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31EF00A5-BDA4-4A24-ACB0-C214124D8EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31EF00A5-BDA4-4A24-ACB0-C214124D8EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31EF00A5-BDA4-4A24-ACB0-C214124D8EBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F11C03C-C625-43E3-B322-A70C09AE26E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F11C03C-C625-43E3-B322-A70C09AE26E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F11C03C-C625-43E3-B322-A70C09AE26E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F11C03C-C625-43E3-B322-A70C09AE26E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54287C48-4D6C-4471-93C0-C0F469AC6D9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54287C48-4D6C-4471-93C0-C0F469AC6D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54287C48-4D6C-4471-93C0-C0F469AC6D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54287C48-4D6C-4471-93C0-C0F469AC6D9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{425A067F-46F1-4F7A-9A8D-5F247DF932E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{425A067F-46F1-4F7A-9A8D-5F247DF932E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{425A067F-46F1-4F7A-9A8D-5F247DF932E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{425A067F-46F1-4F7A-9A8D-5F247DF932E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EB585B1-73D9-45C2-A5BB-57F1EFDEB22D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EB585B1-73D9-45C2-A5BB-57F1EFDEB22D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EB585B1-73D9-45C2-A5BB-57F1EFDEB22D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EB585B1-73D9-45C2-A5BB-57F1EFDEB22D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{31EF00A5-BDA4-4A24-ACB0-C214124D8EBC} = {9361884B-4541-40CC-9937-F282795D6B31}
+		{3F11C03C-C625-43E3-B322-A70C09AE26E6} = {9361884B-4541-40CC-9937-F282795D6B31}
+		{54287C48-4D6C-4471-93C0-C0F469AC6D9B} = {9361884B-4541-40CC-9937-F282795D6B31}
+		{425A067F-46F1-4F7A-9A8D-5F247DF932E5} = {9361884B-4541-40CC-9937-F282795D6B31}
+		{3EB585B1-73D9-45C2-A5BB-57F1EFDEB22D} = {9361884B-4541-40CC-9937-F282795D6B31}
+	EndGlobalSection
+EndGlobal

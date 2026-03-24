@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Window -->
+  <data name="AppTitle" xml:space="preserve"><value>Trophic</value></data>
+
+  <!-- Toolbar buttons -->
+  <data name="Open" xml:space="preserve"><value>打开</value></data>
+  <data name="Save" xml:space="preserve"><value>保存</value></data>
+  <data name="Saved" xml:space="preserve"><value>已保存！</value></data>
+  <data name="Close" xml:space="preserve"><value>关闭</value></data>
+  <data name="Import" xml:space="preserve"><value>导入</value></data>
+  <data name="UnlockAll" xml:space="preserve"><value>全部解锁</value></data>
+  <data name="ClearAll" xml:space="preserve"><value>全部清除</value></data>
+  <data name="Exit" xml:space="preserve"><value>退出</value></data>
+  <data name="Donate" xml:space="preserve"><value>捐赠</value></data>
+  <data name="ShowHidden" xml:space="preserve"><value>显示隐藏</value></data>
+
+  <!-- Toolbar tooltips -->
+  <data name="TooltipOpen" xml:space="preserve"><value>Ctrl+O</value></data>
+  <data name="TooltipSave" xml:space="preserve"><value>Ctrl+S</value></data>
+  <data name="TooltipClose" xml:space="preserve"><value>Ctrl+W</value></data>
+  <data name="TooltipImport" xml:space="preserve"><value>从奖杯网站导入时间戳</value></data>
+  <data name="TooltipMoreImport" xml:space="preserve"><value>更多导入选项</value></data>
+  <data name="TooltipUnlockAll" xml:space="preserve"><value>以当前时间解锁所有奖杯</value></data>
+  <data name="TooltipMoreUnlock" xml:space="preserve"><value>更多解锁选项</value></data>
+  <data name="TooltipClearAll" xml:space="preserve"><value>清除所有未同步的奖杯</value></data>
+  <data name="TooltipMoreClear" xml:space="preserve"><value>更多清除选项</value></data>
+  <data name="TooltipExit" xml:space="preserve"><value>Alt+F4</value></data>
+  <data name="TooltipDonate" xml:space="preserve"><value>支持此项目</value></data>
+  <data name="TooltipShowHidden" xml:space="preserve"><value>显示隐藏奖杯详情</value></data>
+
+  <!-- Dropdown menus -->
+  <data name="FromWebsite" xml:space="preserve"><value>从网站...</value></data>
+  <data name="FromTextFile" xml:space="preserve"><value>从文本文件...</value></data>
+  <data name="FromTextFileTooltip" xml:space="preserve"><value>格式：奖杯名称 | YYYY-MM-DD HH:MM:SS（每行一个）。也可以将 .txt 文件拖放到窗口中。</value></data>
+  <data name="AtTimestamp" xml:space="preserve"><value>指定时间戳...</value></data>
+  <data name="Randomized" xml:space="preserve"><value>随机时间</value></data>
+  <data name="ClearAllIncludingSynced" xml:space="preserve"><value>全部清除（包括已同步）</value></data>
+
+  <!-- Info bar -->
+  <data name="ProfileLabel" xml:space="preserve"><value>档案：</value></data>
+  <data name="TooltipProfileSelector" xml:space="preserve"><value>选择一个档案以在保存时重新签名奖杯。留空则不进行重新签名。</value></data>
+  <data name="TooltipAddProfile" xml:space="preserve"><value>添加档案（选择 PARAM.SFO 文件）</value></data>
+  <data name="TooltipRemoveProfile" xml:space="preserve"><value>移除所选档案</value></data>
+  <data name="DST" xml:space="preserve"><value>夏令时</value></data>
+  <data name="TooltipTimezone" xml:space="preserve"><value>奖杯时间戳的时区</value></data>
+  <data name="TooltipDst" xml:space="preserve"><value>显示时间戳时包含夏令时偏移（仅影响在夏令时期间获得的奖杯）</value></data>
+  <data name="EXP" xml:space="preserve"><value>经验值</value></data>
+
+  <!-- Language -->
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Hebrew" xml:space="preserve"><value>עברית</value></data>
+  <data name="TooltipLanguage" xml:space="preserve"><value>切换语言</value></data>
+
+  <!-- Search and filters -->
+  <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+F 搜索</value></data>
+  <data name="ClearFilters" xml:space="preserve"><value>清除筛选</value></data>
+  <data name="FilterLabel" xml:space="preserve"><value>筛选：</value></data>
+  <data name="FilterEarned" xml:space="preserve"><value>已获得</value></data>
+  <data name="FilterNotEarned" xml:space="preserve"><value>未获得</value></data>
+  <data name="FilterSynced" xml:space="preserve"><value>已同步</value></data>
+  <data name="FilterPlatinum" xml:space="preserve"><value>白金</value></data>
+  <data name="FilterGold" xml:space="preserve"><value>金</value></data>
+  <data name="FilterSilver" xml:space="preserve"><value>银</value></data>
+  <data name="FilterBronze" xml:space="preserve"><value>铜</value></data>
+  <data name="TooltipFilterEarned" xml:space="preserve"><value>仅显示已获得的奖杯</value></data>
+  <data name="TooltipFilterNotEarned" xml:space="preserve"><value>仅显示未获得的奖杯</value></data>
+  <data name="TooltipFilterSynced" xml:space="preserve"><value>仅显示已同步至 PSN 的奖杯</value></data>
+  <data name="TooltipFilterPlatinum" xml:space="preserve"><value>仅显示白金奖杯</value></data>
+  <data name="TooltipFilterGold" xml:space="preserve"><value>仅显示金奖杯</value></data>
+  <data name="TooltipFilterSilver" xml:space="preserve"><value>仅显示银奖杯</value></data>
+  <data name="TooltipFilterBronze" xml:space="preserve"><value>仅显示铜奖杯</value></data>
+
+  <!-- Column headers -->
+  <data name="ColumnType" xml:space="preserve"><value>类型</value></data>
+  <data name="ColumnIcon" xml:space="preserve"><value>图标</value></data>
+  <data name="ColumnTrophy" xml:space="preserve"><value>奖杯</value></data>
+
+  <!-- Empty state -->
+  <data name="EmptyStateDrop" xml:space="preserve"><value>将奖杯文件夹拖放到此处以打开</value></data>
+  <data name="EmptyStateBrowse" xml:space="preserve"><value>或按 Ctrl+O 浏览</value></data>
+  <data name="Recent" xml:space="preserve"><value>最近</value></data>
+  <data name="TooltipRemoveRecent" xml:space="preserve"><value>从最近记录中移除</value></data>
+
+  <!-- Context menu -->
+  <data name="UnlockSelected" xml:space="preserve"><value>解锁所选</value></data>
+  <data name="LockSelected" xml:space="preserve"><value>锁定所选</value></data>
+  <data name="ClearSelected" xml:space="preserve"><value>清除所选</value></data>
+  <data name="EditTime" xml:space="preserve"><value>编辑时间...</value></data>
+  <data name="Clear" xml:space="preserve"><value>清除</value></data>
+  <data name="CopyName" xml:space="preserve"><value>复制名称</value></data>
+
+  <!-- Confirmation dialog -->
+  <data name="Yes" xml:space="preserve"><value>是</value></data>
+  <data name="No" xml:space="preserve"><value>否</value></data>
+  <data name="Copy" xml:space="preserve"><value>复制</value></data>
+  <data name="OK" xml:space="preserve"><value>确定</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Copied" xml:space="preserve"><value>已复制！</value></data>
+
+  <!-- DateTime picker -->
+  <data name="SelectDateTimeTitle" xml:space="preserve"><value>选择日期和时间</value></data>
+  <data name="SelectDateTimePrompt" xml:space="preserve"><value>选择奖杯解锁的日期和时间：</value></data>
+  <data name="HourLabel" xml:space="preserve"><value>时：</value></data>
+  <data name="MinLabel" xml:space="preserve"><value>分：</value></data>
+  <data name="SecLabel" xml:space="preserve"><value>秒：</value></data>
+  <data name="Now" xml:space="preserve"><value>现在</value></data>
+  <data name="FutureDateWarning" xml:space="preserve"><value>未来日期无法同步至 PSN，并可能导致账号被标记。</value></data>
+
+  <!-- Import dialog -->
+  <data name="ImportTimestampsTitle" xml:space="preserve"><value>导入时间戳</value></data>
+  <data name="TrophyPageUrl" xml:space="preserve"><value>奖杯页面 URL：</value></data>
+  <data name="InvalidUrlError" xml:space="preserve"><value>请输入有效的 URL（https://...）。</value></data>
+  <data name="SupportedSites" xml:space="preserve"><value>支持的网站：PSN Trophy Leaders、TrueTrophies、PSNProfiles</value></data>
+  <data name="ImportAsIs" xml:space="preserve"><value>原样导入</value></data>
+  <data name="WithOffset" xml:space="preserve"><value>带偏移量</value></data>
+  <data name="FixedValues" xml:space="preserve"><value>固定值</value></data>
+  <data name="StartTime" xml:space="preserve"><value>起始时间</value></data>
+  <data name="ImportAsIsDesc" xml:space="preserve"><value>时间戳将按照源档案中显示的原样导入。</value></data>
+  <data name="OffsetDesc" xml:space="preserve"><value>对所有导入的时间戳进行时间增减：</value></data>
+  <data name="OffsetHint" xml:space="preserve"><value>使用负值进行减少（例如 -2 年）。</value></data>
+  <data name="FixedValuesDesc" xml:space="preserve"><value>覆盖每个导入时间戳的特定部分：</value></data>
+  <data name="FixedValuesHint" xml:space="preserve"><value>仅勾选的字段会被覆盖。未勾选的字段保留原始值。</value></data>
+  <data name="StartTimeDesc" xml:space="preserve"><value>设置第一个奖杯应获得的时间。其他所有奖杯保持原始间隔。</value></data>
+  <data name="StartTimeExample" xml:space="preserve"><value>示例：如果源档案的第一个奖杯是 2020 年 1 月 1 日，而您将起始时间设为 2005 年 5 月 10 日，则所有奖杯将回退约 15 年，同时保持彼此之间的时间间隔不变。</value></data>
+  <data name="Years" xml:space="preserve"><value>年：</value></data>
+  <data name="Months" xml:space="preserve"><value>月：</value></data>
+  <data name="Weeks" xml:space="preserve"><value>周：</value></data>
+  <data name="Days" xml:space="preserve"><value>天：</value></data>
+  <data name="Hours" xml:space="preserve"><value>小时：</value></data>
+  <data name="Minutes" xml:space="preserve"><value>分钟：</value></data>
+  <data name="Seconds" xml:space="preserve"><value>秒：</value></data>
+  <data name="Year" xml:space="preserve"><value>年：</value></data>
+  <data name="Month" xml:space="preserve"><value>月：</value></data>
+  <data name="Day" xml:space="preserve"><value>日：</value></data>
+  <data name="Hour" xml:space="preserve"><value>时：</value></data>
+  <data name="Minute" xml:space="preserve"><value>分：</value></data>
+  <data name="Second" xml:space="preserve"><value>秒：</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>日期：</value></data>
+
+  <!-- Automation properties -->
+  <data name="AutoSearchTrophies" xml:space="preserve"><value>搜索奖杯</value></data>
+  <data name="AutoClearSearch" xml:space="preserve"><value>清除搜索</value></data>
+  <data name="AutoAddProfile" xml:space="preserve"><value>添加档案</value></data>
+  <data name="AutoRemoveProfile" xml:space="preserve"><value>移除所选档案</value></data>
+  <data name="AutoProfileResigning" xml:space="preserve"><value>用于重新签名的档案</value></data>
+  <data name="AutoImportFromWebsite" xml:space="preserve"><value>从网站导入时间戳</value></data>
+  <data name="AutoImportFromFile" xml:space="preserve"><value>从文本文件导入时间戳</value></data>
+  <data name="AutoUnlockAtTimestamp" xml:space="preserve"><value>以指定时间戳解锁全部</value></data>
+  <data name="AutoUnlockRandomized" xml:space="preserve"><value>以随机时间戳解锁全部</value></data>
+  <data name="AutoClearIncludingSynced" xml:space="preserve"><value>清除所有奖杯（包括已同步）</value></data>
+
+  <!-- File browser dialog -->
+  <data name="BrowseTitle" xml:space="preserve"><value>浏览</value></data>
+  <data name="Select" xml:space="preserve"><value>选择</value></data>
+  <data name="SelectFolder" xml:space="preserve"><value>选择文件夹</value></data>
+  <data name="SelectTrophyFolder" xml:space="preserve"><value>选择奖杯文件夹</value></data>
+  <data name="SelectFile" xml:space="preserve"><value>选择文件</value></data>
+  <data name="GoUpOneLevel" xml:space="preserve"><value>返回上一级</value></data>
+  <data name="ThisPC" xml:space="preserve"><value>此电脑</value></data>
+  <data name="ShowingFiles" xml:space="preserve"><value>显示：{0} 个文件</value></data>
+
+  <!-- Trophy item -->
+  <data name="SetTime" xml:space="preserve"><value>设置时间</value></data>
+  <data name="HiddenTrophy" xml:space="preserve"><value>隐藏奖杯</value></data>
+  <data name="HiddenTrophyDesc" xml:space="preserve"><value>此奖杯已隐藏。</value></data>
+  <data name="Unlock" xml:space="preserve"><value>解锁</value></data>
+  <data name="Lock" xml:space="preserve"><value>锁定</value></data>
+
+  <!-- ViewModel messages -->
+  <data name="SelectedCount" xml:space="preserve"><value>已选择 {0} 个</value></data>
+  <data name="BusyDecrypting" xml:space="preserve"><value>正在解密并加载奖杯...</value></data>
+  <data name="BusyEncrypting" xml:space="preserve"><value>正在加密并保存奖杯...</value></data>
+  <data name="BusyInitBrowser" xml:space="preserve"><value>正在初始化浏览器...</value></data>
+  <data name="BusyFetching" xml:space="preserve"><value>正在获取时间戳...</value></data>
+  <data name="UnsavedChangesConfirm" xml:space="preserve"><value>您有未保存的更改。仍然关闭吗？</value></data>
+  <data name="ErrorOpenFailed" xml:space="preserve"><value>无法打开奖杯文件夹：</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>保存失败：</value></data>
+  <data name="ErrorAddProfile" xml:space="preserve"><value>添加档案失败：</value></data>
+  <data name="ErrorRemoveProfile" xml:space="preserve"><value>移除档案失败：</value></data>
+  <data name="SelectProfileSFO" xml:space="preserve"><value>选择档案 PARAM.SFO</value></data>
+  <data name="EnterProfileName" xml:space="preserve"><value>为此档案输入名称：</value></data>
+  <data name="AddProfile" xml:space="preserve"><value>添加档案</value></data>
+  <data name="DefaultProfileName" xml:space="preserve"><value>我的档案</value></data>
+  <data name="ProfileAdded" xml:space="preserve"><value>已添加档案"{0}"</value></data>
+  <data name="ProfileRemoved" xml:space="preserve"><value>档案已移除</value></data>
+  <data name="RemoveProfileConfirm" xml:space="preserve"><value>移除档案"{0}"？</value></data>
+
+  <!-- Keyboard shortcuts overlay -->
+  <data name="KeyboardShortcuts" xml:space="preserve"><value>键盘快捷键</value></data>
+  <data name="ShortcutsCloseHint" xml:space="preserve"><value>按 F1 或 Esc 关闭</value></data>
+  <data name="ShortcutCatFile" xml:space="preserve"><value>文件</value></data>
+  <data name="ShortcutCatNavigation" xml:space="preserve"><value>导航</value></data>
+  <data name="ShortcutCatTrophyActions" xml:space="preserve"><value>奖杯操作</value></data>
+  <data name="ShortcutCatHelp" xml:space="preserve"><value>帮助</value></data>
+  <data name="ShortcutOpenFolder" xml:space="preserve"><value>打开奖杯文件夹</value></data>
+  <data name="ShortcutSave" xml:space="preserve"><value>保存</value></data>
+  <data name="ShortcutCloseFile" xml:space="preserve"><value>关闭文件</value></data>
+  <data name="ShortcutSearch" xml:space="preserve"><value>搜索奖杯</value></data>
+  <data name="ShortcutEscape" xml:space="preserve"><value>清除搜索 / 关闭覆盖层</value></data>
+  <data name="ShortcutSelectAll" xml:space="preserve"><value>选择所有可见奖杯</value></data>
+  <data name="ShortcutToggle" xml:space="preserve"><value>切换解锁 / 锁定</value></data>
+  <data name="ShortcutEditTime" xml:space="preserve"><value>编辑时间戳</value></data>
+  <data name="ShortcutClearSelected" xml:space="preserve"><value>清除所选时间戳</value></data>
+  <data name="ShortcutHelp" xml:space="preserve"><value>显示 / 隐藏此覆盖层</value></data>
+
+  <!-- More ViewModel messages -->
+  <data name="ErrorPlatinumFailed" xml:space="preserve"><value>一键白金失败：</value></data>
+  <data name="ErrorUnlockFailed" xml:space="preserve"><value>一键解锁失败：</value></data>
+  <data name="ErrorImportFailed" xml:space="preserve"><value>导入失败：</value></data>
+  <data name="ErrorFileImportFailed" xml:space="preserve"><value>文件导入失败：</value></data>
+  <data name="ConfirmClearNonSynced" xml:space="preserve"><value>清除所有未同步的奖杯？</value></data>
+  <data name="ConfirmClearIncludingSynced" xml:space="preserve"><value>清除所有奖杯（包括已同步）？
+
+警告：这也将移除已与 PSN 同步的奖杯。</value></data>
+  <data name="ConfirmUnlockAll" xml:space="preserve"><value>以当前时间解锁所有奖杯？</value></data>
+  <data name="ConfirmClearBatch" xml:space="preserve"><value>清除 {0} 个所选奖杯？</value></data>
+  <data name="NoTimestampsFound" xml:space="preserve"><value>在此页面上未找到奖杯时间戳。
+
+请确保 URL 正确且该用户已获得此游戏的奖杯。</value></data>
+  <data name="NoDataFound" xml:space="preserve"><value>未找到数据</value></data>
+  <data name="ImportedTimestamps" xml:space="preserve"><value>已导入 {0} 个时间戳</value></data>
+  <data name="ImportedFromFile" xml:space="preserve"><value>已从文件导入 {0} 个时间戳</value></data>
+  <data name="UnmatchedSuffix" xml:space="preserve"><value>（{0} 个未匹配）</value></data>
+  <data name="UnlockedCount" xml:space="preserve"><value>已解锁 {0} 个奖杯</value></data>
+  <data name="LockedCount" xml:space="preserve"><value>已锁定 {0} 个奖杯</value></data>
+  <data name="ClearedCount" xml:space="preserve"><value>已清除 {0} 个奖杯</value></data>
+  <data name="CopiedName" xml:space="preserve"><value>已复制：{0}</value></data>
+  <data name="FolderNoLongerExists" xml:space="preserve"><value>文件夹已不存在</value></data>
+  <data name="SyncedCannotClear" xml:space="preserve"><value>此奖杯已与 PSN 同步，无法清除。
+请使用"全部清除（包括已同步）"来强制清除已同步的奖杯。</value></data>
+  <data name="SelectTrophyImportFile" xml:space="preserve"><value>选择奖杯导入文件</value></data>
+  <data name="ImportFormatHint" xml:space="preserve"><value>预期格式：奖杯名称 | YYYY-MM-DD HH:MM:SS（每行一个，以 # 开头的行将被忽略）</value></data>
+  <data name="NoValidTimestampsInFile" xml:space="preserve"><value>在此文件中未找到有效的奖杯时间戳。
+
+预期格式（每行一个，使用竖线或制表符分隔）：
+奖杯名称 | YYYY-MM-DD HH:MM:SS
+
+示例：
+First Blood | 2024-06-15 18:30:00
+Speed Demon | 2024-06-15 19:45:22
+
+以 # 开头的行将被忽略。</value></data>
+  <data name="ImportComplete" xml:space="preserve"><value>导入完成</value></data>
+  <data name="ImportCompleteMessage" xml:space="preserve"><value>已成功导入 {0} 个时间戳。
+
+{1} 个条目无法匹配：</value></data>
+
+  <!-- Status bar format strings -->
+  <data name="EarnedFormat" xml:space="preserve"><value>{0} / {1} 已获得</value></data>
+  <data name="UserFormat" xml:space="preserve"><value>用户：{0}</value></data>
+  <data name="TrophiesFormat" xml:space="preserve"><value>{0} / {1} 奖杯</value></data>
+  <data name="FilteredFormat" xml:space="preserve"><value>{0} / {1}</value></data>
+
+  <!-- Status indicators -->
+  <data name="AutoPlatinum" xml:space="preserve"><value>白金</value></data>
+  <data name="AutoGold" xml:space="preserve"><value>金</value></data>
+  <data name="AutoSilver" xml:space="preserve"><value>银</value></data>
+  <data name="AutoBronze" xml:space="preserve"><value>铜</value></data>
+  <data name="AutoPlatinumCount" xml:space="preserve"><value>白金奖杯数量</value></data>
+  <data name="AutoGoldCount" xml:space="preserve"><value>金奖杯数量</value></data>
+  <data name="AutoSilverCount" xml:space="preserve"><value>银奖杯数量</value></data>
+  <data name="AutoBronzeCount" xml:space="preserve"><value>铜奖杯数量</value></data>
+</root>

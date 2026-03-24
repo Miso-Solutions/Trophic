@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Window -->
+  <data name="AppTitle" xml:space="preserve"><value>Trophic</value></data>
+
+  <!-- Toolbar buttons -->
+  <data name="Open" xml:space="preserve"><value>Open</value></data>
+  <data name="Save" xml:space="preserve"><value>Save</value></data>
+  <data name="Saved" xml:space="preserve"><value>Saved!</value></data>
+  <data name="Close" xml:space="preserve"><value>Close</value></data>
+  <data name="Import" xml:space="preserve"><value>Import</value></data>
+  <data name="UnlockAll" xml:space="preserve"><value>Unlock All</value></data>
+  <data name="ClearAll" xml:space="preserve"><value>Clear All</value></data>
+  <data name="Exit" xml:space="preserve"><value>Exit</value></data>
+  <data name="Donate" xml:space="preserve"><value>Donate</value></data>
+  <data name="ShowHidden" xml:space="preserve"><value>Show Hidden</value></data>
+
+  <!-- Toolbar tooltips -->
+  <data name="TooltipOpen" xml:space="preserve"><value>Ctrl+O</value></data>
+  <data name="TooltipSave" xml:space="preserve"><value>Ctrl+S</value></data>
+  <data name="TooltipClose" xml:space="preserve"><value>Ctrl+W</value></data>
+  <data name="TooltipImport" xml:space="preserve"><value>Import timestamps from a trophy website</value></data>
+  <data name="TooltipMoreImport" xml:space="preserve"><value>More import options</value></data>
+  <data name="TooltipUnlockAll" xml:space="preserve"><value>Unlock all trophies at current time</value></data>
+  <data name="TooltipMoreUnlock" xml:space="preserve"><value>More unlock options</value></data>
+  <data name="TooltipClearAll" xml:space="preserve"><value>Clear all non-synced trophies</value></data>
+  <data name="TooltipMoreClear" xml:space="preserve"><value>More clear options</value></data>
+  <data name="TooltipExit" xml:space="preserve"><value>Alt+F4</value></data>
+  <data name="TooltipDonate" xml:space="preserve"><value>Support this project</value></data>
+  <data name="TooltipShowHidden" xml:space="preserve"><value>Reveal hidden trophy details</value></data>
+
+  <!-- Dropdown menus -->
+  <data name="FromWebsite" xml:space="preserve"><value>From website...</value></data>
+  <data name="FromTextFile" xml:space="preserve"><value>From text file...</value></data>
+  <data name="FromTextFileTooltip" xml:space="preserve"><value>Format: Trophy Name | YYYY-MM-DD HH:MM:SS (one per line). You can also drag a .txt file onto the window.</value></data>
+  <data name="AtTimestamp" xml:space="preserve"><value>At timestamp...</value></data>
+  <data name="Randomized" xml:space="preserve"><value>Randomized</value></data>
+  <data name="ClearAllIncludingSynced" xml:space="preserve"><value>Clear all (including synced)</value></data>
+
+  <!-- Info bar -->
+  <data name="ProfileLabel" xml:space="preserve"><value>Profile:</value></data>
+  <data name="TooltipProfileSelector" xml:space="preserve"><value>Select a profile to resign trophies to on save. Leave empty for no resigning.</value></data>
+  <data name="TooltipAddProfile" xml:space="preserve"><value>Add a profile (select a PARAM.SFO file)</value></data>
+  <data name="TooltipRemoveProfile" xml:space="preserve"><value>Remove selected profile</value></data>
+  <data name="DST" xml:space="preserve"><value>DST</value></data>
+  <data name="TooltipTimezone" xml:space="preserve"><value>Timezone for trophy timestamps</value></data>
+  <data name="TooltipDst" xml:space="preserve"><value>Include DST offset when displaying timestamps (only affects trophies earned during DST periods)</value></data>
+  <data name="EXP" xml:space="preserve"><value>EXP</value></data>
+
+  <!-- Language -->
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Hebrew" xml:space="preserve"><value>עברית</value></data>
+  <data name="TooltipLanguage" xml:space="preserve"><value>Switch language</value></data>
+
+  <!-- Search and filters -->
+  <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+F to search</value></data>
+  <data name="ClearFilters" xml:space="preserve"><value>Clear filters</value></data>
+  <data name="FilterLabel" xml:space="preserve"><value>Filter:</value></data>
+  <data name="FilterEarned" xml:space="preserve"><value>Earned</value></data>
+  <data name="FilterNotEarned" xml:space="preserve"><value>Not Earned</value></data>
+  <data name="FilterSynced" xml:space="preserve"><value>Synced</value></data>
+  <data name="FilterPlatinum" xml:space="preserve"><value>Platinum</value></data>
+  <data name="FilterGold" xml:space="preserve"><value>Gold</value></data>
+  <data name="FilterSilver" xml:space="preserve"><value>Silver</value></data>
+  <data name="FilterBronze" xml:space="preserve"><value>Bronze</value></data>
+  <data name="TooltipFilterEarned" xml:space="preserve"><value>Show only earned trophies</value></data>
+  <data name="TooltipFilterNotEarned" xml:space="preserve"><value>Show only unearned trophies</value></data>
+  <data name="TooltipFilterSynced" xml:space="preserve"><value>Show only PSN-synced trophies</value></data>
+  <data name="TooltipFilterPlatinum" xml:space="preserve"><value>Show only platinum trophies</value></data>
+  <data name="TooltipFilterGold" xml:space="preserve"><value>Show only gold trophies</value></data>
+  <data name="TooltipFilterSilver" xml:space="preserve"><value>Show only silver trophies</value></data>
+  <data name="TooltipFilterBronze" xml:space="preserve"><value>Show only bronze trophies</value></data>
+
+  <!-- Column headers -->
+  <data name="ColumnType" xml:space="preserve"><value>Type</value></data>
+  <data name="ColumnIcon" xml:space="preserve"><value>Icon</value></data>
+  <data name="ColumnTrophy" xml:space="preserve"><value>Trophy</value></data>
+
+  <!-- Empty state -->
+  <data name="EmptyStateDrop" xml:space="preserve"><value>Drop a trophy folder here to open it</value></data>
+  <data name="EmptyStateBrowse" xml:space="preserve"><value>or press Ctrl+O to browse</value></data>
+  <data name="Recent" xml:space="preserve"><value>Recent</value></data>
+  <data name="TooltipRemoveRecent" xml:space="preserve"><value>Remove from recents</value></data>
+
+  <!-- Context menu -->
+  <data name="UnlockSelected" xml:space="preserve"><value>Unlock Selected</value></data>
+  <data name="LockSelected" xml:space="preserve"><value>Lock Selected</value></data>
+  <data name="ClearSelected" xml:space="preserve"><value>Clear Selected</value></data>
+  <data name="EditTime" xml:space="preserve"><value>Edit Time...</value></data>
+  <data name="Clear" xml:space="preserve"><value>Clear</value></data>
+  <data name="CopyName" xml:space="preserve"><value>Copy Name</value></data>
+
+  <!-- Confirmation dialog -->
+  <data name="Yes" xml:space="preserve"><value>Yes</value></data>
+  <data name="No" xml:space="preserve"><value>No</value></data>
+  <data name="Copy" xml:space="preserve"><value>Copy</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Copied" xml:space="preserve"><value>Copied!</value></data>
+
+  <!-- DateTime picker -->
+  <data name="SelectDateTimeTitle" xml:space="preserve"><value>Select Date and Time</value></data>
+  <data name="SelectDateTimePrompt" xml:space="preserve"><value>Select trophy unlock date and time:</value></data>
+  <data name="HourLabel" xml:space="preserve"><value>Hour:</value></data>
+  <data name="MinLabel" xml:space="preserve"><value>Min:</value></data>
+  <data name="SecLabel" xml:space="preserve"><value>Sec:</value></data>
+  <data name="Now" xml:space="preserve"><value>Now</value></data>
+  <data name="FutureDateWarning" xml:space="preserve"><value>Future dates cannot be synced to PSN and may flag your account.</value></data>
+
+  <!-- Import dialog -->
+  <data name="ImportTimestampsTitle" xml:space="preserve"><value>Import Timestamps</value></data>
+  <data name="TrophyPageUrl" xml:space="preserve"><value>Trophy page URL:</value></data>
+  <data name="InvalidUrlError" xml:space="preserve"><value>Please enter a valid URL (https://...).</value></data>
+  <data name="SupportedSites" xml:space="preserve"><value>Supported: PSN Trophy Leaders, TrueTrophies, PSNProfiles</value></data>
+  <data name="ImportAsIs" xml:space="preserve"><value>Import as-is</value></data>
+  <data name="WithOffset" xml:space="preserve"><value>With offset</value></data>
+  <data name="FixedValues" xml:space="preserve"><value>Fixed values</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Start time</value></data>
+  <data name="ImportAsIsDesc" xml:space="preserve"><value>Timestamps will be imported exactly as they appear on the source profile.</value></data>
+  <data name="OffsetDesc" xml:space="preserve"><value>Add or subtract time from all imported timestamps:</value></data>
+  <data name="OffsetHint" xml:space="preserve"><value>Use negative values to subtract (e.g. -2 years).</value></data>
+  <data name="FixedValuesDesc" xml:space="preserve"><value>Override specific parts of every imported timestamp:</value></data>
+  <data name="FixedValuesHint" xml:space="preserve"><value>Only checked fields will be overridden. Unchecked fields keep their original values.</value></data>
+  <data name="StartTimeDesc" xml:space="preserve"><value>Set when the first trophy should be earned. All other trophies keep their original spacing.</value></data>
+  <data name="StartTimeExample" xml:space="preserve"><value>Example: if the source's first trophy is Jan 1 2020 and you set start to May 10 2005, all trophies shift back ~15 years while keeping the same gaps between them.</value></data>
+  <data name="Years" xml:space="preserve"><value>Years:</value></data>
+  <data name="Months" xml:space="preserve"><value>Months:</value></data>
+  <data name="Weeks" xml:space="preserve"><value>Weeks:</value></data>
+  <data name="Days" xml:space="preserve"><value>Days:</value></data>
+  <data name="Hours" xml:space="preserve"><value>Hours:</value></data>
+  <data name="Minutes" xml:space="preserve"><value>Minutes:</value></data>
+  <data name="Seconds" xml:space="preserve"><value>Seconds:</value></data>
+  <data name="Year" xml:space="preserve"><value>Year:</value></data>
+  <data name="Month" xml:space="preserve"><value>Month:</value></data>
+  <data name="Day" xml:space="preserve"><value>Day:</value></data>
+  <data name="Hour" xml:space="preserve"><value>Hour:</value></data>
+  <data name="Minute" xml:space="preserve"><value>Minute:</value></data>
+  <data name="Second" xml:space="preserve"><value>Second:</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>Date:</value></data>
+
+  <!-- Automation properties -->
+  <data name="AutoSearchTrophies" xml:space="preserve"><value>Search trophies</value></data>
+  <data name="AutoClearSearch" xml:space="preserve"><value>Clear search</value></data>
+  <data name="AutoAddProfile" xml:space="preserve"><value>Add profile</value></data>
+  <data name="AutoRemoveProfile" xml:space="preserve"><value>Remove selected profile</value></data>
+  <data name="AutoProfileResigning" xml:space="preserve"><value>Profile for resigning</value></data>
+  <data name="AutoImportFromWebsite" xml:space="preserve"><value>Import timestamps from website</value></data>
+  <data name="AutoImportFromFile" xml:space="preserve"><value>Import timestamps from text file</value></data>
+  <data name="AutoUnlockAtTimestamp" xml:space="preserve"><value>Unlock all at specific timestamp</value></data>
+  <data name="AutoUnlockRandomized" xml:space="preserve"><value>Unlock all with randomized timestamps</value></data>
+  <data name="AutoClearIncludingSynced" xml:space="preserve"><value>Clear all trophies including synced</value></data>
+
+  <!-- File browser dialog -->
+  <data name="BrowseTitle" xml:space="preserve"><value>Browse</value></data>
+  <data name="Select" xml:space="preserve"><value>Select</value></data>
+  <data name="SelectFolder" xml:space="preserve"><value>Select Folder</value></data>
+  <data name="SelectTrophyFolder" xml:space="preserve"><value>Select Trophy Folder</value></data>
+  <data name="SelectFile" xml:space="preserve"><value>Select File</value></data>
+  <data name="GoUpOneLevel" xml:space="preserve"><value>Go up one level</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Refresh</value></data>
+  <data name="ThisPC" xml:space="preserve"><value>This PC</value></data>
+  <data name="ShowingFiles" xml:space="preserve"><value>Showing: {0} files</value></data>
+
+  <!-- Trophy item -->
+  <data name="SetTime" xml:space="preserve"><value>Set time</value></data>
+  <data name="HiddenTrophy" xml:space="preserve"><value>Hidden Trophy</value></data>
+  <data name="HiddenTrophyDesc" xml:space="preserve"><value>This trophy is hidden.</value></data>
+  <data name="Unlock" xml:space="preserve"><value>Unlock</value></data>
+  <data name="Lock" xml:space="preserve"><value>Lock</value></data>
+
+  <!-- ViewModel messages -->
+  <data name="SelectedCount" xml:space="preserve"><value>{0} selected</value></data>
+  <data name="BusyDecrypting" xml:space="preserve"><value>Decrypting and loading trophies...</value></data>
+  <data name="BusyEncrypting" xml:space="preserve"><value>Encrypting and saving trophies...</value></data>
+  <data name="BusyInitBrowser" xml:space="preserve"><value>Initializing browser...</value></data>
+  <data name="BusyFetching" xml:space="preserve"><value>Fetching timestamps...</value></data>
+  <data name="UnsavedChangesConfirm" xml:space="preserve"><value>You have unsaved changes. Close anyway?</value></data>
+  <data name="ErrorOpenFailed" xml:space="preserve"><value>Failed to open trophy folder:</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>Failed to save:</value></data>
+  <data name="ErrorAddProfile" xml:space="preserve"><value>Failed to add profile:</value></data>
+  <data name="ErrorRemoveProfile" xml:space="preserve"><value>Failed to remove profile:</value></data>
+  <data name="SelectProfileSFO" xml:space="preserve"><value>Select Profile PARAM.SFO</value></data>
+  <data name="EnterProfileName" xml:space="preserve"><value>Enter a name for this profile:</value></data>
+  <data name="AddProfile" xml:space="preserve"><value>Add Profile</value></data>
+  <data name="DefaultProfileName" xml:space="preserve"><value>My Profile</value></data>
+  <data name="ProfileAdded" xml:space="preserve"><value>Profile '{0}' added</value></data>
+  <data name="ProfileRemoved" xml:space="preserve"><value>Profile removed</value></data>
+  <data name="RemoveProfileConfirm" xml:space="preserve"><value>Remove profile '{0}'?</value></data>
+
+  <!-- Keyboard shortcuts overlay -->
+  <data name="KeyboardShortcuts" xml:space="preserve"><value>Keyboard Shortcuts</value></data>
+  <data name="ShortcutsCloseHint" xml:space="preserve"><value>Press F1 or Esc to close</value></data>
+  <data name="ShortcutCatFile" xml:space="preserve"><value>File</value></data>
+  <data name="ShortcutCatNavigation" xml:space="preserve"><value>Navigation</value></data>
+  <data name="ShortcutCatTrophyActions" xml:space="preserve"><value>Trophy Actions</value></data>
+  <data name="ShortcutCatHelp" xml:space="preserve"><value>Help</value></data>
+  <data name="ShortcutOpenFolder" xml:space="preserve"><value>Open trophy folder</value></data>
+  <data name="ShortcutSave" xml:space="preserve"><value>Save</value></data>
+  <data name="ShortcutCloseFile" xml:space="preserve"><value>Close file</value></data>
+  <data name="ShortcutSearch" xml:space="preserve"><value>Search trophies</value></data>
+  <data name="ShortcutEscape" xml:space="preserve"><value>Clear search / close overlay</value></data>
+  <data name="ShortcutSelectAll" xml:space="preserve"><value>Select all visible trophies</value></data>
+  <data name="ShortcutToggle" xml:space="preserve"><value>Toggle unlock / lock</value></data>
+  <data name="ShortcutEditTime" xml:space="preserve"><value>Edit timestamp</value></data>
+  <data name="ShortcutClearSelected" xml:space="preserve"><value>Clear selected timestamp(s)</value></data>
+  <data name="ShortcutHelp" xml:space="preserve"><value>Show / hide this overlay</value></data>
+
+  <!-- More ViewModel messages -->
+  <data name="ErrorPlatinumFailed" xml:space="preserve"><value>Instant Platinum failed:</value></data>
+  <data name="ErrorUnlockFailed" xml:space="preserve"><value>Instant Unlock failed:</value></data>
+  <data name="ErrorImportFailed" xml:space="preserve"><value>Import failed:</value></data>
+  <data name="ErrorFileImportFailed" xml:space="preserve"><value>File import failed:</value></data>
+  <data name="ConfirmClearNonSynced" xml:space="preserve"><value>Clear all non-synced trophies?</value></data>
+  <data name="ConfirmClearIncludingSynced" xml:space="preserve"><value>Clear ALL trophies including synced?
+
+Warning: This will also remove trophies that have been synced with PSN.</value></data>
+  <data name="ConfirmUnlockAll" xml:space="preserve"><value>Unlock all trophies at the current time?</value></data>
+  <data name="ConfirmClearBatch" xml:space="preserve"><value>Clear {0} selected trophy(ies)?</value></data>
+  <data name="NoTimestampsFound" xml:space="preserve"><value>No trophy timestamps were found on this page.
+
+Make sure the URL is correct and the user has earned trophies for this game.</value></data>
+  <data name="NoDataFound" xml:space="preserve"><value>No Data Found</value></data>
+  <data name="ImportedTimestamps" xml:space="preserve"><value>Imported {0} timestamp(s)</value></data>
+  <data name="ImportedFromFile" xml:space="preserve"><value>Imported {0} timestamp(s) from file</value></data>
+  <data name="UnmatchedSuffix" xml:space="preserve"><value> ({0} unmatched)</value></data>
+  <data name="UnlockedCount" xml:space="preserve"><value>Unlocked {0} trophy(ies)</value></data>
+  <data name="LockedCount" xml:space="preserve"><value>Locked {0} trophy(ies)</value></data>
+  <data name="ClearedCount" xml:space="preserve"><value>Cleared {0} trophy(ies)</value></data>
+  <data name="CopiedName" xml:space="preserve"><value>Copied: {0}</value></data>
+  <data name="FolderNoLongerExists" xml:space="preserve"><value>Folder no longer exists</value></data>
+  <data name="SyncedCannotClear" xml:space="preserve"><value>This trophy is synced with PSN and cannot be cleared.
+Use 'Clear All Including Synced' to force clear synced trophies.</value></data>
+  <data name="SelectTrophyImportFile" xml:space="preserve"><value>Select Trophy Import File</value></data>
+  <data name="ImportFormatHint" xml:space="preserve"><value>Expected format:  Trophy Name | YYYY-MM-DD HH:MM:SS  (one per line, lines starting with # are ignored)</value></data>
+  <data name="NoValidTimestampsInFile" xml:space="preserve"><value>No valid trophy timestamps were found in this file.
+
+Expected format (one per line, pipe or tab separated):
+Trophy Name | YYYY-MM-DD HH:MM:SS
+
+Example:
+First Blood | 2024-06-15 18:30:00
+Speed Demon | 2024-06-15 19:45:22
+
+Lines starting with # are ignored.</value></data>
+  <data name="ImportComplete" xml:space="preserve"><value>Import Complete</value></data>
+  <data name="ImportCompleteMessage" xml:space="preserve"><value>Imported {0} timestamp(s) successfully.
+
+{1} entries could not be matched:</value></data>
+
+  <!-- Status bar format strings -->
+  <data name="EarnedFormat" xml:space="preserve"><value>{0} / {1} Earned</value></data>
+  <data name="UserFormat" xml:space="preserve"><value>User: {0}</value></data>
+  <data name="TrophiesFormat" xml:space="preserve"><value>{0} / {1} Trophies</value></data>
+  <data name="FilteredFormat" xml:space="preserve"><value>{0} of {1}</value></data>
+
+  <!-- Status indicators -->
+  <data name="AutoPlatinum" xml:space="preserve"><value>Platinum</value></data>
+  <data name="AutoGold" xml:space="preserve"><value>Gold</value></data>
+  <data name="AutoSilver" xml:space="preserve"><value>Silver</value></data>
+  <data name="AutoBronze" xml:space="preserve"><value>Bronze</value></data>
+  <data name="AutoPlatinumCount" xml:space="preserve"><value>Platinum trophy count</value></data>
+  <data name="AutoGoldCount" xml:space="preserve"><value>Gold trophy count</value></data>
+  <data name="AutoSilverCount" xml:space="preserve"><value>Silver trophy count</value></data>
+  <data name="AutoBronzeCount" xml:space="preserve"><value>Bronze trophy count</value></data>
+</root>

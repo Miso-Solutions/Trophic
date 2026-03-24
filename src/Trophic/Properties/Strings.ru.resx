@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Window -->
+  <data name="AppTitle" xml:space="preserve"><value>Trophic</value></data>
+
+  <!-- Toolbar buttons -->
+  <data name="Open" xml:space="preserve"><value>Открыть</value></data>
+  <data name="Save" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="Saved" xml:space="preserve"><value>Сохранено!</value></data>
+  <data name="Close" xml:space="preserve"><value>Закрыть</value></data>
+  <data name="Import" xml:space="preserve"><value>Импорт</value></data>
+  <data name="UnlockAll" xml:space="preserve"><value>Разблокировать все</value></data>
+  <data name="ClearAll" xml:space="preserve"><value>Очистить все</value></data>
+  <data name="Exit" xml:space="preserve"><value>Выход</value></data>
+  <data name="Donate" xml:space="preserve"><value>Поддержать</value></data>
+  <data name="ShowHidden" xml:space="preserve"><value>Показать скрытые</value></data>
+
+  <!-- Toolbar tooltips -->
+  <data name="TooltipOpen" xml:space="preserve"><value>Ctrl+O</value></data>
+  <data name="TooltipSave" xml:space="preserve"><value>Ctrl+S</value></data>
+  <data name="TooltipClose" xml:space="preserve"><value>Ctrl+W</value></data>
+  <data name="TooltipImport" xml:space="preserve"><value>Импортировать временные метки с сайта трофеев</value></data>
+  <data name="TooltipMoreImport" xml:space="preserve"><value>Дополнительные параметры импорта</value></data>
+  <data name="TooltipUnlockAll" xml:space="preserve"><value>Разблокировать все трофеи на текущее время</value></data>
+  <data name="TooltipMoreUnlock" xml:space="preserve"><value>Дополнительные параметры разблокировки</value></data>
+  <data name="TooltipClearAll" xml:space="preserve"><value>Очистить все несинхронизированные трофеи</value></data>
+  <data name="TooltipMoreClear" xml:space="preserve"><value>Дополнительные параметры очистки</value></data>
+  <data name="TooltipExit" xml:space="preserve"><value>Alt+F4</value></data>
+  <data name="TooltipDonate" xml:space="preserve"><value>Поддержать этот проект</value></data>
+  <data name="TooltipShowHidden" xml:space="preserve"><value>Показать описания скрытых трофеев</value></data>
+
+  <!-- Dropdown menus -->
+  <data name="FromWebsite" xml:space="preserve"><value>С сайта...</value></data>
+  <data name="FromTextFile" xml:space="preserve"><value>Из текстового файла...</value></data>
+  <data name="FromTextFileTooltip" xml:space="preserve"><value>Формат: Название трофея | ГГГГ-ММ-ДД ЧЧ:ММ:СС (по одному на строку). Также можно перетащить .txt файл в окно.</value></data>
+  <data name="AtTimestamp" xml:space="preserve"><value>На указанное время...</value></data>
+  <data name="Randomized" xml:space="preserve"><value>Случайное время</value></data>
+  <data name="ClearAllIncludingSynced" xml:space="preserve"><value>Очистить все (включая синхронизированные)</value></data>
+
+  <!-- Info bar -->
+  <data name="ProfileLabel" xml:space="preserve"><value>Профиль:</value></data>
+  <data name="TooltipProfileSelector" xml:space="preserve"><value>Выберите профиль для переподписи трофеев при сохранении. Оставьте пустым, чтобы не переподписывать.</value></data>
+  <data name="TooltipAddProfile" xml:space="preserve"><value>Добавить профиль (выберите файл PARAM.SFO)</value></data>
+  <data name="TooltipRemoveProfile" xml:space="preserve"><value>Удалить выбранный профиль</value></data>
+  <data name="DST" xml:space="preserve"><value>ЛВ</value></data>
+  <data name="TooltipTimezone" xml:space="preserve"><value>Часовой пояс для временных меток трофеев</value></data>
+  <data name="TooltipDst" xml:space="preserve"><value>Учитывать летнее время при отображении временных меток (влияет только на трофеи, полученные в период летнего времени)</value></data>
+  <data name="EXP" xml:space="preserve"><value>EXP</value></data>
+
+  <!-- Language -->
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Hebrew" xml:space="preserve"><value>עברית</value></data>
+  <data name="TooltipLanguage" xml:space="preserve"><value>Сменить язык</value></data>
+
+  <!-- Search and filters -->
+  <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+F для поиска</value></data>
+  <data name="ClearFilters" xml:space="preserve"><value>Сбросить фильтры</value></data>
+  <data name="FilterLabel" xml:space="preserve"><value>Фильтр:</value></data>
+  <data name="FilterEarned" xml:space="preserve"><value>Полученные</value></data>
+  <data name="FilterNotEarned" xml:space="preserve"><value>Неполученные</value></data>
+  <data name="FilterSynced" xml:space="preserve"><value>Синхронизированные</value></data>
+  <data name="FilterPlatinum" xml:space="preserve"><value>Платина</value></data>
+  <data name="FilterGold" xml:space="preserve"><value>Золото</value></data>
+  <data name="FilterSilver" xml:space="preserve"><value>Серебро</value></data>
+  <data name="FilterBronze" xml:space="preserve"><value>Бронза</value></data>
+  <data name="TooltipFilterEarned" xml:space="preserve"><value>Показать только полученные трофеи</value></data>
+  <data name="TooltipFilterNotEarned" xml:space="preserve"><value>Показать только неполученные трофеи</value></data>
+  <data name="TooltipFilterSynced" xml:space="preserve"><value>Показать только синхронизированные с PSN трофеи</value></data>
+  <data name="TooltipFilterPlatinum" xml:space="preserve"><value>Показать только платиновые трофеи</value></data>
+  <data name="TooltipFilterGold" xml:space="preserve"><value>Показать только золотые трофеи</value></data>
+  <data name="TooltipFilterSilver" xml:space="preserve"><value>Показать только серебряные трофеи</value></data>
+  <data name="TooltipFilterBronze" xml:space="preserve"><value>Показать только бронзовые трофеи</value></data>
+
+  <!-- Column headers -->
+  <data name="ColumnType" xml:space="preserve"><value>Тип</value></data>
+  <data name="ColumnIcon" xml:space="preserve"><value>Значок</value></data>
+  <data name="ColumnTrophy" xml:space="preserve"><value>Трофей</value></data>
+
+  <!-- Empty state -->
+  <data name="EmptyStateDrop" xml:space="preserve"><value>Перетащите папку с трофеями сюда, чтобы открыть</value></data>
+  <data name="EmptyStateBrowse" xml:space="preserve"><value>или нажмите Ctrl+O для выбора</value></data>
+  <data name="Recent" xml:space="preserve"><value>Недавние</value></data>
+  <data name="TooltipRemoveRecent" xml:space="preserve"><value>Удалить из недавних</value></data>
+
+  <!-- Context menu -->
+  <data name="UnlockSelected" xml:space="preserve"><value>Разблокировать выбранные</value></data>
+  <data name="LockSelected" xml:space="preserve"><value>Заблокировать выбранные</value></data>
+  <data name="ClearSelected" xml:space="preserve"><value>Очистить выбранные</value></data>
+  <data name="EditTime" xml:space="preserve"><value>Изменить время...</value></data>
+  <data name="Clear" xml:space="preserve"><value>Очистить</value></data>
+  <data name="CopyName" xml:space="preserve"><value>Копировать название</value></data>
+
+  <!-- Confirmation dialog -->
+  <data name="Yes" xml:space="preserve"><value>Да</value></data>
+  <data name="No" xml:space="preserve"><value>Нет</value></data>
+  <data name="Copy" xml:space="preserve"><value>Копировать</value></data>
+  <data name="OK" xml:space="preserve"><value>ОК</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Отмена</value></data>
+  <data name="Copied" xml:space="preserve"><value>Скопировано!</value></data>
+
+  <!-- DateTime picker -->
+  <data name="SelectDateTimeTitle" xml:space="preserve"><value>Выбор даты и времени</value></data>
+  <data name="SelectDateTimePrompt" xml:space="preserve"><value>Выберите дату и время разблокировки трофея:</value></data>
+  <data name="HourLabel" xml:space="preserve"><value>Час:</value></data>
+  <data name="MinLabel" xml:space="preserve"><value>Мин:</value></data>
+  <data name="SecLabel" xml:space="preserve"><value>Сек:</value></data>
+  <data name="Now" xml:space="preserve"><value>Сейчас</value></data>
+  <data name="FutureDateWarning" xml:space="preserve"><value>Будущие даты нельзя синхронизировать с PSN — это может привлечь внимание к вашему аккаунту.</value></data>
+
+  <!-- Import dialog -->
+  <data name="ImportTimestampsTitle" xml:space="preserve"><value>Импорт временных меток</value></data>
+  <data name="TrophyPageUrl" xml:space="preserve"><value>URL страницы трофеев:</value></data>
+  <data name="InvalidUrlError" xml:space="preserve"><value>Введите корректный URL (https://...).</value></data>
+  <data name="SupportedSites" xml:space="preserve"><value>Поддерживаются: PSN Trophy Leaders, TrueTrophies, PSNProfiles</value></data>
+  <data name="ImportAsIs" xml:space="preserve"><value>Импортировать как есть</value></data>
+  <data name="WithOffset" xml:space="preserve"><value>Со смещением</value></data>
+  <data name="FixedValues" xml:space="preserve"><value>Фиксированные значения</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Время начала</value></data>
+  <data name="ImportAsIsDesc" xml:space="preserve"><value>Временные метки будут импортированы точно так, как они указаны в исходном профиле.</value></data>
+  <data name="OffsetDesc" xml:space="preserve"><value>Прибавить или вычесть время из всех импортированных временных меток:</value></data>
+  <data name="OffsetHint" xml:space="preserve"><value>Используйте отрицательные значения для вычитания (напр. -2 года).</value></data>
+  <data name="FixedValuesDesc" xml:space="preserve"><value>Заменить определённые части каждой импортированной временной метки:</value></data>
+  <data name="FixedValuesHint" xml:space="preserve"><value>Будут заменены только отмеченные поля. Неотмеченные поля сохранят исходные значения.</value></data>
+  <data name="StartTimeDesc" xml:space="preserve"><value>Укажите, когда должен быть получен первый трофей. Все остальные трофеи сохранят исходные интервалы.</value></data>
+  <data name="StartTimeExample" xml:space="preserve"><value>Пример: если первый трофей в источнике — 1 января 2020, а вы установите начало на 10 мая 2005, все трофеи сдвинутся назад на ~15 лет, сохраняя те же промежутки между ними.</value></data>
+  <data name="Years" xml:space="preserve"><value>Годы:</value></data>
+  <data name="Months" xml:space="preserve"><value>Месяцы:</value></data>
+  <data name="Weeks" xml:space="preserve"><value>Недели:</value></data>
+  <data name="Days" xml:space="preserve"><value>Дни:</value></data>
+  <data name="Hours" xml:space="preserve"><value>Часы:</value></data>
+  <data name="Minutes" xml:space="preserve"><value>Минуты:</value></data>
+  <data name="Seconds" xml:space="preserve"><value>Секунды:</value></data>
+  <data name="Year" xml:space="preserve"><value>Год:</value></data>
+  <data name="Month" xml:space="preserve"><value>Месяц:</value></data>
+  <data name="Day" xml:space="preserve"><value>День:</value></data>
+  <data name="Hour" xml:space="preserve"><value>Час:</value></data>
+  <data name="Minute" xml:space="preserve"><value>Минута:</value></data>
+  <data name="Second" xml:space="preserve"><value>Секунда:</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>Дата:</value></data>
+
+  <!-- Automation properties -->
+  <data name="AutoSearchTrophies" xml:space="preserve"><value>Поиск трофеев</value></data>
+  <data name="AutoClearSearch" xml:space="preserve"><value>Очистить поиск</value></data>
+  <data name="AutoAddProfile" xml:space="preserve"><value>Добавить профиль</value></data>
+  <data name="AutoRemoveProfile" xml:space="preserve"><value>Удалить выбранный профиль</value></data>
+  <data name="AutoProfileResigning" xml:space="preserve"><value>Профиль для переподписи</value></data>
+  <data name="AutoImportFromWebsite" xml:space="preserve"><value>Импортировать временные метки с сайта</value></data>
+  <data name="AutoImportFromFile" xml:space="preserve"><value>Импортировать временные метки из текстового файла</value></data>
+  <data name="AutoUnlockAtTimestamp" xml:space="preserve"><value>Разблокировать все на указанное время</value></data>
+  <data name="AutoUnlockRandomized" xml:space="preserve"><value>Разблокировать все со случайными временными метками</value></data>
+  <data name="AutoClearIncludingSynced" xml:space="preserve"><value>Очистить все трофеи, включая синхронизированные</value></data>
+
+  <!-- File browser dialog -->
+  <data name="BrowseTitle" xml:space="preserve"><value>Обзор</value></data>
+  <data name="Select" xml:space="preserve"><value>Выбрать</value></data>
+  <data name="SelectFolder" xml:space="preserve"><value>Выбрать папку</value></data>
+  <data name="SelectTrophyFolder" xml:space="preserve"><value>Выбрать папку трофеев</value></data>
+  <data name="SelectFile" xml:space="preserve"><value>Выбрать файл</value></data>
+  <data name="GoUpOneLevel" xml:space="preserve"><value>Перейти на уровень выше</value></data>
+  <data name="ThisPC" xml:space="preserve"><value>Этот компьютер</value></data>
+  <data name="ShowingFiles" xml:space="preserve"><value>Показано: {0} файлов</value></data>
+
+  <!-- Trophy item -->
+  <data name="SetTime" xml:space="preserve"><value>Установить время</value></data>
+  <data name="HiddenTrophy" xml:space="preserve"><value>Скрытый трофей</value></data>
+  <data name="HiddenTrophyDesc" xml:space="preserve"><value>Этот трофей скрыт.</value></data>
+  <data name="Unlock" xml:space="preserve"><value>Разблокировать</value></data>
+  <data name="Lock" xml:space="preserve"><value>Заблокировать</value></data>
+
+  <!-- ViewModel messages -->
+  <data name="SelectedCount" xml:space="preserve"><value>{0} выбрано</value></data>
+  <data name="BusyDecrypting" xml:space="preserve"><value>Расшифровка и загрузка трофеев...</value></data>
+  <data name="BusyEncrypting" xml:space="preserve"><value>Шифрование и сохранение трофеев...</value></data>
+  <data name="BusyInitBrowser" xml:space="preserve"><value>Инициализация браузера...</value></data>
+  <data name="BusyFetching" xml:space="preserve"><value>Получение временных меток...</value></data>
+  <data name="UnsavedChangesConfirm" xml:space="preserve"><value>Есть несохранённые изменения. Всё равно закрыть?</value></data>
+  <data name="ErrorOpenFailed" xml:space="preserve"><value>Не удалось открыть папку трофеев:</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>Не удалось сохранить:</value></data>
+  <data name="ErrorAddProfile" xml:space="preserve"><value>Не удалось добавить профиль:</value></data>
+  <data name="ErrorRemoveProfile" xml:space="preserve"><value>Не удалось удалить профиль:</value></data>
+  <data name="SelectProfileSFO" xml:space="preserve"><value>Выберите PARAM.SFO профиля</value></data>
+  <data name="EnterProfileName" xml:space="preserve"><value>Введите имя для этого профиля:</value></data>
+  <data name="AddProfile" xml:space="preserve"><value>Добавить профиль</value></data>
+  <data name="DefaultProfileName" xml:space="preserve"><value>Мой профиль</value></data>
+  <data name="ProfileAdded" xml:space="preserve"><value>Профиль «{0}» добавлен</value></data>
+  <data name="ProfileRemoved" xml:space="preserve"><value>Профиль удалён</value></data>
+  <data name="RemoveProfileConfirm" xml:space="preserve"><value>Удалить профиль «{0}»?</value></data>
+
+  <!-- Keyboard shortcuts overlay -->
+  <data name="KeyboardShortcuts" xml:space="preserve"><value>Сочетания клавиш</value></data>
+  <data name="ShortcutsCloseHint" xml:space="preserve"><value>Нажмите F1 или Esc, чтобы закрыть</value></data>
+  <data name="ShortcutCatFile" xml:space="preserve"><value>Файл</value></data>
+  <data name="ShortcutCatNavigation" xml:space="preserve"><value>Навигация</value></data>
+  <data name="ShortcutCatTrophyActions" xml:space="preserve"><value>Действия с трофеями</value></data>
+  <data name="ShortcutCatHelp" xml:space="preserve"><value>Справка</value></data>
+  <data name="ShortcutOpenFolder" xml:space="preserve"><value>Открыть папку трофеев</value></data>
+  <data name="ShortcutSave" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="ShortcutCloseFile" xml:space="preserve"><value>Закрыть файл</value></data>
+  <data name="ShortcutSearch" xml:space="preserve"><value>Поиск трофеев</value></data>
+  <data name="ShortcutEscape" xml:space="preserve"><value>Очистить поиск / закрыть панель</value></data>
+  <data name="ShortcutSelectAll" xml:space="preserve"><value>Выбрать все видимые трофеи</value></data>
+  <data name="ShortcutToggle" xml:space="preserve"><value>Разблокировать / заблокировать</value></data>
+  <data name="ShortcutEditTime" xml:space="preserve"><value>Изменить временную метку</value></data>
+  <data name="ShortcutClearSelected" xml:space="preserve"><value>Очистить выбранные временные метки</value></data>
+  <data name="ShortcutHelp" xml:space="preserve"><value>Показать / скрыть эту панель</value></data>
+
+  <!-- More ViewModel messages -->
+  <data name="ErrorPlatinumFailed" xml:space="preserve"><value>Мгновенная платина не удалась:</value></data>
+  <data name="ErrorUnlockFailed" xml:space="preserve"><value>Мгновенная разблокировка не удалась:</value></data>
+  <data name="ErrorImportFailed" xml:space="preserve"><value>Импорт не удался:</value></data>
+  <data name="ErrorFileImportFailed" xml:space="preserve"><value>Импорт из файла не удался:</value></data>
+  <data name="ConfirmClearNonSynced" xml:space="preserve"><value>Очистить все несинхронизированные трофеи?</value></data>
+  <data name="ConfirmClearIncludingSynced" xml:space="preserve"><value>Очистить ВСЕ трофеи, включая синхронизированные?
+
+Внимание: это также удалит трофеи, которые были синхронизированы с PSN.</value></data>
+  <data name="ConfirmUnlockAll" xml:space="preserve"><value>Разблокировать все трофеи на текущее время?</value></data>
+  <data name="ConfirmClearBatch" xml:space="preserve"><value>Очистить выбранные трофеи ({0})?</value></data>
+  <data name="NoTimestampsFound" xml:space="preserve"><value>На этой странице не найдены временные метки трофеев.
+
+Убедитесь, что URL указан верно и пользователь получил трофеи для этой игры.</value></data>
+  <data name="NoDataFound" xml:space="preserve"><value>Данные не найдены</value></data>
+  <data name="ImportedTimestamps" xml:space="preserve"><value>Импортировано временных меток: {0}</value></data>
+  <data name="ImportedFromFile" xml:space="preserve"><value>Импортировано временных меток из файла: {0}</value></data>
+  <data name="UnmatchedSuffix" xml:space="preserve"><value> ({0} без совпадений)</value></data>
+  <data name="UnlockedCount" xml:space="preserve"><value>Разблокировано трофеев: {0}</value></data>
+  <data name="LockedCount" xml:space="preserve"><value>Заблокировано трофеев: {0}</value></data>
+  <data name="ClearedCount" xml:space="preserve"><value>Очищено трофеев: {0}</value></data>
+  <data name="CopiedName" xml:space="preserve"><value>Скопировано: {0}</value></data>
+  <data name="FolderNoLongerExists" xml:space="preserve"><value>Папка больше не существует</value></data>
+  <data name="SyncedCannotClear" xml:space="preserve"><value>Этот трофей синхронизирован с PSN и не может быть очищен.
+Используйте «Очистить все (включая синхронизированные)» для принудительной очистки синхронизированных трофеев.</value></data>
+  <data name="SelectTrophyImportFile" xml:space="preserve"><value>Выберите файл импорта трофеев</value></data>
+  <data name="ImportFormatHint" xml:space="preserve"><value>Ожидаемый формат:  Название трофея | ГГГГ-ММ-ДД ЧЧ:ММ:СС  (по одному на строку, строки, начинающиеся с #, игнорируются)</value></data>
+  <data name="NoValidTimestampsInFile" xml:space="preserve"><value>В этом файле не найдены корректные временные метки трофеев.
+
+Ожидаемый формат (по одному на строку, разделитель — вертикальная черта или табуляция):
+Название трофея | ГГГГ-ММ-ДД ЧЧ:ММ:СС
+
+Пример:
+First Blood | 2024-06-15 18:30:00
+Speed Demon | 2024-06-15 19:45:22
+
+Строки, начинающиеся с #, игнорируются.</value></data>
+  <data name="ImportComplete" xml:space="preserve"><value>Импорт завершён</value></data>
+  <data name="ImportCompleteMessage" xml:space="preserve"><value>Успешно импортировано временных меток: {0}.
+
+Не удалось сопоставить записей: {1}:</value></data>
+
+  <!-- Status bar format strings -->
+  <data name="EarnedFormat" xml:space="preserve"><value>{0} / {1} получено</value></data>
+  <data name="UserFormat" xml:space="preserve"><value>Пользователь: {0}</value></data>
+  <data name="TrophiesFormat" xml:space="preserve"><value>{0} / {1} трофеев</value></data>
+  <data name="FilteredFormat" xml:space="preserve"><value>{0} из {1}</value></data>
+
+  <!-- Status indicators -->
+  <data name="AutoPlatinum" xml:space="preserve"><value>Платина</value></data>
+  <data name="AutoGold" xml:space="preserve"><value>Золото</value></data>
+  <data name="AutoSilver" xml:space="preserve"><value>Серебро</value></data>
+  <data name="AutoBronze" xml:space="preserve"><value>Бронза</value></data>
+  <data name="AutoPlatinumCount" xml:space="preserve"><value>Количество платиновых трофеев</value></data>
+  <data name="AutoGoldCount" xml:space="preserve"><value>Количество золотых трофеев</value></data>
+  <data name="AutoSilverCount" xml:space="preserve"><value>Количество серебряных трофеев</value></data>
+  <data name="AutoBronzeCount" xml:space="preserve"><value>Количество бронзовых трофеев</value></data>
+</root>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Window -->
+  <data name="AppTitle" xml:space="preserve"><value>Trophic</value></data>
+
+  <!-- Toolbar buttons -->
+  <data name="Open" xml:space="preserve"><value>開く</value></data>
+  <data name="Save" xml:space="preserve"><value>保存</value></data>
+  <data name="Saved" xml:space="preserve"><value>保存しました！</value></data>
+  <data name="Close" xml:space="preserve"><value>閉じる</value></data>
+  <data name="Import" xml:space="preserve"><value>インポート</value></data>
+  <data name="UnlockAll" xml:space="preserve"><value>すべて解除</value></data>
+  <data name="ClearAll" xml:space="preserve"><value>すべてクリア</value></data>
+  <data name="Exit" xml:space="preserve"><value>終了</value></data>
+  <data name="Donate" xml:space="preserve"><value>寄付</value></data>
+  <data name="ShowHidden" xml:space="preserve"><value>隠しを表示</value></data>
+
+  <!-- Toolbar tooltips -->
+  <data name="TooltipOpen" xml:space="preserve"><value>Ctrl+O</value></data>
+  <data name="TooltipSave" xml:space="preserve"><value>Ctrl+S</value></data>
+  <data name="TooltipClose" xml:space="preserve"><value>Ctrl+W</value></data>
+  <data name="TooltipImport" xml:space="preserve"><value>トロフィーサイトからタイムスタンプをインポート</value></data>
+  <data name="TooltipMoreImport" xml:space="preserve"><value>その他のインポートオプション</value></data>
+  <data name="TooltipUnlockAll" xml:space="preserve"><value>すべてのトロフィーを現在の時刻で解除</value></data>
+  <data name="TooltipMoreUnlock" xml:space="preserve"><value>その他の解除オプション</value></data>
+  <data name="TooltipClearAll" xml:space="preserve"><value>未同期のトロフィーをすべてクリア</value></data>
+  <data name="TooltipMoreClear" xml:space="preserve"><value>その他のクリアオプション</value></data>
+  <data name="TooltipExit" xml:space="preserve"><value>Alt+F4</value></data>
+  <data name="TooltipDonate" xml:space="preserve"><value>このプロジェクトを支援する</value></data>
+  <data name="TooltipShowHidden" xml:space="preserve"><value>隠しトロフィーの詳細を表示</value></data>
+
+  <!-- Dropdown menus -->
+  <data name="FromWebsite" xml:space="preserve"><value>ウェブサイトから...</value></data>
+  <data name="FromTextFile" xml:space="preserve"><value>テキストファイルから...</value></data>
+  <data name="FromTextFileTooltip" xml:space="preserve"><value>形式: トロフィー名 | YYYY-MM-DD HH:MM:SS（1行に1つ）。.txtファイルをウィンドウにドラッグすることもできます。</value></data>
+  <data name="AtTimestamp" xml:space="preserve"><value>タイムスタンプを指定...</value></data>
+  <data name="Randomized" xml:space="preserve"><value>ランダム</value></data>
+  <data name="ClearAllIncludingSynced" xml:space="preserve"><value>すべてクリア（同期済みを含む）</value></data>
+
+  <!-- Info bar -->
+  <data name="ProfileLabel" xml:space="preserve"><value>プロファイル:</value></data>
+  <data name="TooltipProfileSelector" xml:space="preserve"><value>保存時にトロフィーを再署名するプロファイルを選択。空欄の場合は再署名しません。</value></data>
+  <data name="TooltipAddProfile" xml:space="preserve"><value>プロファイルを追加（PARAM.SFOファイルを選択）</value></data>
+  <data name="TooltipRemoveProfile" xml:space="preserve"><value>選択したプロファイルを削除</value></data>
+  <data name="DST" xml:space="preserve"><value>DST</value></data>
+  <data name="TooltipTimezone" xml:space="preserve"><value>トロフィーのタイムスタンプに使用するタイムゾーン</value></data>
+  <data name="TooltipDst" xml:space="preserve"><value>タイムスタンプ表示にDSTオフセットを含める（DST期間中に獲得したトロフィーのみ影響）</value></data>
+  <data name="EXP" xml:space="preserve"><value>EXP</value></data>
+
+  <!-- Language -->
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Hebrew" xml:space="preserve"><value>עברית</value></data>
+  <data name="TooltipLanguage" xml:space="preserve"><value>言語を切り替え</value></data>
+
+  <!-- Search and filters -->
+  <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+Fで検索</value></data>
+  <data name="ClearFilters" xml:space="preserve"><value>フィルターをクリア</value></data>
+  <data name="FilterLabel" xml:space="preserve"><value>フィルター:</value></data>
+  <data name="FilterEarned" xml:space="preserve"><value>獲得済み</value></data>
+  <data name="FilterNotEarned" xml:space="preserve"><value>未獲得</value></data>
+  <data name="FilterSynced" xml:space="preserve"><value>同期済み</value></data>
+  <data name="FilterPlatinum" xml:space="preserve"><value>プラチナ</value></data>
+  <data name="FilterGold" xml:space="preserve"><value>ゴールド</value></data>
+  <data name="FilterSilver" xml:space="preserve"><value>シルバー</value></data>
+  <data name="FilterBronze" xml:space="preserve"><value>ブロンズ</value></data>
+  <data name="TooltipFilterEarned" xml:space="preserve"><value>獲得済みのトロフィーのみ表示</value></data>
+  <data name="TooltipFilterNotEarned" xml:space="preserve"><value>未獲得のトロフィーのみ表示</value></data>
+  <data name="TooltipFilterSynced" xml:space="preserve"><value>PSN同期済みのトロフィーのみ表示</value></data>
+  <data name="TooltipFilterPlatinum" xml:space="preserve"><value>プラチナトロフィーのみ表示</value></data>
+  <data name="TooltipFilterGold" xml:space="preserve"><value>ゴールドトロフィーのみ表示</value></data>
+  <data name="TooltipFilterSilver" xml:space="preserve"><value>シルバートロフィーのみ表示</value></data>
+  <data name="TooltipFilterBronze" xml:space="preserve"><value>ブロンズトロフィーのみ表示</value></data>
+
+  <!-- Column headers -->
+  <data name="ColumnType" xml:space="preserve"><value>種類</value></data>
+  <data name="ColumnIcon" xml:space="preserve"><value>アイコン</value></data>
+  <data name="ColumnTrophy" xml:space="preserve"><value>トロフィー</value></data>
+
+  <!-- Empty state -->
+  <data name="EmptyStateDrop" xml:space="preserve"><value>トロフィーフォルダーをここにドロップして開く</value></data>
+  <data name="EmptyStateBrowse" xml:space="preserve"><value>またはCtrl+Oで参照</value></data>
+  <data name="Recent" xml:space="preserve"><value>最近使用したファイル</value></data>
+  <data name="TooltipRemoveRecent" xml:space="preserve"><value>最近の履歴から削除</value></data>
+
+  <!-- Context menu -->
+  <data name="UnlockSelected" xml:space="preserve"><value>選択を解除</value></data>
+  <data name="LockSelected" xml:space="preserve"><value>選択をロック</value></data>
+  <data name="ClearSelected" xml:space="preserve"><value>選択をクリア</value></data>
+  <data name="EditTime" xml:space="preserve"><value>時刻を編集...</value></data>
+  <data name="Clear" xml:space="preserve"><value>クリア</value></data>
+  <data name="CopyName" xml:space="preserve"><value>名前をコピー</value></data>
+
+  <!-- Confirmation dialog -->
+  <data name="Yes" xml:space="preserve"><value>はい</value></data>
+  <data name="No" xml:space="preserve"><value>いいえ</value></data>
+  <data name="Copy" xml:space="preserve"><value>コピー</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Cancel" xml:space="preserve"><value>キャンセル</value></data>
+  <data name="Copied" xml:space="preserve"><value>コピーしました！</value></data>
+
+  <!-- DateTime picker -->
+  <data name="SelectDateTimeTitle" xml:space="preserve"><value>日時の選択</value></data>
+  <data name="SelectDateTimePrompt" xml:space="preserve"><value>トロフィー解除の日時を選択:</value></data>
+  <data name="HourLabel" xml:space="preserve"><value>時:</value></data>
+  <data name="MinLabel" xml:space="preserve"><value>分:</value></data>
+  <data name="SecLabel" xml:space="preserve"><value>秒:</value></data>
+  <data name="Now" xml:space="preserve"><value>現在</value></data>
+  <data name="FutureDateWarning" xml:space="preserve"><value>未来の日付はPSNに同期できず、アカウントにフラグが付く可能性があります。</value></data>
+
+  <!-- Import dialog -->
+  <data name="ImportTimestampsTitle" xml:space="preserve"><value>タイムスタンプのインポート</value></data>
+  <data name="TrophyPageUrl" xml:space="preserve"><value>トロフィーページのURL:</value></data>
+  <data name="InvalidUrlError" xml:space="preserve"><value>有効なURLを入力してください（https://...）。</value></data>
+  <data name="SupportedSites" xml:space="preserve"><value>対応サイト: PSN Trophy Leaders、TrueTrophies、PSNProfiles</value></data>
+  <data name="ImportAsIs" xml:space="preserve"><value>そのままインポート</value></data>
+  <data name="WithOffset" xml:space="preserve"><value>オフセット付き</value></data>
+  <data name="FixedValues" xml:space="preserve"><value>固定値</value></data>
+  <data name="StartTime" xml:space="preserve"><value>開始時刻</value></data>
+  <data name="ImportAsIsDesc" xml:space="preserve"><value>タイムスタンプはソースプロファイルに表示されたとおりにインポートされます。</value></data>
+  <data name="OffsetDesc" xml:space="preserve"><value>インポートしたすべてのタイムスタンプに時間を加算または減算:</value></data>
+  <data name="OffsetHint" xml:space="preserve"><value>減算するには負の値を使用してください（例: -2年）。</value></data>
+  <data name="FixedValuesDesc" xml:space="preserve"><value>インポートしたすべてのタイムスタンプの特定の部分を上書き:</value></data>
+  <data name="FixedValuesHint" xml:space="preserve"><value>チェックされたフィールドのみ上書きされます。チェックされていないフィールドは元の値を保持します。</value></data>
+  <data name="StartTimeDesc" xml:space="preserve"><value>最初のトロフィーの獲得時刻を設定します。他のトロフィーは元の間隔を保持します。</value></data>
+  <data name="StartTimeExample" xml:space="preserve"><value>例: ソースの最初のトロフィーが2020年1月1日で、開始を2005年5月10日に設定した場合、すべてのトロフィーが約15年前にずれますが、間隔は同じまま維持されます。</value></data>
+  <data name="Years" xml:space="preserve"><value>年:</value></data>
+  <data name="Months" xml:space="preserve"><value>月:</value></data>
+  <data name="Weeks" xml:space="preserve"><value>週:</value></data>
+  <data name="Days" xml:space="preserve"><value>日:</value></data>
+  <data name="Hours" xml:space="preserve"><value>時間:</value></data>
+  <data name="Minutes" xml:space="preserve"><value>分:</value></data>
+  <data name="Seconds" xml:space="preserve"><value>秒:</value></data>
+  <data name="Year" xml:space="preserve"><value>年:</value></data>
+  <data name="Month" xml:space="preserve"><value>月:</value></data>
+  <data name="Day" xml:space="preserve"><value>日:</value></data>
+  <data name="Hour" xml:space="preserve"><value>時:</value></data>
+  <data name="Minute" xml:space="preserve"><value>分:</value></data>
+  <data name="Second" xml:space="preserve"><value>秒:</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>日付:</value></data>
+
+  <!-- Automation properties -->
+  <data name="AutoSearchTrophies" xml:space="preserve"><value>トロフィーを検索</value></data>
+  <data name="AutoClearSearch" xml:space="preserve"><value>検索をクリア</value></data>
+  <data name="AutoAddProfile" xml:space="preserve"><value>プロファイルを追加</value></data>
+  <data name="AutoRemoveProfile" xml:space="preserve"><value>選択したプロファイルを削除</value></data>
+  <data name="AutoProfileResigning" xml:space="preserve"><value>再署名用プロファイル</value></data>
+  <data name="AutoImportFromWebsite" xml:space="preserve"><value>ウェブサイトからタイムスタンプをインポート</value></data>
+  <data name="AutoImportFromFile" xml:space="preserve"><value>テキストファイルからタイムスタンプをインポート</value></data>
+  <data name="AutoUnlockAtTimestamp" xml:space="preserve"><value>指定したタイムスタンプですべて解除</value></data>
+  <data name="AutoUnlockRandomized" xml:space="preserve"><value>ランダムなタイムスタンプですべて解除</value></data>
+  <data name="AutoClearIncludingSynced" xml:space="preserve"><value>同期済みを含むすべてのトロフィーをクリア</value></data>
+
+  <!-- File browser dialog -->
+  <data name="BrowseTitle" xml:space="preserve"><value>参照</value></data>
+  <data name="Select" xml:space="preserve"><value>選択</value></data>
+  <data name="SelectFolder" xml:space="preserve"><value>フォルダーを選択</value></data>
+  <data name="SelectTrophyFolder" xml:space="preserve"><value>トロフィーフォルダーを選択</value></data>
+  <data name="SelectFile" xml:space="preserve"><value>ファイルを選択</value></data>
+  <data name="GoUpOneLevel" xml:space="preserve"><value>1つ上の階層へ</value></data>
+  <data name="ThisPC" xml:space="preserve"><value>PC</value></data>
+  <data name="ShowingFiles" xml:space="preserve"><value>表示中: {0} ファイル</value></data>
+
+  <!-- Trophy item -->
+  <data name="SetTime" xml:space="preserve"><value>時刻を設定</value></data>
+  <data name="HiddenTrophy" xml:space="preserve"><value>隠しトロフィー</value></data>
+  <data name="HiddenTrophyDesc" xml:space="preserve"><value>このトロフィーは隠されています。</value></data>
+  <data name="Unlock" xml:space="preserve"><value>解除</value></data>
+  <data name="Lock" xml:space="preserve"><value>ロック</value></data>
+
+  <!-- ViewModel messages -->
+  <data name="SelectedCount" xml:space="preserve"><value>{0} 件選択中</value></data>
+  <data name="BusyDecrypting" xml:space="preserve"><value>トロフィーを復号して読み込み中...</value></data>
+  <data name="BusyEncrypting" xml:space="preserve"><value>トロフィーを暗号化して保存中...</value></data>
+  <data name="BusyInitBrowser" xml:space="preserve"><value>ブラウザーを初期化中...</value></data>
+  <data name="BusyFetching" xml:space="preserve"><value>タイムスタンプを取得中...</value></data>
+  <data name="UnsavedChangesConfirm" xml:space="preserve"><value>未保存の変更があります。それでも閉じますか？</value></data>
+  <data name="ErrorOpenFailed" xml:space="preserve"><value>トロフィーフォルダーを開けませんでした:</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>保存に失敗しました:</value></data>
+  <data name="ErrorAddProfile" xml:space="preserve"><value>プロファイルの追加に失敗しました:</value></data>
+  <data name="ErrorRemoveProfile" xml:space="preserve"><value>プロファイルの削除に失敗しました:</value></data>
+  <data name="SelectProfileSFO" xml:space="preserve"><value>プロファイルのPARAM.SFOを選択</value></data>
+  <data name="EnterProfileName" xml:space="preserve"><value>このプロファイルの名前を入力:</value></data>
+  <data name="AddProfile" xml:space="preserve"><value>プロファイルを追加</value></data>
+  <data name="DefaultProfileName" xml:space="preserve"><value>マイプロファイル</value></data>
+  <data name="ProfileAdded" xml:space="preserve"><value>プロファイル '{0}' を追加しました</value></data>
+  <data name="ProfileRemoved" xml:space="preserve"><value>プロファイルを削除しました</value></data>
+  <data name="RemoveProfileConfirm" xml:space="preserve"><value>プロファイル '{0}' を削除しますか？</value></data>
+
+  <!-- Keyboard shortcuts overlay -->
+  <data name="KeyboardShortcuts" xml:space="preserve"><value>キーボードショートカット</value></data>
+  <data name="ShortcutsCloseHint" xml:space="preserve"><value>F1またはEscで閉じる</value></data>
+  <data name="ShortcutCatFile" xml:space="preserve"><value>ファイル</value></data>
+  <data name="ShortcutCatNavigation" xml:space="preserve"><value>ナビゲーション</value></data>
+  <data name="ShortcutCatTrophyActions" xml:space="preserve"><value>トロフィー操作</value></data>
+  <data name="ShortcutCatHelp" xml:space="preserve"><value>ヘルプ</value></data>
+  <data name="ShortcutOpenFolder" xml:space="preserve"><value>トロフィーフォルダーを開く</value></data>
+  <data name="ShortcutSave" xml:space="preserve"><value>保存</value></data>
+  <data name="ShortcutCloseFile" xml:space="preserve"><value>ファイルを閉じる</value></data>
+  <data name="ShortcutSearch" xml:space="preserve"><value>トロフィーを検索</value></data>
+  <data name="ShortcutEscape" xml:space="preserve"><value>検索をクリア / オーバーレイを閉じる</value></data>
+  <data name="ShortcutSelectAll" xml:space="preserve"><value>表示中のトロフィーをすべて選択</value></data>
+  <data name="ShortcutToggle" xml:space="preserve"><value>解除 / ロックを切り替え</value></data>
+  <data name="ShortcutEditTime" xml:space="preserve"><value>タイムスタンプを編集</value></data>
+  <data name="ShortcutClearSelected" xml:space="preserve"><value>選択したタイムスタンプをクリア</value></data>
+  <data name="ShortcutHelp" xml:space="preserve"><value>このオーバーレイの表示 / 非表示</value></data>
+
+  <!-- More ViewModel messages -->
+  <data name="ErrorPlatinumFailed" xml:space="preserve"><value>プラチナ即時獲得に失敗しました:</value></data>
+  <data name="ErrorUnlockFailed" xml:space="preserve"><value>即時解除に失敗しました:</value></data>
+  <data name="ErrorImportFailed" xml:space="preserve"><value>インポートに失敗しました:</value></data>
+  <data name="ErrorFileImportFailed" xml:space="preserve"><value>ファイルのインポートに失敗しました:</value></data>
+  <data name="ConfirmClearNonSynced" xml:space="preserve"><value>未同期のトロフィーをすべてクリアしますか？</value></data>
+  <data name="ConfirmClearIncludingSynced" xml:space="preserve"><value>同期済みを含むすべてのトロフィーをクリアしますか？
+
+警告: PSNに同期済みのトロフィーも削除されます。</value></data>
+  <data name="ConfirmUnlockAll" xml:space="preserve"><value>すべてのトロフィーを現在の時刻で解除しますか？</value></data>
+  <data name="ConfirmClearBatch" xml:space="preserve"><value>選択した {0} 件のトロフィーをクリアしますか？</value></data>
+  <data name="NoTimestampsFound" xml:space="preserve"><value>このページにトロフィーのタイムスタンプが見つかりませんでした。
+
+URLが正しいこと、およびそのユーザーがこのゲームのトロフィーを獲得していることを確認してください。</value></data>
+  <data name="NoDataFound" xml:space="preserve"><value>データが見つかりません</value></data>
+  <data name="ImportedTimestamps" xml:space="preserve"><value>{0} 件のタイムスタンプをインポートしました</value></data>
+  <data name="ImportedFromFile" xml:space="preserve"><value>ファイルから {0} 件のタイムスタンプをインポートしました</value></data>
+  <data name="UnmatchedSuffix" xml:space="preserve"><value>（{0} 件一致なし）</value></data>
+  <data name="UnlockedCount" xml:space="preserve"><value>{0} 件のトロフィーを解除しました</value></data>
+  <data name="LockedCount" xml:space="preserve"><value>{0} 件のトロフィーをロックしました</value></data>
+  <data name="ClearedCount" xml:space="preserve"><value>{0} 件のトロフィーをクリアしました</value></data>
+  <data name="CopiedName" xml:space="preserve"><value>コピー: {0}</value></data>
+  <data name="FolderNoLongerExists" xml:space="preserve"><value>フォルダーが存在しません</value></data>
+  <data name="SyncedCannotClear" xml:space="preserve"><value>このトロフィーはPSNと同期済みのためクリアできません。
+同期済みトロフィーを強制クリアするには「すべてクリア（同期済みを含む）」を使用してください。</value></data>
+  <data name="SelectTrophyImportFile" xml:space="preserve"><value>トロフィーインポートファイルを選択</value></data>
+  <data name="ImportFormatHint" xml:space="preserve"><value>形式:  トロフィー名 | YYYY-MM-DD HH:MM:SS（1行に1つ、#で始まる行は無視されます）</value></data>
+  <data name="NoValidTimestampsInFile" xml:space="preserve"><value>このファイルに有効なトロフィーのタイムスタンプが見つかりませんでした。
+
+期待される形式（1行に1つ、パイプまたはタブ区切り）:
+トロフィー名 | YYYY-MM-DD HH:MM:SS
+
+例:
+First Blood | 2024-06-15 18:30:00
+Speed Demon | 2024-06-15 19:45:22
+
+#で始まる行は無視されます。</value></data>
+  <data name="ImportComplete" xml:space="preserve"><value>インポート完了</value></data>
+  <data name="ImportCompleteMessage" xml:space="preserve"><value>{0} 件のタイムスタンプを正常にインポートしました。
+
+{1} 件のエントリが一致しませんでした:</value></data>
+
+  <!-- Status bar format strings -->
+  <data name="EarnedFormat" xml:space="preserve"><value>{0} / {1} 獲得済み</value></data>
+  <data name="UserFormat" xml:space="preserve"><value>ユーザー: {0}</value></data>
+  <data name="TrophiesFormat" xml:space="preserve"><value>{0} / {1} トロフィー</value></data>
+  <data name="FilteredFormat" xml:space="preserve"><value>{0} / {1}</value></data>
+
+  <!-- Status indicators -->
+  <data name="AutoPlatinum" xml:space="preserve"><value>プラチナ</value></data>
+  <data name="AutoGold" xml:space="preserve"><value>ゴールド</value></data>
+  <data name="AutoSilver" xml:space="preserve"><value>シルバー</value></data>
+  <data name="AutoBronze" xml:space="preserve"><value>ブロンズ</value></data>
+  <data name="AutoPlatinumCount" xml:space="preserve"><value>プラチナトロフィー数</value></data>
+  <data name="AutoGoldCount" xml:space="preserve"><value>ゴールドトロフィー数</value></data>
+  <data name="AutoSilverCount" xml:space="preserve"><value>シルバートロフィー数</value></data>
+  <data name="AutoBronzeCount" xml:space="preserve"><value>ブロンズトロフィー数</value></data>
+</root>

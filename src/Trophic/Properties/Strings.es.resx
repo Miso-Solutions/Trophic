@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute name="xml:space" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <!-- Window -->
+  <data name="AppTitle" xml:space="preserve"><value>Trophic</value></data>
+
+  <!-- Toolbar buttons -->
+  <data name="Open" xml:space="preserve"><value>Abrir</value></data>
+  <data name="Save" xml:space="preserve"><value>Guardar</value></data>
+  <data name="Saved" xml:space="preserve"><value>¡Guardado!</value></data>
+  <data name="Close" xml:space="preserve"><value>Cerrar</value></data>
+  <data name="Import" xml:space="preserve"><value>Importar</value></data>
+  <data name="UnlockAll" xml:space="preserve"><value>Desbloquear todo</value></data>
+  <data name="ClearAll" xml:space="preserve"><value>Borrar todo</value></data>
+  <data name="Exit" xml:space="preserve"><value>Salir</value></data>
+  <data name="Donate" xml:space="preserve"><value>Donar</value></data>
+  <data name="ShowHidden" xml:space="preserve"><value>Mostrar ocultos</value></data>
+
+  <!-- Toolbar tooltips -->
+  <data name="TooltipOpen" xml:space="preserve"><value>Ctrl+O</value></data>
+  <data name="TooltipSave" xml:space="preserve"><value>Ctrl+S</value></data>
+  <data name="TooltipClose" xml:space="preserve"><value>Ctrl+W</value></data>
+  <data name="TooltipImport" xml:space="preserve"><value>Importar marcas de tiempo desde un sitio web de trofeos</value></data>
+  <data name="TooltipMoreImport" xml:space="preserve"><value>Más opciones de importación</value></data>
+  <data name="TooltipUnlockAll" xml:space="preserve"><value>Desbloquear todos los trofeos con la hora actual</value></data>
+  <data name="TooltipMoreUnlock" xml:space="preserve"><value>Más opciones de desbloqueo</value></data>
+  <data name="TooltipClearAll" xml:space="preserve"><value>Borrar todos los trofeos no sincronizados</value></data>
+  <data name="TooltipMoreClear" xml:space="preserve"><value>Más opciones de borrado</value></data>
+  <data name="TooltipExit" xml:space="preserve"><value>Alt+F4</value></data>
+  <data name="TooltipDonate" xml:space="preserve"><value>Apoyar este proyecto</value></data>
+  <data name="TooltipShowHidden" xml:space="preserve"><value>Revelar detalles de trofeos ocultos</value></data>
+
+  <!-- Dropdown menus -->
+  <data name="FromWebsite" xml:space="preserve"><value>Desde sitio web...</value></data>
+  <data name="FromTextFile" xml:space="preserve"><value>Desde archivo de texto...</value></data>
+  <data name="FromTextFileTooltip" xml:space="preserve"><value>Formato: Nombre del trofeo | AAAA-MM-DD HH:MM:SS (uno por línea). También puedes arrastrar un archivo .txt a la ventana.</value></data>
+  <data name="AtTimestamp" xml:space="preserve"><value>En marca de tiempo...</value></data>
+  <data name="Randomized" xml:space="preserve"><value>Aleatorio</value></data>
+  <data name="ClearAllIncludingSynced" xml:space="preserve"><value>Borrar todo (incluidos sincronizados)</value></data>
+
+  <!-- Info bar -->
+  <data name="ProfileLabel" xml:space="preserve"><value>Perfil:</value></data>
+  <data name="TooltipProfileSelector" xml:space="preserve"><value>Selecciona un perfil para refirmar los trofeos al guardar. Déjalo vacío para no refirmar.</value></data>
+  <data name="TooltipAddProfile" xml:space="preserve"><value>Agregar un perfil (selecciona un archivo PARAM.SFO)</value></data>
+  <data name="TooltipRemoveProfile" xml:space="preserve"><value>Eliminar perfil seleccionado</value></data>
+  <data name="DST" xml:space="preserve"><value>HV</value></data>
+  <data name="TooltipTimezone" xml:space="preserve"><value>Zona horaria para las marcas de tiempo de los trofeos</value></data>
+  <data name="TooltipDst" xml:space="preserve"><value>Incluir desfase de horario de verano al mostrar marcas de tiempo (solo afecta trofeos obtenidos durante períodos de horario de verano)</value></data>
+  <data name="EXP" xml:space="preserve"><value>EXP</value></data>
+
+  <!-- Language -->
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Hebrew" xml:space="preserve"><value>עברית</value></data>
+  <data name="TooltipLanguage" xml:space="preserve"><value>Cambiar idioma</value></data>
+
+  <!-- Search and filters -->
+  <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+F para buscar</value></data>
+  <data name="ClearFilters" xml:space="preserve"><value>Borrar filtros</value></data>
+  <data name="FilterLabel" xml:space="preserve"><value>Filtro:</value></data>
+  <data name="FilterEarned" xml:space="preserve"><value>Obtenidos</value></data>
+  <data name="FilterNotEarned" xml:space="preserve"><value>No obtenidos</value></data>
+  <data name="FilterSynced" xml:space="preserve"><value>Sincronizados</value></data>
+  <data name="FilterPlatinum" xml:space="preserve"><value>Platino</value></data>
+  <data name="FilterGold" xml:space="preserve"><value>Oro</value></data>
+  <data name="FilterSilver" xml:space="preserve"><value>Plata</value></data>
+  <data name="FilterBronze" xml:space="preserve"><value>Bronce</value></data>
+  <data name="TooltipFilterEarned" xml:space="preserve"><value>Mostrar solo trofeos obtenidos</value></data>
+  <data name="TooltipFilterNotEarned" xml:space="preserve"><value>Mostrar solo trofeos no obtenidos</value></data>
+  <data name="TooltipFilterSynced" xml:space="preserve"><value>Mostrar solo trofeos sincronizados con PSN</value></data>
+  <data name="TooltipFilterPlatinum" xml:space="preserve"><value>Mostrar solo trofeos de platino</value></data>
+  <data name="TooltipFilterGold" xml:space="preserve"><value>Mostrar solo trofeos de oro</value></data>
+  <data name="TooltipFilterSilver" xml:space="preserve"><value>Mostrar solo trofeos de plata</value></data>
+  <data name="TooltipFilterBronze" xml:space="preserve"><value>Mostrar solo trofeos de bronce</value></data>
+
+  <!-- Column headers -->
+  <data name="ColumnType" xml:space="preserve"><value>Tipo</value></data>
+  <data name="ColumnIcon" xml:space="preserve"><value>Icono</value></data>
+  <data name="ColumnTrophy" xml:space="preserve"><value>Trofeo</value></data>
+
+  <!-- Empty state -->
+  <data name="EmptyStateDrop" xml:space="preserve"><value>Arrastra una carpeta de trofeos aquí para abrirla</value></data>
+  <data name="EmptyStateBrowse" xml:space="preserve"><value>o presiona Ctrl+O para explorar</value></data>
+  <data name="Recent" xml:space="preserve"><value>Recientes</value></data>
+  <data name="TooltipRemoveRecent" xml:space="preserve"><value>Eliminar de recientes</value></data>
+
+  <!-- Context menu -->
+  <data name="UnlockSelected" xml:space="preserve"><value>Desbloquear seleccionados</value></data>
+  <data name="LockSelected" xml:space="preserve"><value>Bloquear seleccionados</value></data>
+  <data name="ClearSelected" xml:space="preserve"><value>Borrar seleccionados</value></data>
+  <data name="EditTime" xml:space="preserve"><value>Editar hora...</value></data>
+  <data name="Clear" xml:space="preserve"><value>Borrar</value></data>
+  <data name="CopyName" xml:space="preserve"><value>Copiar nombre</value></data>
+
+  <!-- Confirmation dialog -->
+  <data name="Yes" xml:space="preserve"><value>Sí</value></data>
+  <data name="No" xml:space="preserve"><value>No</value></data>
+  <data name="Copy" xml:space="preserve"><value>Copiar</value></data>
+  <data name="OK" xml:space="preserve"><value>Aceptar</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancelar</value></data>
+  <data name="Copied" xml:space="preserve"><value>¡Copiado!</value></data>
+
+  <!-- DateTime picker -->
+  <data name="SelectDateTimeTitle" xml:space="preserve"><value>Seleccionar fecha y hora</value></data>
+  <data name="SelectDateTimePrompt" xml:space="preserve"><value>Selecciona la fecha y hora de desbloqueo del trofeo:</value></data>
+  <data name="HourLabel" xml:space="preserve"><value>Hora:</value></data>
+  <data name="MinLabel" xml:space="preserve"><value>Min:</value></data>
+  <data name="SecLabel" xml:space="preserve"><value>Seg:</value></data>
+  <data name="Now" xml:space="preserve"><value>Ahora</value></data>
+  <data name="FutureDateWarning" xml:space="preserve"><value>Las fechas futuras no se pueden sincronizar con PSN y pueden marcar tu cuenta.</value></data>
+
+  <!-- Import dialog -->
+  <data name="ImportTimestampsTitle" xml:space="preserve"><value>Importar marcas de tiempo</value></data>
+  <data name="TrophyPageUrl" xml:space="preserve"><value>URL de la página de trofeos:</value></data>
+  <data name="InvalidUrlError" xml:space="preserve"><value>Por favor, introduce una URL válida (https://...).</value></data>
+  <data name="SupportedSites" xml:space="preserve"><value>Compatibles: PSN Trophy Leaders, TrueTrophies, PSNProfiles</value></data>
+  <data name="ImportAsIs" xml:space="preserve"><value>Importar tal cual</value></data>
+  <data name="WithOffset" xml:space="preserve"><value>Con desfase</value></data>
+  <data name="FixedValues" xml:space="preserve"><value>Valores fijos</value></data>
+  <data name="StartTime" xml:space="preserve"><value>Hora de inicio</value></data>
+  <data name="ImportAsIsDesc" xml:space="preserve"><value>Las marcas de tiempo se importarán exactamente como aparecen en el perfil de origen.</value></data>
+  <data name="OffsetDesc" xml:space="preserve"><value>Sumar o restar tiempo a todas las marcas de tiempo importadas:</value></data>
+  <data name="OffsetHint" xml:space="preserve"><value>Usa valores negativos para restar (ej. -2 años).</value></data>
+  <data name="FixedValuesDesc" xml:space="preserve"><value>Sobrescribir partes específicas de cada marca de tiempo importada:</value></data>
+  <data name="FixedValuesHint" xml:space="preserve"><value>Solo los campos marcados serán sobrescritos. Los campos sin marcar conservan sus valores originales.</value></data>
+  <data name="StartTimeDesc" xml:space="preserve"><value>Establece cuándo se debe obtener el primer trofeo. Los demás trofeos mantienen su espaciado original.</value></data>
+  <data name="StartTimeExample" xml:space="preserve"><value>Ejemplo: si el primer trofeo del perfil de origen es del 1 de enero de 2020 y estableces el inicio en el 10 de mayo de 2005, todos los trofeos retroceden ~15 años manteniendo los mismos intervalos entre ellos.</value></data>
+  <data name="Years" xml:space="preserve"><value>Años:</value></data>
+  <data name="Months" xml:space="preserve"><value>Meses:</value></data>
+  <data name="Weeks" xml:space="preserve"><value>Semanas:</value></data>
+  <data name="Days" xml:space="preserve"><value>Días:</value></data>
+  <data name="Hours" xml:space="preserve"><value>Horas:</value></data>
+  <data name="Minutes" xml:space="preserve"><value>Minutos:</value></data>
+  <data name="Seconds" xml:space="preserve"><value>Segundos:</value></data>
+  <data name="Year" xml:space="preserve"><value>Año:</value></data>
+  <data name="Month" xml:space="preserve"><value>Mes:</value></data>
+  <data name="Day" xml:space="preserve"><value>Día:</value></data>
+  <data name="Hour" xml:space="preserve"><value>Hora:</value></data>
+  <data name="Minute" xml:space="preserve"><value>Minuto:</value></data>
+  <data name="Second" xml:space="preserve"><value>Segundo:</value></data>
+  <data name="DateLabel" xml:space="preserve"><value>Fecha:</value></data>
+
+  <!-- Automation properties -->
+  <data name="AutoSearchTrophies" xml:space="preserve"><value>Buscar trofeos</value></data>
+  <data name="AutoClearSearch" xml:space="preserve"><value>Borrar búsqueda</value></data>
+  <data name="AutoAddProfile" xml:space="preserve"><value>Agregar perfil</value></data>
+  <data name="AutoRemoveProfile" xml:space="preserve"><value>Eliminar perfil seleccionado</value></data>
+  <data name="AutoProfileResigning" xml:space="preserve"><value>Perfil para refirmar</value></data>
+  <data name="AutoImportFromWebsite" xml:space="preserve"><value>Importar marcas de tiempo desde sitio web</value></data>
+  <data name="AutoImportFromFile" xml:space="preserve"><value>Importar marcas de tiempo desde archivo de texto</value></data>
+  <data name="AutoUnlockAtTimestamp" xml:space="preserve"><value>Desbloquear todos en marca de tiempo específica</value></data>
+  <data name="AutoUnlockRandomized" xml:space="preserve"><value>Desbloquear todos con marcas de tiempo aleatorias</value></data>
+  <data name="AutoClearIncludingSynced" xml:space="preserve"><value>Borrar todos los trofeos incluidos los sincronizados</value></data>
+
+  <!-- File browser dialog -->
+  <data name="BrowseTitle" xml:space="preserve"><value>Explorar</value></data>
+  <data name="Select" xml:space="preserve"><value>Seleccionar</value></data>
+  <data name="SelectFolder" xml:space="preserve"><value>Seleccionar carpeta</value></data>
+  <data name="SelectTrophyFolder" xml:space="preserve"><value>Seleccionar carpeta de trofeos</value></data>
+  <data name="SelectFile" xml:space="preserve"><value>Seleccionar archivo</value></data>
+  <data name="GoUpOneLevel" xml:space="preserve"><value>Subir un nivel</value></data>
+  <data name="ThisPC" xml:space="preserve"><value>Este equipo</value></data>
+  <data name="ShowingFiles" xml:space="preserve"><value>Mostrando: {0} archivos</value></data>
+
+  <!-- Trophy item -->
+  <data name="SetTime" xml:space="preserve"><value>Establecer hora</value></data>
+  <data name="HiddenTrophy" xml:space="preserve"><value>Trofeo oculto</value></data>
+  <data name="HiddenTrophyDesc" xml:space="preserve"><value>Este trofeo está oculto.</value></data>
+  <data name="Unlock" xml:space="preserve"><value>Desbloquear</value></data>
+  <data name="Lock" xml:space="preserve"><value>Bloquear</value></data>
+
+  <!-- ViewModel messages -->
+  <data name="SelectedCount" xml:space="preserve"><value>{0} seleccionado(s)</value></data>
+  <data name="BusyDecrypting" xml:space="preserve"><value>Descifrando y cargando trofeos...</value></data>
+  <data name="BusyEncrypting" xml:space="preserve"><value>Cifrando y guardando trofeos...</value></data>
+  <data name="BusyInitBrowser" xml:space="preserve"><value>Inicializando navegador...</value></data>
+  <data name="BusyFetching" xml:space="preserve"><value>Obteniendo marcas de tiempo...</value></data>
+  <data name="UnsavedChangesConfirm" xml:space="preserve"><value>Tienes cambios sin guardar. ¿Cerrar de todos modos?</value></data>
+  <data name="ErrorOpenFailed" xml:space="preserve"><value>Error al abrir la carpeta de trofeos:</value></data>
+  <data name="ErrorSaveFailed" xml:space="preserve"><value>Error al guardar:</value></data>
+  <data name="ErrorAddProfile" xml:space="preserve"><value>Error al agregar perfil:</value></data>
+  <data name="ErrorRemoveProfile" xml:space="preserve"><value>Error al eliminar perfil:</value></data>
+  <data name="SelectProfileSFO" xml:space="preserve"><value>Seleccionar PARAM.SFO del perfil</value></data>
+  <data name="EnterProfileName" xml:space="preserve"><value>Introduce un nombre para este perfil:</value></data>
+  <data name="AddProfile" xml:space="preserve"><value>Agregar perfil</value></data>
+  <data name="DefaultProfileName" xml:space="preserve"><value>Mi perfil</value></data>
+  <data name="ProfileAdded" xml:space="preserve"><value>Perfil '{0}' agregado</value></data>
+  <data name="ProfileRemoved" xml:space="preserve"><value>Perfil eliminado</value></data>
+  <data name="RemoveProfileConfirm" xml:space="preserve"><value>¿Eliminar perfil '{0}'?</value></data>
+
+  <!-- Keyboard shortcuts overlay -->
+  <data name="KeyboardShortcuts" xml:space="preserve"><value>Atajos de teclado</value></data>
+  <data name="ShortcutsCloseHint" xml:space="preserve"><value>Presiona F1 o Esc para cerrar</value></data>
+  <data name="ShortcutCatFile" xml:space="preserve"><value>Archivo</value></data>
+  <data name="ShortcutCatNavigation" xml:space="preserve"><value>Navegación</value></data>
+  <data name="ShortcutCatTrophyActions" xml:space="preserve"><value>Acciones de trofeos</value></data>
+  <data name="ShortcutCatHelp" xml:space="preserve"><value>Ayuda</value></data>
+  <data name="ShortcutOpenFolder" xml:space="preserve"><value>Abrir carpeta de trofeos</value></data>
+  <data name="ShortcutSave" xml:space="preserve"><value>Guardar</value></data>
+  <data name="ShortcutCloseFile" xml:space="preserve"><value>Cerrar archivo</value></data>
+  <data name="ShortcutSearch" xml:space="preserve"><value>Buscar trofeos</value></data>
+  <data name="ShortcutEscape" xml:space="preserve"><value>Borrar búsqueda / cerrar panel</value></data>
+  <data name="ShortcutSelectAll" xml:space="preserve"><value>Seleccionar todos los trofeos visibles</value></data>
+  <data name="ShortcutToggle" xml:space="preserve"><value>Alternar desbloquear / bloquear</value></data>
+  <data name="ShortcutEditTime" xml:space="preserve"><value>Editar marca de tiempo</value></data>
+  <data name="ShortcutClearSelected" xml:space="preserve"><value>Borrar marca(s) de tiempo seleccionada(s)</value></data>
+  <data name="ShortcutHelp" xml:space="preserve"><value>Mostrar / ocultar este panel</value></data>
+
+  <!-- More ViewModel messages -->
+  <data name="ErrorPlatinumFailed" xml:space="preserve"><value>Error en Platino instantáneo:</value></data>
+  <data name="ErrorUnlockFailed" xml:space="preserve"><value>Error en Desbloqueo instantáneo:</value></data>
+  <data name="ErrorImportFailed" xml:space="preserve"><value>Error en la importación:</value></data>
+  <data name="ErrorFileImportFailed" xml:space="preserve"><value>Error en la importación de archivo:</value></data>
+  <data name="ConfirmClearNonSynced" xml:space="preserve"><value>¿Borrar todos los trofeos no sincronizados?</value></data>
+  <data name="ConfirmClearIncludingSynced" xml:space="preserve"><value>¿Borrar TODOS los trofeos incluidos los sincronizados?
+
+Advertencia: Esto también eliminará los trofeos que han sido sincronizados con PSN.</value></data>
+  <data name="ConfirmUnlockAll" xml:space="preserve"><value>¿Desbloquear todos los trofeos con la hora actual?</value></data>
+  <data name="ConfirmClearBatch" xml:space="preserve"><value>¿Borrar {0} trofeo(s) seleccionado(s)?</value></data>
+  <data name="NoTimestampsFound" xml:space="preserve"><value>No se encontraron marcas de tiempo de trofeos en esta página.
+
+Asegúrate de que la URL sea correcta y que el usuario haya obtenido trofeos para este juego.</value></data>
+  <data name="NoDataFound" xml:space="preserve"><value>No se encontraron datos</value></data>
+  <data name="ImportedTimestamps" xml:space="preserve"><value>{0} marca(s) de tiempo importada(s)</value></data>
+  <data name="ImportedFromFile" xml:space="preserve"><value>{0} marca(s) de tiempo importada(s) desde archivo</value></data>
+  <data name="UnmatchedSuffix" xml:space="preserve"><value> ({0} sin coincidencia)</value></data>
+  <data name="UnlockedCount" xml:space="preserve"><value>{0} trofeo(s) desbloqueado(s)</value></data>
+  <data name="LockedCount" xml:space="preserve"><value>{0} trofeo(s) bloqueado(s)</value></data>
+  <data name="ClearedCount" xml:space="preserve"><value>{0} trofeo(s) borrado(s)</value></data>
+  <data name="CopiedName" xml:space="preserve"><value>Copiado: {0}</value></data>
+  <data name="FolderNoLongerExists" xml:space="preserve"><value>La carpeta ya no existe</value></data>
+  <data name="SyncedCannotClear" xml:space="preserve"><value>Este trofeo está sincronizado con PSN y no se puede borrar.
+Usa 'Borrar todo incluidos sincronizados' para forzar el borrado de trofeos sincronizados.</value></data>
+  <data name="SelectTrophyImportFile" xml:space="preserve"><value>Seleccionar archivo de importación de trofeos</value></data>
+  <data name="ImportFormatHint" xml:space="preserve"><value>Formato esperado:  Nombre del trofeo | AAAA-MM-DD HH:MM:SS  (uno por línea, las líneas que comienzan con # se ignoran)</value></data>
+  <data name="NoValidTimestampsInFile" xml:space="preserve"><value>No se encontraron marcas de tiempo válidas en este archivo.
+
+Formato esperado (una por línea, separadas por pipe o tabulación):
+Nombre del trofeo | AAAA-MM-DD HH:MM:SS
+
+Ejemplo:
+First Blood | 2024-06-15 18:30:00
+Speed Demon | 2024-06-15 19:45:22
+
+Las líneas que comienzan con # se ignoran.</value></data>
+  <data name="ImportComplete" xml:space="preserve"><value>Importación completada</value></data>
+  <data name="ImportCompleteMessage" xml:space="preserve"><value>{0} marca(s) de tiempo importada(s) correctamente.
+
+{1} entrada(s) no pudieron ser emparejadas:</value></data>
+
+  <!-- Status bar format strings -->
+  <data name="EarnedFormat" xml:space="preserve"><value>{0} / {1} Obtenidos</value></data>
+  <data name="UserFormat" xml:space="preserve"><value>Usuario: {0}</value></data>
+  <data name="TrophiesFormat" xml:space="preserve"><value>{0} / {1} Trofeos</value></data>
+  <data name="FilteredFormat" xml:space="preserve"><value>{0} de {1}</value></data>
+
+  <!-- Status indicators -->
+  <data name="AutoPlatinum" xml:space="preserve"><value>Platino</value></data>
+  <data name="AutoGold" xml:space="preserve"><value>Oro</value></data>
+  <data name="AutoSilver" xml:space="preserve"><value>Plata</value></data>
+  <data name="AutoBronze" xml:space="preserve"><value>Bronce</value></data>
+  <data name="AutoPlatinumCount" xml:space="preserve"><value>Cantidad de trofeos de platino</value></data>
+  <data name="AutoGoldCount" xml:space="preserve"><value>Cantidad de trofeos de oro</value></data>
+  <data name="AutoSilverCount" xml:space="preserve"><value>Cantidad de trofeos de plata</value></data>
+  <data name="AutoBronzeCount" xml:space="preserve"><value>Cantidad de trofeos de bronce</value></data>
+</root>
