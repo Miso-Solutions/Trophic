@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Trophic;
 
@@ -35,7 +36,35 @@ public static class Program
         // Without this, it searches the working directory instead of the app directory.
         Environment.SetEnvironmentVariable("PLAYWRIGHT_DRIVER_SEARCH_PATH", AppContext.BaseDirectory);
 
+        // Strip Mark of the Web from Playwright driver files.
+        // When extracted from a zip downloaded from the internet, Windows applies
+        // Zone.Identifier alternate data streams that block node.exe from running.
+        StripMotwFromPlaywright();
+
         RunApp();
+    }
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool DeleteFile(string lpFileName);
+
+    private static void StripMotwFromPlaywright()
+    {
+        var playwrightDir = Path.Combine(AppContext.BaseDirectory, ".playwright");
+        if (!Directory.Exists(playwrightDir)) return;
+
+        try
+        {
+            foreach (var file in Directory.EnumerateFiles(playwrightDir, "*", SearchOption.AllDirectories))
+            {
+                // Delete the Zone.Identifier alternate data stream (MOTW)
+                DeleteFile(file + ":Zone.Identifier");
+            }
+        }
+        catch
+        {
+            // Non-critical — if stripping fails, Playwright will report its own error
+        }
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]

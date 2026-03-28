@@ -104,6 +104,29 @@ public sealed class WebScraperService : IWebScraperService
         return ScrapeSite.Unknown;
     }
 
+    /// <summary>
+    /// Creates the Playwright instance only (for CDP connections to system Chrome).
+    /// Does NOT install or launch bundled Chromium.
+    /// </summary>
+    private async Task EnsurePlaywrightAsync()
+    {
+        if (_playwright != null) return;
+
+        await _initLock.WaitAsync();
+        try
+        {
+            _playwright ??= await Playwright.CreateAsync();
+        }
+        finally
+        {
+            _initLock.Release();
+        }
+    }
+
+    /// <summary>
+    /// Full initialization: installs bundled Chromium and launches a headless browser.
+    /// Used by PSN Trophy Leaders and TrueTrophies scrapers.
+    /// </summary>
     public async Task InitializeAsync()
     {
         if (_initialized || _disposed) return;
@@ -116,7 +139,7 @@ public sealed class WebScraperService : IWebScraperService
             // Install browser if needed — blocking CLI runs on background thread
             await Task.Run(() => Microsoft.Playwright.Program.Main(["install", "chromium"]));
 
-            _playwright = await Playwright.CreateAsync();
+            _playwright ??= await Playwright.CreateAsync();
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Headless = true
@@ -319,11 +342,9 @@ public sealed class WebScraperService : IWebScraperService
         string url, CancellationToken ct)
     {
         // PSNProfiles has aggressive Cloudflare Turnstile that detects Playwright-launched browsers.
-        // Launch a standalone Chrome process with remote debugging, then connect via CDP.
-        // This makes Chrome completely undetectable as automation.
-        await InitializeAsync();
+        // Launch a standalone Chrome process with remote debugging, then connect via raw CDP WebSocket.
+        // No Playwright/node.exe needed — direct Chrome DevTools Protocol over WebSocket.
 
-        // Validate URL scheme to prevent passing non-HTTP URIs to the browser process
         if (Uri.TryCreate(url, UriKind.Absolute, out var parsedUri) &&
             parsedUri.Scheme is not ("http" or "https"))
         {
@@ -332,138 +353,197 @@ public sealed class WebScraperService : IWebScraperService
 
         var debugPort = 9222 + Random.Shared.Next(1000);
         var userDataDir = Path.Combine(Path.GetTempPath(), $"ps3te-chrome-{debugPort}");
-        var chromePath = FindChromeExecutable();
+        var chromePath = FindBrowserExecutable();
+
+        // Clean up any leftover user data dir from a previous crashed session
+        try { if (Directory.Exists(userDataDir)) Directory.Delete(userDataDir, true); } catch { }
 
         System.Diagnostics.Process? chromeProcess = null;
-        IBrowser? cdpBrowser = null;
         var hideCts = new CancellationTokenSource();
         CancellationTokenSource? linkedCts = null;
         Task? hideTask = null;
+        System.Net.WebSockets.ClientWebSocket? ws = null;
         try
         {
-            // Launch Chrome as headed (Cloudflare detects all headless modes).
-            // Continuously hide Chrome windows using a background task.
             chromeProcess = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
                 FileName = chromePath,
                 Arguments = $"--remote-debugging-port={debugPort} " +
                             $"--user-data-dir=\"{userDataDir}\" " +
                             "--no-first-run --no-default-browser-check " +
+                            "--disable-features=RendererCodeIntegrity " +
                             $"\"{url}\"",
                 UseShellExecute = false
             });
 
-            // Background task that aggressively hides all Chrome windows every 50ms
             var chromeId = chromeProcess?.Id ?? 0;
             linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, hideCts.Token);
+
+            // Hide Chrome windows immediately — JS still executes when hidden
             hideTask = Task.Run(async () =>
             {
-                while (!linkedCts.Token.IsCancellationRequested)
+                while (!linkedCts!.Token.IsCancellationRequested)
                 {
                     if (chromeId > 0) HideProcessWindows(chromeId);
                     try { await Task.Delay(50, linkedCts.Token); } catch (Exception) { break; }
                 }
             }, linkedCts.Token);
 
-            // Connect to Chrome via CDP with retry (Chrome needs a moment to start)
-            for (int retry = 0; retry < 20; retry++)
+            // Wait for CDP endpoint to be available
+            for (int retry = 0; retry < 30; retry++)
             {
                 ct.ThrowIfCancellationRequested();
                 try
                 {
-                    cdpBrowser = await _playwright!.Chromium.ConnectOverCDPAsync($"http://localhost:{debugPort}");
+                    await Http.GetStringAsync($"http://localhost:{debugPort}/json", ct);
                     break;
                 }
                 catch (Exception)
                 {
-                    if (retry == 19) throw;
+                    if (retry == 29) throw;
                     await Task.Delay(500, ct);
                 }
             }
 
-            // Find the page Chrome opened
-            IPage? page = null;
-            foreach (var ctx in cdpBrowser!.Contexts)
+            // Wait for Cloudflare to clear by polling /json (HTTP, no WebSocket needed).
+            // Browser must stay visible so Cloudflare's JS challenge can execute.
+            // Match by URL to avoid picking up Edge internal pages (sync, new tab, etc).
+            var targetHost = parsedUri!.Host;
+            for (int attempt = 0; attempt < 90; attempt++)
             {
-                foreach (var p in ctx.Pages)
+                ct.ThrowIfCancellationRequested();
+                try
                 {
-                    page = p;
-                    break;
+                    var json = await Http.GetStringAsync($"http://localhost:{debugPort}/json", ct);
+                    var targets = JsonSerializer.Deserialize<JsonElement>(json);
+                    foreach (var target in targets.EnumerateArray())
+                    {
+                        if (target.TryGetProperty("type", out var type) && type.GetString() == "page" &&
+                            target.TryGetProperty("url", out var targetUrl) &&
+                            (targetUrl.GetString() ?? "").Contains(targetHost, StringComparison.OrdinalIgnoreCase) &&
+                            target.TryGetProperty("title", out var title))
+                        {
+                            var titleStr = title.GetString() ?? "";
+                            if (!titleStr.Contains("Just a moment", StringComparison.OrdinalIgnoreCase) &&
+                                titleStr.Length > 0)
+                                goto cloudflareCleared;
+                        }
+                    }
                 }
-                if (page != null) break;
+                catch (Exception) { }
+                await Task.Delay(1000, ct);
             }
+            cloudflareCleared:
 
-            if (page == null)
-                throw new Exception("Could not find browser page. Please try again.");
+            // Small delay to let page fully settle after Cloudflare redirect
+            await Task.Delay(2000, ct);
 
-            // Wait for Cloudflare to clear, then for trophy content to appear
-            await WaitForCloudflareAsync(page, maxAttempts: 60, delayMs: 1000, ct);
-
-            // Wait for any post-Cloudflare navigation to settle
-            try
+            // Get fresh WebSocket URL for the target page (match by host to skip Edge internal pages)
+            string wsUrl = null!;
+            for (int retry = 0; retry < 10; retry++)
             {
-                await page.WaitForLoadStateAsync(LoadState.DOMContentLoaded,
-                    new PageWaitForLoadStateOptions { Timeout = 10000 });
+                ct.ThrowIfCancellationRequested();
+                try
+                {
+                    var json = await Http.GetStringAsync($"http://localhost:{debugPort}/json", ct);
+                    var targets = JsonSerializer.Deserialize<JsonElement>(json);
+                    foreach (var target in targets.EnumerateArray())
+                    {
+                        if (target.TryGetProperty("type", out var type) &&
+                            type.GetString() == "page" &&
+                            target.TryGetProperty("url", out var targetUrl) &&
+                            (targetUrl.GetString() ?? "").Contains(targetHost, StringComparison.OrdinalIgnoreCase) &&
+                            target.TryGetProperty("webSocketDebuggerUrl", out var wsUrlProp))
+                        {
+                            wsUrl = wsUrlProp.GetString()!;
+                            break;
+                        }
+                    }
+                    if (wsUrl != null) break;
+                }
+                catch (Exception)
+                {
+                    if (retry == 9) throw;
+                }
+                await Task.Delay(500, ct);
             }
-            catch (Exception) { }
+
+            // Connect via WebSocket CDP — page is stable now
+            ws = new System.Net.WebSockets.ClientWebSocket();
+            await ws.ConnectAsync(new Uri(wsUrl), ct);
+
+            int msgId = 1;
+
+            async Task<JsonElement> CdpSendAsync(string method, object? parameters = null)
+            {
+                var id = msgId++;
+                var cmd = new Dictionary<string, object?> { ["id"] = id, ["method"] = method };
+                if (parameters != null) cmd["params"] = parameters;
+                var bytes = JsonSerializer.SerializeToUtf8Bytes(cmd);
+                await ws!.SendAsync(bytes, System.Net.WebSockets.WebSocketMessageType.Text, true, ct);
+
+                var buffer = new byte[1024 * 256];
+                while (true)
+                {
+                    using var ms = new MemoryStream();
+                    System.Net.WebSockets.WebSocketReceiveResult result;
+                    do
+                    {
+                        result = await ws.ReceiveAsync(buffer, ct);
+                        ms.Write(buffer, 0, result.Count);
+                    } while (!result.EndOfMessage);
+
+                    var response = JsonSerializer.Deserialize<JsonElement>(ms.ToArray());
+                    if (response.TryGetProperty("id", out var respId) && respId.GetInt32() == id)
+                        return response;
+                }
+            }
+
+            await CdpSendAsync("Runtime.enable");
 
             // Wait for trophy table to appear
-            try
+            for (int attempt = 0; attempt < 30; attempt++)
             {
-                await page.WaitForSelectorAsync("table.zebra", new PageWaitForSelectorOptions { Timeout = 15000 });
+                ct.ThrowIfCancellationRequested();
+                try
+                {
+                    var checkResult = await CdpSendAsync("Runtime.evaluate",
+                        new { expression = "!!document.querySelector('table.zebra')" });
+                    var found = checkResult.GetProperty("result").GetProperty("result")
+                        .GetProperty("value").GetBoolean();
+                    if (found) break;
+                }
+                catch (Exception) { }
+                await Task.Delay(500, ct);
             }
-            catch (TimeoutException) { }
 
-            // PSNProfiles structure:
-            // table.zebra contains trophy rows
-            // tr.completed = earned trophies; first tr is a summary row (skip)
-            // Each trophy tr has <a href="/trophy/game/N-name"> and <nobr> with date/time
-            // Dates in <nobr>: "18th Feb 2015" followed by "2:03:52 AM"
-            var results = await page.EvaluateAsync<JsonElement?>(@"() => {
+            // Extract timestamps via JS evaluation
+            var extractJs = @"(() => {
                 const trophies = [];
                 const months = {
                     'jan':0,'feb':1,'mar':2,'apr':3,'may':4,'jun':5,
                     'jul':6,'aug':7,'sep':8,'oct':9,'nov':10,'dec':11
                 };
-
-                // Get all table rows
                 const rows = document.querySelectorAll('table.zebra tr');
                 let trophyIndex = -1;
-
                 for (const row of rows) {
-                    // Only process rows that have a trophy link
                     const trophyLink = row.querySelector('a[href*=""/trophy/""]');
                     if (!trophyLink) continue;
-
                     trophyIndex++;
-
-                    // Only process earned trophies
                     if (!row.classList.contains('completed')) continue;
-
-                    // Extract date from <nobr> elements
                     const nobrs = row.querySelectorAll('nobr');
-                    let dateStr = null;
-                    let timeStr = null;
-
+                    let dateStr = null, timeStr = null;
                     for (const nobr of nobrs) {
                         const text = nobr.textContent.trim();
-                        // Date pattern: '18th Feb 2015' or '9th Sep 2014'
-                        if (/\d{1,2}(?:st|nd|rd|th)\s+\w+\s+\d{4}/i.test(text)) {
-                            dateStr = text;
-                        }
-                        // Time pattern: '2:03:52 AM' or '10:30:00 PM'
-                        else if (/\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)/i.test(text)) {
-                            timeStr = text;
-                        }
+                        if (/\d{1,2}(?:st|nd|rd|th)\s+\w+\s+\d{4}/i.test(text)) dateStr = text;
+                        else if (/\d{1,2}:\d{2}(?::\d{2})?\s*(?:AM|PM)/i.test(text)) timeStr = text;
                     }
-
                     if (dateStr) {
                         const dm = dateStr.match(/(\d{1,2})(?:st|nd|rd|th)\s+(\w+)\s+(\d{4})/i);
                         if (dm) {
                             const day = parseInt(dm[1], 10);
                             const month = months[dm[2].toLowerCase().substring(0,3)];
                             const year = parseInt(dm[3], 10);
-
                             let hour = 12, minute = 0, second = 0;
                             if (timeStr) {
                                 const tm = timeStr.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)/i);
@@ -475,24 +555,29 @@ public sealed class WebScraperService : IWebScraperService
                                     if (tm[4].toUpperCase() === 'AM' && hour === 12) hour = 0;
                                 }
                             }
-
                             if (month !== undefined && year >= 2000) {
                                 const d = new Date(Date.UTC(year, month, day, hour, minute, second));
                                 if (!isNaN(d.getTime())) {
                                     const ts = Math.floor(d.getTime() / 1000);
-                                    if (ts > 946684800) {
-                                        trophies.push({ id: trophyIndex, timestamp: ts });
-                                    }
+                                    if (ts > 946684800) trophies.push({ id: trophyIndex, timestamp: ts });
                                 }
                             }
                         }
                     }
                 }
+                return JSON.stringify(trophies);
+            })()";
 
-                return trophies;
-            }");
+            var evalResult = await CdpSendAsync("Runtime.evaluate",
+                new { expression = extractJs });
+            var jsonStr = evalResult.GetProperty("result").GetProperty("result")
+                .GetProperty("value").GetString();
 
-            return ParseJsonTimestamps(results);
+            if (string.IsNullOrEmpty(jsonStr))
+                return Array.Empty<ScrapedTimestamp>();
+
+            var parsed = JsonSerializer.Deserialize<JsonElement>(jsonStr);
+            return ParseJsonTimestamps(parsed);
         }
         finally
         {
@@ -505,8 +590,10 @@ public sealed class WebScraperService : IWebScraperService
             linkedCts?.Dispose();
             hideCts.Dispose();
 
-            if (cdpBrowser != null)
-                await cdpBrowser.CloseAsync();
+            if (ws != null)
+            {
+                try { ws.Dispose(); } catch (Exception) { }
+            }
 
             if (chromeProcess != null && !chromeProcess.HasExited)
             {
@@ -514,7 +601,6 @@ public sealed class WebScraperService : IWebScraperService
                 chromeProcess.Dispose();
             }
 
-            // Clean up temp user data dir
             try { if (Directory.Exists(userDataDir)) Directory.Delete(userDataDir, true); } catch (Exception) { }
         }
     }
@@ -575,9 +661,10 @@ public sealed class WebScraperService : IWebScraperService
     }
 
     /// <summary>
-    /// Finds the Chrome executable across common install locations.
+    /// Finds a Chromium-based browser executable. Prefers Edge (always present on Windows 10/11),
+    /// falls back to Chrome.
     /// </summary>
-    private static string FindChromeExecutable()
+    private static string FindBrowserExecutable()
     {
         var candidates = new[]
         {
@@ -586,7 +673,12 @@ public sealed class WebScraperService : IWebScraperService
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
                 @"Google\Chrome\Application\chrome.exe"),
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                @"Google\Chrome\Application\chrome.exe")
+                @"Google\Chrome\Application\chrome.exe"),
+            // Fallback to Edge
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
+                @"Microsoft\Edge\Application\msedge.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                @"Microsoft\Edge\Application\msedge.exe")
         };
 
         foreach (var path in candidates)

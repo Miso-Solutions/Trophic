@@ -82,3 +82,6 @@ foreach ($prop in @($target.PSObject.Properties)) {
 }
 
 $deps | ConvertTo-Json -Depth 20 | Set-Content $depsFile -Encoding UTF8
+
+# Remove PDB files (debug symbols — not needed for release, can trigger SmartScreen)
+Get-ChildItem -Path $pub -Recurse -Filter '*.pdb' | Remove-Item -Force
