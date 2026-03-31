@@ -34,9 +34,6 @@ public partial class ConfirmationDialogOverlay : UserControl
         return _result;
     }
 
-    /// <summary>
-    /// Shows an OK-only alert dialog (for errors and info messages).
-    /// </summary>
     public void ShowAlert(string message, string title = "Info", bool showCopy = false)
     {
         TitleText.Text = title;
@@ -57,9 +54,6 @@ public partial class ConfirmationDialogOverlay : UserControl
         Visibility = Visibility.Collapsed;
     }
 
-    /// <summary>
-    /// Shows a prompt dialog with a text input field. Returns the entered text, or null if cancelled.
-    /// </summary>
     public string? ShowPrompt(string message, string title = "Input", string defaultValue = "")
     {
         TitleText.Text = title;
@@ -73,7 +67,7 @@ public partial class ConfirmationDialogOverlay : UserControl
         InputBox.Visibility = Visibility.Visible;
         Visibility = Visibility.Visible;
 
-        InputBox.Focus();
+        Keyboard.Focus(InputBox);
         InputBox.SelectAll();
 
         _frame = new DispatcherFrame();

@@ -53,8 +53,10 @@ public partial class MainWindow : Window
             }
         }
 
-        // Skip remaining shortcuts when SearchBox is focused
+        // Skip remaining shortcuts when SearchBox is focused or overlay is open
         if (SearchBox.IsFocused)
+            return;
+        if (ConfirmDialog.Visibility == Visibility.Visible)
             return;
 
         // Ctrl+F — focus search

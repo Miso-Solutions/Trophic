@@ -20,6 +20,10 @@ public sealed class WebScraperService : IWebScraperService
     private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
     [DllImport("user32.dll")]
+    private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter,
+        int x, int y, int cx, int cy, uint uFlags);
+
+    [DllImport("user32.dll")]
     private static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
     [DllImport("user32.dll")]
@@ -28,10 +32,30 @@ public sealed class WebScraperService : IWebScraperService
     private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
     private const int SW_HIDE = 0;
+    private const uint SWP_NOSIZE = 0x0001;
+    private const uint SWP_NOZORDER = 0x0004;
+    private const uint SWP_NOACTIVATE = 0x0010;
 
     private const string ChromeUserAgent =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
         "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
+
+    /// <summary>
+    /// Moves all windows of a process off-screen. The window remains "visible" to the OS
+    /// (document.visibilityState = "visible") so Cloudflare challenges still execute,
+    /// but the user cannot see it.
+    /// </summary>
+    private static void MoveProcessWindowsOffScreen(int processId)
+    {
+        EnumWindows((hWnd, _) =>
+        {
+            GetWindowThreadProcessId(hWnd, out uint pid);
+            if (pid == (uint)processId)
+                SetWindowPos(hWnd, IntPtr.Zero, -32000, -32000, 0, 0,
+                    SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+            return true;
+        }, IntPtr.Zero);
+    }
 
     private static void HideProcessWindows(int processId)
     {
@@ -351,18 +375,42 @@ public sealed class WebScraperService : IWebScraperService
             throw new ArgumentException($"[{ErrorCodes.NetImportFailed}] Only HTTP/HTTPS URLs are supported.");
         }
 
-        var debugPort = 9222 + Random.Shared.Next(1000);
-        var userDataDir = Path.Combine(Path.GetTempPath(), $"ps3te-chrome-{debugPort}");
+        var debugPort = 19222;
+        var userDataDir = Path.Combine(Path.GetTempPath(), "trophic-chrome");
         var chromePath = FindBrowserExecutable();
 
-        // Clean up any leftover user data dir from a previous crashed session
-        try { if (Directory.Exists(userDataDir)) Directory.Delete(userDataDir, true); } catch { }
+        // Kill any zombie debug Chrome from a previous crashed session on our fixed port.
+        // Leftover processes lock the temp dir and corrupt it, causing STATUS_STACK_BUFFER_OVERRUN.
+        try
+        {
+            using var probe = new HttpClient { Timeout = TimeSpan.FromSeconds(1) };
+            await probe.GetStringAsync($"http://localhost:{debugPort}/json", ct);
+            // Something is listening on our port — kill it via the CDP browser/close endpoint
+            try { await probe.PostAsync($"http://localhost:{debugPort}/json/close", null, ct); } catch { }
+            // Also try the shutdown endpoint
+            try { await probe.GetStringAsync($"http://localhost:{debugPort}/shutdown", ct); } catch { }
+            await Task.Delay(2000, ct);
+        }
+        catch { /* Nothing on our port — good */ }
+
+        // Force-clean the temp dir
+        for (int attempt = 0; attempt < 3; attempt++)
+        {
+            try
+            {
+                if (Directory.Exists(userDataDir))
+                    Directory.Delete(userDataDir, true);
+                break;
+            }
+            catch { await Task.Delay(500, ct); }
+        }
 
         System.Diagnostics.Process? chromeProcess = null;
         var hideCts = new CancellationTokenSource();
         CancellationTokenSource? linkedCts = null;
         Task? hideTask = null;
         System.Net.WebSockets.ClientWebSocket? ws = null;
+        int chromeId = 0;
         try
         {
             chromeProcess = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
@@ -371,23 +419,13 @@ public sealed class WebScraperService : IWebScraperService
                 Arguments = $"--remote-debugging-port={debugPort} " +
                             $"--user-data-dir=\"{userDataDir}\" " +
                             "--no-first-run --no-default-browser-check " +
-                            "--disable-features=RendererCodeIntegrity " +
+                            "--window-position=-32000,-32000 --window-size=800,600 " +
                             $"\"{url}\"",
                 UseShellExecute = false
             });
 
-            var chromeId = chromeProcess?.Id ?? 0;
+            chromeId = chromeProcess?.Id ?? 0;
             linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, hideCts.Token);
-
-            // Hide Chrome windows immediately — JS still executes when hidden
-            hideTask = Task.Run(async () =>
-            {
-                while (!linkedCts!.Token.IsCancellationRequested)
-                {
-                    if (chromeId > 0) HideProcessWindows(chromeId);
-                    try { await Task.Delay(50, linkedCts.Token); } catch (Exception) { break; }
-                }
-            }, linkedCts.Token);
 
             // Wait for CDP endpoint to be available
             for (int retry = 0; retry < 30; retry++)
@@ -595,13 +633,25 @@ public sealed class WebScraperService : IWebScraperService
                 try { ws.Dispose(); } catch (Exception) { }
             }
 
-            if (chromeProcess != null && !chromeProcess.HasExited)
+            // Kill all browser processes that were launched with our unique user-data-dir.
+            // Edge re-parents processes so the original PID becomes stale.
+            try
             {
-                try { chromeProcess.Kill(true); } catch (Exception) { }
-                chromeProcess.Dispose();
+                var kill = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "powershell.exe",
+                    Arguments = "-NoProfile -Command \"Get-CimInstance Win32_Process -Filter \\\"CommandLine LIKE '%trophic-chrome%'\\\" | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                });
+                kill?.WaitForExit(10000);
+                kill?.Dispose();
             }
+            catch { }
 
-            try { if (Directory.Exists(userDataDir)) Directory.Delete(userDataDir, true); } catch (Exception) { }
+            await Task.Delay(500);
+
+            try { if (Directory.Exists(userDataDir)) Directory.Delete(userDataDir, true); } catch { }
         }
     }
 
@@ -666,19 +716,21 @@ public sealed class WebScraperService : IWebScraperService
     /// </summary>
     private static string FindBrowserExecutable()
     {
+        // Edge preferred — Chrome 146+ crashes with STATUS_STACK_BUFFER_OVERRUN
+        // when launched with --remote-debugging-port from a .NET parent process.
+        // Edge uses the same Chromium engine and CDP protocol without this issue.
         var candidates = new[]
         {
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
+                @"Microsoft\Edge\Application\msedge.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                @"Microsoft\Edge\Application\msedge.exe"),
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
                 @"Google\Chrome\Application\chrome.exe"),
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
                 @"Google\Chrome\Application\chrome.exe"),
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                @"Google\Chrome\Application\chrome.exe"),
-            // Fallback to Edge
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
-                @"Microsoft\Edge\Application\msedge.exe"),
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                @"Microsoft\Edge\Application\msedge.exe")
+                @"Google\Chrome\Application\chrome.exe")
         };
 
         foreach (var path in candidates)
@@ -687,7 +739,7 @@ public sealed class WebScraperService : IWebScraperService
                 return path;
         }
 
-        throw new Exception("Google Chrome not found. Please install Chrome to import from PSNProfiles.");
+        throw new Exception("No compatible browser found. Please install Microsoft Edge or Google Chrome.");
     }
 
     public async ValueTask DisposeAsync()

@@ -6,6 +6,7 @@
              AutomationProperties.Name="Confirmation dialog">
     <Grid x:Name="OverlayRoot" Background="{StaticResource OverlayBackdropBrush}"
           KeyboardNavigation.TabNavigation="Cycle"
+          FocusManager.IsFocusScope="True"
           Focusable="True"
           KeyDown="OverlayRoot_KeyDown">
         <!-- Centered card -->

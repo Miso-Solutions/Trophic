@@ -341,6 +341,11 @@ public partial class FileBrowserDialog : Window
         NavigateTo(_currentPath);
     }
 
+    private void DesktopButton_Click(object sender, RoutedEventArgs e)
+    {
+        NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+    }
+
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
         if (_currentPath == null) return;
