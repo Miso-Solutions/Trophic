@@ -36,6 +36,21 @@ jobs:
     - name: Publish
       run: dotnet publish src/Trophic/Trophic.csproj --configuration ${{ matrix.configuration }} --output publish
 
+    - name: Verify publish output
+      shell: pwsh
+      run: |
+        $exe = "publish/Trophic.exe"
+        $lib = "publish/lib"
+        $missing = @()
+        if (-not (Test-Path $exe)) { $missing += $exe }
+        if (-not (Test-Path $lib)) { $missing += $lib }
+        if ($missing.Count -gt 0) {
+          Write-Error "Publish verification failed — missing: $($missing -join ', ')"
+          Get-ChildItem publish/ -Recurse | Select-Object FullName
+          exit 1
+        }
+        Write-Host "Publish OK: Trophic.exe and lib/ directory present"
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:

@@ -271,6 +271,77 @@ public partial class MainWindow : Window
         catch (Exception) { /* Handled by command */ }
     }
 
+    private void MenuDropdown_Click(object sender, RoutedEventArgs e)
+    {
+        var btn = (Button)sender;
+        btn.ContextMenu.PlacementTarget = btn;
+        btn.ContextMenu.IsOpen = true;
+    }
+
+    private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        var overlay = FindName("ConfirmDialog") as Controls.ConfirmationDialogOverlay;
+        overlay?.ShowAlert(
+            $"Version: {MainViewModel.AppVersion}\n" +
+            $"Runtime: .NET {Environment.Version}\n" +
+            $"Platform: {Environment.OSVersion}\n\n" +
+            "PS3 trophy editor with encrypted file support,\n" +
+            "trophy catalog, web scraping import, and\n" +
+            "profile management.\n\n" +
+            "Copyright (c) 2025 Miso Solutions.\n" +
+            "Free for personal use only.",
+            "About Trophic");
+    }
+
+    private async void CheckUpdates_Click(object sender, RoutedEventArgs e)
+    {
+        try { await _viewModel.CheckForUpdateCommand.ExecuteAsync(null); }
+        catch (Exception) { /* Handled by command */ }
+    }
+
+    private void ViewLog_Click(object sender, RoutedEventArgs e)
+    {
+        var logPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "trophic.log");
+        var overlay = FindName("ConfirmDialog") as Controls.ConfirmationDialogOverlay;
+
+        if (!System.IO.File.Exists(logPath))
+        {
+            overlay?.ShowAlert("No log file found. Logs are created when events occur.", "Diagnostic Log");
+            return;
+        }
+
+        try
+        {
+            var content = System.IO.File.ReadAllText(logPath);
+            // Show last 50 lines max to avoid huge dialogs
+            var lines = content.Split('\n');
+            var display = lines.Length > 50
+                ? $"(showing last 50 of {lines.Length} lines)\n\n" + string.Join('\n', lines[^50..])
+                : content;
+            overlay?.ShowAlert(display, "Diagnostic Log", showCopy: true);
+        }
+        catch (Exception ex)
+        {
+            overlay?.ShowAlert($"Could not read log: {ex.Message}", "Diagnostic Log");
+        }
+    }
+
+    private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
+        => _viewModel.ExitCommand.Execute(null);
+
+    private void BackupDropdown_Click(object sender, RoutedEventArgs e)
+    {
+        var btn = (Button)sender;
+        btn.ContextMenu.PlacementTarget = btn;
+        btn.ContextMenu.IsOpen = true;
+    }
+
+    private void ExportBackup_Click(object sender, RoutedEventArgs e)
+        => _viewModel.ExportBackupCommand.Execute(null);
+
+    private void ImportBackup_Click(object sender, RoutedEventArgs e)
+        => _viewModel.ImportBackupCommand.Execute(null);
+
     private void UnlockDropdown_Click(object sender, RoutedEventArgs e)
     {
         var btn = (Button)sender;

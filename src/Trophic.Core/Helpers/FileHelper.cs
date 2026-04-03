@@ -7,6 +7,10 @@ public static class FileHelper
     /// </summary>
     public static string CopyTrophyDirToTemp(string sourcePath)
     {
+        ArgumentNullException.ThrowIfNull(sourcePath);
+        if (!Directory.Exists(sourcePath))
+            throw new DirectoryNotFoundException($"Source trophy directory not found: {sourcePath}");
+
         string tempRoot = Path.Combine(Path.GetTempPath(), "Trophic");
         string tempDir = Path.Combine(tempRoot, Guid.NewGuid().ToString("N"));
         string destDir = Path.Combine(tempDir, Path.GetFileName(sourcePath));
@@ -65,6 +69,33 @@ public static class FileHelper
         catch (UnauthorizedAccessException)
         {
             // Best effort cleanup — insufficient permissions
+        }
+    }
+
+    /// <summary>
+    /// Removes stale temp directories from previous sessions.
+    /// Call once at startup for hygiene.
+    /// </summary>
+    public static void CleanupStaleTempDirectories()
+    {
+        try
+        {
+            string tempRoot = Path.Combine(Path.GetTempPath(), "Trophic");
+            if (!Directory.Exists(tempRoot)) return;
+
+            foreach (var dir in Directory.GetDirectories(tempRoot))
+            {
+                try
+                {
+                    Directory.Delete(dir, recursive: true);
+                }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
+            }
+        }
+        catch (Exception)
+        {
+            // Best effort — never crash on cleanup
         }
     }
 }

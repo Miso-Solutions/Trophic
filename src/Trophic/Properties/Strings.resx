@@ -97,6 +97,31 @@
   <data name="CatalogDownloadFailed" xml:space="preserve"><value>Download failed: {0}</value></data>
   <data name="CatalogNoResults" xml:space="preserve"><value>No matching games found</value></data>
 
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>About, updates, and more</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>About Trophic</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>View diagnostic log</value></data>
+
+  <!-- Update -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>Update available: v{0}</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>You're up to date!</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>Would you like to download and install it now?</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Downloading update...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>Update failed:</value></data>
+
+  <!-- Backup -->
+  <data name="Backup" xml:space="preserve"><value>Backup</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>Export backup...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>Import backup...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>Select folder to save backup</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>Select backup file to restore</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>Backup exported successfully</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>Backup restored successfully. Restart to apply.</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>Backup operation failed:</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>This will overwrite your current settings and profiles. Continue?</value></data>
+
   <!-- Search and filters -->
   <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+F to search</value></data>
   <data name="ClearFilters" xml:space="preserve"><value>Clear filters</value></data>

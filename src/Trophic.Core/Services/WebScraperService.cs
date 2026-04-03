@@ -36,6 +36,18 @@ public sealed class WebScraperService : IWebScraperService
     private const uint SWP_NOZORDER = 0x0004;
     private const uint SWP_NOACTIVATE = 0x0010;
 
+    private const int CdpDebugPort = 19222;
+    private const int CdpEndpointRetries = 30;
+    private const int CdpRetryDelayMs = 500;
+    private const int CloudflarePollRetries = 90;
+    private const int CloudflarePollDelayMs = 1000;
+    private const int WebSocketUrlRetries = 10;
+    private const int TrophyTableRetries = 30;
+    private const int TrophyTableRetryDelayMs = 500;
+    private const int PageLoadTimeoutMs = 60000;
+    private const int PageSettleDelayMs = 2000;
+    private const int ProcessKillWaitMs = 10000;
+
     private const string ChromeUserAgent =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
         "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
@@ -180,6 +192,13 @@ public sealed class WebScraperService : IWebScraperService
     public async Task<IReadOnlyList<ScrapedTimestamp>> ScrapeTimestampsAsync(
         string profileGameUrl, CancellationToken ct = default)
     {
+        // Validate URL at the entry point — all scrapers require valid HTTP(S) URLs
+        if (!Uri.TryCreate(profileGameUrl, UriKind.Absolute, out var validatedUri) ||
+            validatedUri.Scheme is not ("http" or "https"))
+        {
+            throw new ArgumentException($"[{ErrorCodes.NetImportFailed}] Only HTTP/HTTPS URLs are supported.");
+        }
+
         var site = DetectSite(profileGameUrl);
 
         return site switch
@@ -218,7 +237,7 @@ public sealed class WebScraperService : IWebScraperService
             await page.GotoAsync(url, new PageGotoOptions
             {
                 WaitUntil = WaitUntilState.DOMContentLoaded,
-                Timeout = 60000
+                Timeout = PageLoadTimeoutMs
             });
 
             try
@@ -273,7 +292,7 @@ public sealed class WebScraperService : IWebScraperService
                 await page.GotoAsync(url, new PageGotoOptions
                 {
                     WaitUntil = WaitUntilState.DOMContentLoaded,
-                    Timeout = 60000
+                    Timeout = PageLoadTimeoutMs
                 });
 
                 await WaitForCloudflareAsync(page, maxAttempts: 30, delayMs: 2000, ct);
@@ -375,7 +394,7 @@ public sealed class WebScraperService : IWebScraperService
             throw new ArgumentException($"[{ErrorCodes.NetImportFailed}] Only HTTP/HTTPS URLs are supported.");
         }
 
-        var debugPort = 19222;
+        var debugPort = CdpDebugPort;
         var userDataDir = Path.Combine(Path.GetTempPath(), "trophic-chrome");
         var chromePath = FindBrowserExecutable();
 
@@ -428,7 +447,7 @@ public sealed class WebScraperService : IWebScraperService
             linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, hideCts.Token);
 
             // Wait for CDP endpoint to be available
-            for (int retry = 0; retry < 30; retry++)
+            for (int retry = 0; retry < CdpEndpointRetries; retry++)
             {
                 ct.ThrowIfCancellationRequested();
                 try
@@ -438,8 +457,8 @@ public sealed class WebScraperService : IWebScraperService
                 }
                 catch (Exception)
                 {
-                    if (retry == 29) throw;
-                    await Task.Delay(500, ct);
+                    if (retry == CdpEndpointRetries - 1) throw;
+                    await Task.Delay(CdpRetryDelayMs, ct);
                 }
             }
 
@@ -447,7 +466,8 @@ public sealed class WebScraperService : IWebScraperService
             // Browser must stay visible so Cloudflare's JS challenge can execute.
             // Match by URL to avoid picking up Edge internal pages (sync, new tab, etc).
             var targetHost = parsedUri!.Host;
-            for (int attempt = 0; attempt < 90; attempt++)
+            bool cloudflareCleared = false;
+            for (int attempt = 0; attempt < CloudflarePollRetries && !cloudflareCleared; attempt++)
             {
                 ct.ThrowIfCancellationRequested();
                 try
@@ -464,21 +484,23 @@ public sealed class WebScraperService : IWebScraperService
                             var titleStr = title.GetString() ?? "";
                             if (!titleStr.Contains("Just a moment", StringComparison.OrdinalIgnoreCase) &&
                                 titleStr.Length > 0)
-                                goto cloudflareCleared;
+                            {
+                                cloudflareCleared = true;
+                                break;
+                            }
                         }
                     }
                 }
                 catch (Exception) { }
-                await Task.Delay(1000, ct);
+                if (!cloudflareCleared) await Task.Delay(CloudflarePollDelayMs, ct);
             }
-            cloudflareCleared:
 
             // Small delay to let page fully settle after Cloudflare redirect
-            await Task.Delay(2000, ct);
+            await Task.Delay(PageSettleDelayMs, ct);
 
             // Get fresh WebSocket URL for the target page (match by host to skip Edge internal pages)
-            string wsUrl = null!;
-            for (int retry = 0; retry < 10; retry++)
+            string? wsUrl = null;
+            for (int retry = 0; retry < WebSocketUrlRetries; retry++)
             {
                 ct.ThrowIfCancellationRequested();
                 try
@@ -493,7 +515,7 @@ public sealed class WebScraperService : IWebScraperService
                             (targetUrl.GetString() ?? "").Contains(targetHost, StringComparison.OrdinalIgnoreCase) &&
                             target.TryGetProperty("webSocketDebuggerUrl", out var wsUrlProp))
                         {
-                            wsUrl = wsUrlProp.GetString()!;
+                            wsUrl = wsUrlProp.GetString();
                             break;
                         }
                     }
@@ -501,10 +523,13 @@ public sealed class WebScraperService : IWebScraperService
                 }
                 catch (Exception)
                 {
-                    if (retry == 9) throw;
+                    if (retry == WebSocketUrlRetries - 1) throw;
                 }
-                await Task.Delay(500, ct);
+                await Task.Delay(CdpRetryDelayMs, ct);
             }
+
+            if (string.IsNullOrEmpty(wsUrl))
+                throw new Exception("Could not find browser page for this URL. Please try again.");
 
             // Connect via WebSocket CDP — page is stable now
             ws = new System.Net.WebSockets.ClientWebSocket();
@@ -540,7 +565,7 @@ public sealed class WebScraperService : IWebScraperService
             await CdpSendAsync("Runtime.enable");
 
             // Wait for trophy table to appear
-            for (int attempt = 0; attempt < 30; attempt++)
+            for (int attempt = 0; attempt < TrophyTableRetries; attempt++)
             {
                 ct.ThrowIfCancellationRequested();
                 try
@@ -552,7 +577,7 @@ public sealed class WebScraperService : IWebScraperService
                     if (found) break;
                 }
                 catch (Exception) { }
-                await Task.Delay(500, ct);
+                await Task.Delay(TrophyTableRetryDelayMs, ct);
             }
 
             // Extract timestamps via JS evaluation
@@ -644,7 +669,7 @@ public sealed class WebScraperService : IWebScraperService
                     UseShellExecute = false,
                     CreateNoWindow = true
                 });
-                kill?.WaitForExit(10000);
+                kill?.WaitForExit(ProcessKillWaitMs);
                 kill?.Dispose();
             }
             catch { }

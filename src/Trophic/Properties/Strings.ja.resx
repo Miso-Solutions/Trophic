@@ -294,4 +294,40 @@ Speed Demon | 2024-06-15 19:45:22
   <data name="AutoGoldCount" xml:space="preserve"><value>ゴールドトロフィー数</value></data>
   <data name="AutoSilverCount" xml:space="preserve"><value>シルバートロフィー数</value></data>
   <data name="AutoBronzeCount" xml:space="preserve"><value>ブロンズトロフィー数</value></data>
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>カタログ</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>PS3トロフィーセットを検索してダウンロード</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>トロフィーカタログ</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>ゲーム名またはNPWR IDで検索...</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} 件の結果</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>ダウンロード &amp; 開く</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>{0} をダウンロード中...</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>トロフィーセットのダウンロードフォルダーを選択</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>ダウンロードに失敗しました: {0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>一致するゲームが見つかりません</value></data>
+  <data name="Refresh" xml:space="preserve"><value>更新</value></data>
+
+  <!-- Update & Backup -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>アップデートがあります: v{0}</value></data>
+  <data name="Backup" xml:space="preserve"><value>バックアップ</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>バックアップをエクスポート...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>バックアップをインポート...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>バックアップの保存先フォルダーを選択</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>復元するバックアップファイルを選択</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>バックアップのエクスポートに成功しました</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>バックアップの復元に成功しました。再起動して適用してください。</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>バックアップ操作に失敗しました:</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>現在の設定とプロファイルが上書きされます。続行しますか？</value></data>
+
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>メニュー</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>アプリについて、アップデートなど</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>Trophic について</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>アップデートを確認</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>診断ログを表示</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>最新バージョンです！</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>今すぐダウンロードしてインストールしますか？</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>アップデートをダウンロード中...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>アップデートに失敗しました:</value></data>
+
 </root>

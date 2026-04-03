@@ -85,3 +85,9 @@ $deps | ConvertTo-Json -Depth 20 | Set-Content $depsFile -Encoding UTF8
 
 # Remove PDB files (debug symbols — not needed for release, can trigger SmartScreen)
 Get-ChildItem -Path $pub -Recurse -Filter '*.pdb' | Remove-Item -Force
+
+# Remove user data files that may exist from testing (should never ship in release)
+foreach ($f in @('recent.json', 'settings.json')) {
+    $p = Join-Path $pub $f
+    if (Test-Path $p) { Remove-Item $p -Force }
+}

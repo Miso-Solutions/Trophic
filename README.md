@@ -19,11 +19,17 @@ A modern, portable PS3 trophy editor & profile resigner
 - **Batch operations** — unlock, lock, or clear multiple selected trophies at once
 - **Clear trophies** — remove earned timestamps, with optional inclusion of synced trophies
 
+### Trophy Catalog
+- **Search & download** — browse 2,451 PS3 trophy sets by game name or NPWR ID
+- **One-click download** from the Miso PlayStation Database
+- **Region badges** — WW, JPN, EUR, KOR, ASIA displayed per entry
+
 ### Import & Export
 - **Import from websites** — PSN Trophy Leaders, TrueTrophies, and PSNProfiles
 - **Import from text files** — `Trophy Name | YYYY-MM-DD HH:MM:SS` format
 - **Import modes** — as-is, with time offset, fixed date overrides, or relative start time
 - **Profile resigning** — resign trophy folders to a different PSN account
+- **DLC trophy grouping** — trophies grouped by DLC pack name when available
 
 ### User Experience
 - **Drag-and-drop** folder loading
@@ -136,7 +142,7 @@ Click the language button in the bottom-right corner of the status bar. Select a
 ## Runtime Requirements
 
 - **Windows 10** or later
-- **Google Chrome** — required only for PSNProfiles import (Cloudflare bypass)
+- **Microsoft Edge or Google Chrome** — required only for PSNProfiles import (Cloudflare bypass)
 
 > Note: the portable build bundles the .NET runtime. No separate .NET installation is needed.
 

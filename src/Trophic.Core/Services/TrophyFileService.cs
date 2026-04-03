@@ -10,6 +10,10 @@ namespace Trophic.Core.Services;
 
 public sealed class TrophyFileService : ITrophyFileService
 {
+    private const int SfoDataOffsetPosition = 0x0C;
+    private const int SfoProfileIdLength = 0x10;
+    private const int SfoTrophyProfileIdOffset = 0x274;
+
     private readonly IPfdToolService _pfdTool;
     private TrophyFileState? _state;
     private bool _hasUnsavedChanges;
@@ -146,18 +150,18 @@ public sealed class TrophyFileService : ITrophyFileService
             if (magic != 0x46535000) // "\0PSF" in little-endian
                 throw new InvalidOperationException($"Profile PARAM.SFO has invalid magic (expected PSF format).");
 
-            br.BaseStream.Position = 0x0C;
+            br.BaseStream.Position = SfoDataOffsetPosition;
             int dataOffset = br.ReadInt32();
-            if (dataOffset < 0 || dataOffset + 0x10 > br.BaseStream.Length)
+            if (dataOffset < 0 || dataOffset + SfoProfileIdLength > br.BaseStream.Length)
                 throw new InvalidOperationException($"Profile PARAM.SFO has invalid data offset.");
             br.BaseStream.Position = dataOffset;
-            profileId = br.ReadBytes(0x10);
+            profileId = br.ReadBytes(SfoProfileIdLength);
         }
 
         // Write the profile ID into the trophy's PARAM.SFO at offset 0x274
         using (var bw = new BinaryWriter(File.Open(trophySfoPath, FileMode.Open, FileAccess.Write)))
         {
-            bw.BaseStream.Position = 0x274;
+            bw.BaseStream.Position = SfoTrophyProfileIdOffset;
             bw.Write(profileId);
         }
 

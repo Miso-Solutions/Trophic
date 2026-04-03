@@ -294,4 +294,40 @@ Speed Demon | 2024-06-15 19:45:22
   <data name="AutoGoldCount" xml:space="preserve"><value>金奖杯数量</value></data>
   <data name="AutoSilverCount" xml:space="preserve"><value>银奖杯数量</value></data>
   <data name="AutoBronzeCount" xml:space="preserve"><value>铜奖杯数量</value></data>
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>目录</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>搜索和下载 PS3 奖杯套装</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>奖杯目录</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>按游戏名称或 NPWR ID 搜索...</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} 个结果</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>下载 &amp; 打开</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>正在下载 {0}...</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>选择奖杯套装的下载文件夹</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>下载失败：{0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>未找到匹配的游戏</value></data>
+  <data name="Refresh" xml:space="preserve"><value>刷新</value></data>
+
+  <!-- Update & Backup -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>有可用更新：v{0}</value></data>
+  <data name="Backup" xml:space="preserve"><value>备份</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>导出备份...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>导入备份...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>选择保存备份的文件夹</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>选择要恢复的备份文件</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>备份导出成功</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>备份恢复成功。请重新启动以应用。</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>备份操作失败：</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>这将覆盖您当前的设置和档案。是否继续？</value></data>
+
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>菜单</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>关于、更新等</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>关于 Trophic</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>检查更新</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>查看诊断日志</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>已是最新版本！</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>是否立即下载并安装？</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>正在下载更新...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>更新失败：</value></data>
+
 </root>

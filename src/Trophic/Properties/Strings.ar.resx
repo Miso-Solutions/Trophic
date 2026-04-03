@@ -294,4 +294,40 @@ Speed Demon | 2024-06-15 19:45:22
   <data name="AutoGoldCount" xml:space="preserve"><value>عدد الكؤوس الذهبية</value></data>
   <data name="AutoSilverCount" xml:space="preserve"><value>عدد الكؤوس الفضية</value></data>
   <data name="AutoBronzeCount" xml:space="preserve"><value>عدد الكؤوس البرونزية</value></data>
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>الكتالوج</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>البحث وتنزيل مجموعات كؤوس PS3</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>كتالوج الكؤوس</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>البحث باسم اللعبة أو معرّف NPWR...</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} نتيجة</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>تنزيل &amp; فتح</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>جارٍ تنزيل {0}...</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>اختيار مجلد التنزيل لمجموعات الكؤوس</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>فشل التنزيل: {0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>لم يتم العثور على ألعاب مطابقة</value></data>
+  <data name="Refresh" xml:space="preserve"><value>تحديث</value></data>
+
+  <!-- Update & Backup -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>تحديث متاح: v{0}</value></data>
+  <data name="Backup" xml:space="preserve"><value>نسخ احتياطي</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>تصدير نسخة احتياطية...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>استيراد نسخة احتياطية...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>اختيار مجلد لحفظ النسخة الاحتياطية</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>اختيار ملف نسخة احتياطية للاستعادة</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>تم تصدير النسخة الاحتياطية بنجاح</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>تمت استعادة النسخة الاحتياطية بنجاح. أعد التشغيل للتطبيق.</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>فشلت عملية النسخ الاحتياطي:</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>سيؤدي هذا إلى استبدال إعداداتك وملفاتك الشخصية الحالية. هل تريد المتابعة؟</value></data>
+
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>القائمة</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>حول التطبيق والتحديثات والمزيد</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>حول Trophic</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>التحقق من التحديثات</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>عرض سجل التشخيص</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>أنت تستخدم أحدث إصدار!</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>هل تريد تنزيله وتثبيته الآن؟</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>جارٍ تنزيل التحديث...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>فشل التحديث:</value></data>
+
 </root>

@@ -320,4 +320,40 @@ Speed Demon | 2024-06-15 19:45:22
   <data name="AutoSilverCount" xml:space="preserve"><value>מספר גביעי כסף</value></data>
   <data name="AutoBronzeCount" xml:space="preserve"><value>מספר גביעי ארד</value></data>
 
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>קטלוג</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>חיפוש והורדה של ערכות גביעי PS3</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>קטלוג גביעים</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>...חיפוש לפי שם משחק או מזהה NPWR</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} תוצאות</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>הורדה &amp; פתיחה</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>...{0} מוריד</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>בחירת תיקיית הורדה לערכות גביעים</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>ההורדה נכשלה: {0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>לא נמצאו משחקים תואמים</value></data>
+  <data name="Refresh" xml:space="preserve"><value>רענן</value></data>
+
+  <!-- Update & Backup -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>עדכון זמין: v{0}</value></data>
+  <data name="Backup" xml:space="preserve"><value>גיבוי</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>ייצוא גיבוי...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>ייבוא גיבוי...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>בחירת תיקייה לשמירת גיבוי</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>בחירת קובץ גיבוי לשחזור</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>הגיבוי יוצא בהצלחה</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>הגיבוי שוחזר בהצלחה. הפעילו מחדש להחלה.</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>פעולת הגיבוי נכשלה:</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>פעולה זו תדרוס את ההגדרות והפרופילים הנוכחיים שלכם. להמשיך?</value></data>
+
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>תפריט</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>אודות, עדכונים ועוד</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>אודות Trophic</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>בדיקת עדכונים</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>צפייה ביומן אבחון</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>!הגרסה שלכם מעודכנת</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>האם ברצונכם להוריד ולהתקין עכשיו?</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>מוריד עדכון...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>העדכון נכשל:</value></data>
+
 </root>

@@ -41,6 +41,10 @@ recent.json
 # Playwright browser cache
 .playwright/
 
+# Build/release artifacts
+installer/
+publish_release/
+
 # User-specific files
 *.suo
 *.user

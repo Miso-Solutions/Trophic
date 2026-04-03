@@ -22,7 +22,16 @@ public sealed partial class MainViewModel : ObservableObject
     private readonly ISettingsService _settingsService;
     private readonly RecentFilesService _recentFiles;
     private readonly Core.Services.TrophyDownloadService _downloadService;
+    private readonly Core.Services.UpdateCheckService _updateChecker;
+    private readonly Core.Services.AutoUpdateService _autoUpdater;
+    private readonly Core.Services.DiagnosticLogger _logger;
+    private readonly Core.Services.BackupService _backupService;
     private string? _catalogDownloadFolder;
+
+    public static string AppVersion => System.Reflection.Assembly.GetExecutingAssembly()
+        .GetName().Version?.ToString(3) ?? "1.0.0";
+
+    private static string BaseTitle => $"{Properties.Strings.AppTitle} v{AppVersion}";
 
     public MainViewModel(
         ITrophyFileService trophyFileService,
@@ -31,7 +40,11 @@ public sealed partial class MainViewModel : ObservableObject
         IProfileService profileService,
         ISettingsService settingsService,
         RecentFilesService recentFiles,
-        Core.Services.TrophyDownloadService downloadService)
+        Core.Services.TrophyDownloadService downloadService,
+        Core.Services.UpdateCheckService updateChecker,
+        Core.Services.AutoUpdateService autoUpdater,
+        Core.Services.DiagnosticLogger logger,
+        Core.Services.BackupService backupService)
     {
         _trophyFileService = trophyFileService;
         _dialogService = dialogService;
@@ -40,17 +53,25 @@ public sealed partial class MainViewModel : ObservableObject
         _settingsService = settingsService;
         _recentFiles = recentFiles;
         _downloadService = downloadService;
+        _updateChecker = updateChecker;
+        _autoUpdater = autoUpdater;
+        _logger = logger;
+        _backupService = backupService;
 
         Trophies = new ObservableCollection<TrophyRowViewModel>();
         RecentFiles = new ObservableCollection<RecentFileEntry>(_recentFiles.GetEntries());
         RefreshProfiles();
         ApplyTimeZone();
         ApplyLanguage();
+        _logger.Info($"Trophic v{AppVersion} started");
+
+        // Check for updates in the background (non-blocking)
+        _ = CheckForUpdateAsync();
     }
 
     // --- Observable Properties ---
 
-    [ObservableProperty] private string _windowTitle = Properties.Strings.AppTitle;
+    [ObservableProperty] private string _windowTitle = $"{Properties.Strings.AppTitle}";
     [ObservableProperty] private bool _isFileOpen;
     [ObservableProperty] private bool _isBusy;
     [ObservableProperty] private string _busyMessage = string.Empty;
@@ -372,7 +393,7 @@ public sealed partial class MainViewModel : ObservableObject
             IsFileOpen = true;
             _lastSavedProfile = SelectedProfile;
             var gameName = _trophyFileService.CurrentState?.Config.TitleName ?? "";
-            WindowTitle = string.IsNullOrEmpty(gameName) ? Properties.Strings.AppTitle : $"{Properties.Strings.AppTitle} | {gameName}";
+            WindowTitle = string.IsNullOrEmpty(gameName) ? BaseTitle : $"{BaseTitle} | {gameName}";
             LoadedFolderPath = folderPath;
             _recentFiles.AddEntry(folderPath, WindowTitle);
             RefreshRecentFiles();
@@ -437,7 +458,7 @@ public sealed partial class MainViewModel : ObservableObject
         HasPlatinum = false;
         ShowHiddenTrophies = false;
         IsFileOpen = false;
-        WindowTitle = Properties.Strings.AppTitle;
+        WindowTitle = BaseTitle;
         LoadedFolderPath = string.Empty;
         FilterEarned = false; FilterNotEarned = false; FilterSynced = false;
         FilterPlatinum = false; FilterGold = false; FilterSilver = false; FilterBronze = false;
@@ -508,7 +529,8 @@ public sealed partial class MainViewModel : ObservableObject
     private void Donate()
     {
         var url = "https://ko-fi.com/misosolutions";
-        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+        using var proc = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+
     }
 
     [RelayCommand]
@@ -886,6 +908,105 @@ public sealed partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void ToggleShortcutsHelp() => ShowShortcutsHelp = !ShowShortcutsHelp;
 
+    // --- Update Check ---
+
+    [RelayCommand]
+    private async Task CheckForUpdateAsync()
+    {
+        var update = await _updateChecker.CheckForUpdateAsync(AppVersion);
+        if (update == null)
+        {
+            ShowToastNotification(Properties.Strings.UpdateUpToDate, ToastType.Success);
+            return;
+        }
+
+        var message = string.Format(Properties.Strings.UpdateAvailable, update.Version);
+        if (!_dialogService.Confirm($"{message}\n\n{Properties.Strings.UpdateDownloadPrompt}"))
+            return;
+
+        IsBusy = true;
+        BusyMessage = Properties.Strings.UpdateDownloading;
+        try
+        {
+            var progress = new Progress<double>(p =>
+            {
+                System.Windows.Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    BusyMessage = $"{Properties.Strings.UpdateDownloading} ({(int)(p * 100)}%)";
+                });
+            });
+
+            var appDir = AppDomain.CurrentDomain.BaseDirectory.TrimEnd(Path.DirectorySeparatorChar);
+            var scriptPath = await _autoUpdater.DownloadAndPrepareUpdateAsync(appDir, progress);
+            _logger.Info($"Update downloaded. Launching update script: {scriptPath}");
+
+            IsBusy = false;
+
+            // Launch the update script with our PID so it knows when we've exited
+            var currentPid = System.Diagnostics.Process.GetCurrentProcess().Id;
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = $"/c \"{scriptPath}\" {currentPid}",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            });
+
+            // Exit the app so the script can replace files
+            System.Windows.Application.Current.Shutdown();
+        }
+        catch (Exception ex)
+        {
+            IsBusy = false;
+            _logger.Error("Auto-update failed", ex);
+            _dialogService.ShowError($"{Properties.Strings.UpdateFailed}\n{ex.Message}");
+        }
+    }
+
+    // --- Backup / Export / Import ---
+
+    [RelayCommand]
+    private void ExportBackup()
+    {
+        var path = _dialogService.BrowseFolder(Properties.Strings.BackupSelectFolder);
+        if (path == null) return;
+
+        try
+        {
+            var zipPath = Path.Combine(path, $"Trophic-Backup-{DateTime.Now:yyyy-MM-dd}.zip");
+            _backupService.ExportBackup(AppDomain.CurrentDomain.BaseDirectory, zipPath);
+            _logger.Info($"Backup exported to: {zipPath}");
+            ShowToastNotification(Properties.Strings.BackupExported, ToastType.Success);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Backup export failed", ex);
+            _dialogService.ShowError($"{Properties.Strings.BackupFailed}\n{ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    private void ImportBackup()
+    {
+        var file = _dialogService.BrowseFile("Trophic Backup (*.zip)|*.zip", Properties.Strings.BackupSelectFile);
+        if (file == null) return;
+
+        if (!_dialogService.Confirm(Properties.Strings.BackupImportConfirm))
+            return;
+
+        try
+        {
+            _backupService.ImportBackup(AppDomain.CurrentDomain.BaseDirectory, file);
+            _logger.Info($"Backup imported from: {file}");
+            ShowToastNotification(Properties.Strings.BackupImported, ToastType.Success);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Backup import failed", ex);
+            _dialogService.ShowError($"{Properties.Strings.BackupFailed}\n{ex.Message}");
+        }
+    }
+
     // Language entries sorted alphabetically by display name, English always first
     public sealed class LanguageEntry
     {
@@ -918,7 +1039,7 @@ public sealed partial class MainViewModel : ObservableObject
         var culture = new System.Globalization.CultureInfo(entry.Culture);
         Properties.Strings.Culture = culture;
         CurrentLanguageName = entry.Name;
-        WindowTitle = Properties.Strings.AppTitle;
+        WindowTitle = BaseTitle;
         AppFlowDirection = culture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
     }
 
@@ -933,7 +1054,9 @@ public sealed partial class MainViewModel : ObservableObject
         // WPF x:Static bindings resolve once at parse time — restart to apply new language
         var exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
         if (exePath != null)
-            System.Diagnostics.Process.Start(exePath);
+        {
+            using var proc = System.Diagnostics.Process.Start(exePath);
+        }
         Application.Current.Shutdown();
     }
 

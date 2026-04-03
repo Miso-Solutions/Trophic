@@ -294,4 +294,40 @@ Speed Demon | 2024-06-15 19:45:22
   <data name="AutoGoldCount" xml:space="preserve"><value>Количество золотых трофеев</value></data>
   <data name="AutoSilverCount" xml:space="preserve"><value>Количество серебряных трофеев</value></data>
   <data name="AutoBronzeCount" xml:space="preserve"><value>Количество бронзовых трофеев</value></data>
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>Каталог</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>Поиск и загрузка наборов трофеев PS3</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>Каталог трофеев</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>Поиск по названию игры или ID NPWR...</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} результатов</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>Скачать &amp; Открыть</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>Загрузка {0}...</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>Выберите папку для загрузки наборов трофеев</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>Загрузка не удалась: {0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>Подходящие игры не найдены</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Обновить</value></data>
+
+  <!-- Update & Backup -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>Доступно обновление: v{0}</value></data>
+  <data name="Backup" xml:space="preserve"><value>Резервная копия</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>Экспорт резервной копии...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>Импорт резервной копии...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>Выберите папку для сохранения резервной копии</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>Выберите файл резервной копии для восстановления</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>Резервная копия успешно экспортирована</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>Резервная копия успешно восстановлена. Перезапустите для применения.</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>Операция резервного копирования не удалась:</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>Это перезапишет ваши текущие настройки и профили. Продолжить?</value></data>
+
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>Меню</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>О программе, обновления и другое</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>О Trophic</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>Проверить обновления</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>Просмотреть журнал диагностики</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>У вас последняя версия!</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>Хотите загрузить и установить сейчас?</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Загрузка обновления...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>Ошибка обновления:</value></data>
+
 </root>

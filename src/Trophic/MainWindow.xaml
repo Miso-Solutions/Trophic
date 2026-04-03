@@ -215,16 +215,51 @@
 
                 <Rectangle Width="1" Fill="{StaticResource BorderBrush}" Margin="10,4"/>
 
-                <!-- Exit Button -->
-                <Button Command="{Binding ExitCommand}"
-                        Style="{StaticResource ToolbarButton}"
-                        AutomationProperties.Name="Exit Software (Alt+F4)"
-                        ToolTip="{x:Static props:Strings.TooltipExit}">
+                <!-- Backup Button with dropdown -->
+                <Button Style="{StaticResource ToolbarButton}"
+                        AutomationProperties.Name="{x:Static props:Strings.BackupSelectFolder}"
+                        ToolTip="{x:Static props:Strings.BackupSelectFolder}"
+                        Click="BackupDropdown_Click">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="&#xE7E8;" FontFamily="Segoe MDL2 Assets" FontSize="18"
+                        <TextBlock Text="&#xE895;" FontFamily="Segoe MDL2 Assets" FontSize="18"
                                    HorizontalAlignment="Center"/>
-                        <TextBlock Text="{x:Static props:Strings.Exit}" FontSize="10" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                        <TextBlock Text="{x:Static props:Strings.Backup}" FontSize="10" HorizontalAlignment="Center" Margin="0,2,0,0"/>
                     </StackPanel>
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static props:Strings.BackupExport}" Click="ExportBackup_Click"
+                                     AutomationProperties.Name="Export backup"/>
+                            <MenuItem Header="{x:Static props:Strings.BackupImport}" Click="ImportBackup_Click"
+                                     AutomationProperties.Name="Import backup"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
+
+                <Rectangle Width="1" Fill="{StaticResource BorderBrush}" Margin="10,4"/>
+
+                <!-- Menu Button (About, Updates, Log, Exit) -->
+                <Button Style="{StaticResource ToolbarButton}"
+                        AutomationProperties.Name="Application menu"
+                        ToolTip="{x:Static props:Strings.TooltipMenu}"
+                        Click="MenuDropdown_Click">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE712;" FontFamily="Segoe MDL2 Assets" FontSize="18"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{x:Static props:Strings.Menu}" FontSize="10" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                    </StackPanel>
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static props:Strings.MenuAbout}" Click="AboutMenuItem_Click"
+                                     AutomationProperties.Name="About Trophic"/>
+                            <MenuItem Header="{x:Static props:Strings.MenuCheckUpdates}" Click="CheckUpdates_Click"
+                                     AutomationProperties.Name="Check for updates"/>
+                            <MenuItem Header="{x:Static props:Strings.MenuViewLog}" Click="ViewLog_Click"
+                                     AutomationProperties.Name="View diagnostic log"/>
+                            <Separator/>
+                            <MenuItem Header="{x:Static props:Strings.Exit}" Click="ExitMenuItem_Click"
+                                     AutomationProperties.Name="Exit (Alt+F4)"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
                 </Button>
 
                 <Rectangle Width="1" Fill="{StaticResource BorderBrush}" Margin="10,4"/>

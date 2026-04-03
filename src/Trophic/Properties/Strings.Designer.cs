@@ -64,6 +64,82 @@ namespace Trophic.Properties {
             }
         }
 
+        public static string Menu {
+            get { return ResourceManager.GetString("Menu", resourceCulture); }
+        }
+
+        public static string TooltipMenu {
+            get { return ResourceManager.GetString("TooltipMenu", resourceCulture); }
+        }
+
+        public static string MenuAbout {
+            get { return ResourceManager.GetString("MenuAbout", resourceCulture); }
+        }
+
+        public static string MenuCheckUpdates {
+            get { return ResourceManager.GetString("MenuCheckUpdates", resourceCulture); }
+        }
+
+        public static string MenuViewLog {
+            get { return ResourceManager.GetString("MenuViewLog", resourceCulture); }
+        }
+
+        public static string UpdateUpToDate {
+            get { return ResourceManager.GetString("UpdateUpToDate", resourceCulture); }
+        }
+
+        public static string UpdateDownloadPrompt {
+            get { return ResourceManager.GetString("UpdateDownloadPrompt", resourceCulture); }
+        }
+
+        public static string UpdateDownloading {
+            get { return ResourceManager.GetString("UpdateDownloading", resourceCulture); }
+        }
+
+        public static string UpdateFailed {
+            get { return ResourceManager.GetString("UpdateFailed", resourceCulture); }
+        }
+
+        public static string UpdateAvailable {
+            get { return ResourceManager.GetString("UpdateAvailable", resourceCulture); }
+        }
+
+        public static string Backup {
+            get { return ResourceManager.GetString("Backup", resourceCulture); }
+        }
+
+        public static string BackupExport {
+            get { return ResourceManager.GetString("BackupExport", resourceCulture); }
+        }
+
+        public static string BackupImport {
+            get { return ResourceManager.GetString("BackupImport", resourceCulture); }
+        }
+
+        public static string BackupSelectFolder {
+            get { return ResourceManager.GetString("BackupSelectFolder", resourceCulture); }
+        }
+
+        public static string BackupSelectFile {
+            get { return ResourceManager.GetString("BackupSelectFile", resourceCulture); }
+        }
+
+        public static string BackupExported {
+            get { return ResourceManager.GetString("BackupExported", resourceCulture); }
+        }
+
+        public static string BackupImported {
+            get { return ResourceManager.GetString("BackupImported", resourceCulture); }
+        }
+
+        public static string BackupFailed {
+            get { return ResourceManager.GetString("BackupFailed", resourceCulture); }
+        }
+
+        public static string BackupImportConfirm {
+            get { return ResourceManager.GetString("BackupImportConfirm", resourceCulture); }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to At timestamp....
         /// </summary>

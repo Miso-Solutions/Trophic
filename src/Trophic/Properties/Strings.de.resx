@@ -294,4 +294,40 @@ Zeilen die mit # beginnen werden ignoriert.</value></data>
   <data name="AutoGoldCount" xml:space="preserve"><value>Anzahl Gold-Trophäen</value></data>
   <data name="AutoSilverCount" xml:space="preserve"><value>Anzahl Silber-Trophäen</value></data>
   <data name="AutoBronzeCount" xml:space="preserve"><value>Anzahl Bronze-Trophäen</value></data>
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>Katalog</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>PS3-Trophäen-Sets suchen und herunterladen</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>Trophäen-Katalog</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>Nach Spielname oder NPWR-ID suchen...</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} Ergebnisse</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>Herunterladen &amp; Öffnen</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>{0} wird heruntergeladen...</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>Download-Ordner für Trophäen-Sets auswählen</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>Download fehlgeschlagen: {0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>Keine passenden Spiele gefunden</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Aktualisieren</value></data>
+
+  <!-- Update & Backup -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>Update verfügbar: v{0}</value></data>
+  <data name="Backup" xml:space="preserve"><value>Sicherung</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>Sicherung exportieren...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>Sicherung importieren...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>Ordner zum Speichern der Sicherung auswählen</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>Sicherungsdatei zum Wiederherstellen auswählen</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>Sicherung erfolgreich exportiert</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>Sicherung erfolgreich wiederhergestellt. Neustart erforderlich.</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>Sicherungsvorgang fehlgeschlagen:</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>Dadurch werden Ihre aktuellen Einstellungen und Profile überschrieben. Fortfahren?</value></data>
+
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>Menü</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>Über, Updates und mehr</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>Über Trophic</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>Nach Updates suchen</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>Diagnoseprotokoll anzeigen</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>Sie sind auf dem neuesten Stand!</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>Möchten Sie es jetzt herunterladen und installieren?</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Update wird heruntergeladen...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>Update fehlgeschlagen:</value></data>
+
 </root>

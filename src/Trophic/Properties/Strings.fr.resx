@@ -294,4 +294,40 @@ Les lignes commençant par # sont ignorées.</value></data>
   <data name="AutoGoldCount" xml:space="preserve"><value>Nombre de trophées or</value></data>
   <data name="AutoSilverCount" xml:space="preserve"><value>Nombre de trophées argent</value></data>
   <data name="AutoBronzeCount" xml:space="preserve"><value>Nombre de trophées bronze</value></data>
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>Catalogue</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>Rechercher et télécharger des sets de trophées PS3</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>Catalogue de trophées</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>Rechercher par nom de jeu ou identifiant NPWR...</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} résultats</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>Télécharger &amp; Ouvrir</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>Téléchargement de {0}...</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>Sélectionner le dossier de téléchargement pour les sets de trophées</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>Échec du téléchargement : {0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>Aucun jeu correspondant trouvé</value></data>
+  <data name="Refresh" xml:space="preserve"><value>Actualiser</value></data>
+
+  <!-- Update & Backup -->
+  <data name="UpdateAvailable" xml:space="preserve"><value>Mise à jour disponible : v{0}</value></data>
+  <data name="Backup" xml:space="preserve"><value>Sauvegarde</value></data>
+  <data name="BackupExport" xml:space="preserve"><value>Exporter la sauvegarde...</value></data>
+  <data name="BackupImport" xml:space="preserve"><value>Importer la sauvegarde...</value></data>
+  <data name="BackupSelectFolder" xml:space="preserve"><value>Sélectionner un dossier pour enregistrer la sauvegarde</value></data>
+  <data name="BackupSelectFile" xml:space="preserve"><value>Sélectionner un fichier de sauvegarde à restaurer</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>Sauvegarde exportée avec succès</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>Sauvegarde restaurée avec succès. Redémarrez pour appliquer.</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>L'opération de sauvegarde a échoué :</value></data>
+  <data name="BackupImportConfirm" xml:space="preserve"><value>Cela écrasera vos paramètres et profils actuels. Continuer ?</value></data>
+
+  <!-- Menu -->
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="TooltipMenu" xml:space="preserve"><value>À propos, mises à jour et plus</value></data>
+  <data name="MenuAbout" xml:space="preserve"><value>À propos de Trophic</value></data>
+  <data name="MenuCheckUpdates" xml:space="preserve"><value>Rechercher des mises à jour</value></data>
+  <data name="MenuViewLog" xml:space="preserve"><value>Afficher le journal de diagnostic</value></data>
+  <data name="UpdateUpToDate" xml:space="preserve"><value>Vous êtes à jour !</value></data>
+  <data name="UpdateDownloadPrompt" xml:space="preserve"><value>Voulez-vous le télécharger et l'installer maintenant ?</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Téléchargement de la mise à jour...</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>La mise à jour a échoué :</value></data>
+
 </root>
