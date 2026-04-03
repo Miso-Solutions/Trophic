@@ -11,6 +11,8 @@ public sealed class TrophyDefinition
     public bool Hidden { get; init; }
     public TrophyType Type { get; init; }
     public int GroupId { get; init; }
+    /// <summary>Parent trophy ID. -1 means not linked to platinum (typically DLC trophies).</summary>
+    public int ParentId { get; init; }
     public string Name { get; init; } = string.Empty;
     public string Detail { get; init; } = string.Empty;
 }

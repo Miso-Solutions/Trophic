@@ -396,8 +396,26 @@ public sealed class TrophyFileService : ITrophyFileService
             var timeInfo = i < usr.TrophyTimeInfos.Count ? usr.TrophyTimeInfos[i] : null;
             var trnsRecord = trns[i];
 
-            // Determine group
-            if (def.GroupId == 0 || (def.Type == TrophyType.Platinum && i == 0))
+            // Determine group.
+            // DLC is identified by: gid > 0 (explicit group), OR
+            // pid == -1 on non-platinum trophies after the base game section
+            // (some older games don't use gid, only pid=-1 for DLC trophies).
+            bool isDlcByPid = def.GroupId == 0 && def.ParentId == -1 && def.Type != TrophyType.Platinum;
+            int effectiveGroupId = def.GroupId;
+
+            if (isDlcByPid && !inBaseGame)
+            {
+                // Continue in the current DLC group
+                effectiveGroupId = seenGroups.Count > 0 ? seenGroups.Max() : 1;
+            }
+            else if (isDlcByPid && inBaseGame)
+            {
+                // First DLC trophy — transition out of base game
+                inBaseGame = false;
+                effectiveGroupId = 1;
+            }
+
+            if (effectiveGroupId == 0 || (def.Type == TrophyType.Platinum && i == 0))
             {
                 if (inBaseGame) baseGameCount++;
             }
@@ -406,8 +424,10 @@ public sealed class TrophyFileService : ITrophyFileService
                 inBaseGame = false;
             }
 
-            string groupLabel = def.GroupId == 0 ? "Base Game" : $"DLC {def.GroupId}";
-            bool isFirstInDlcGroup = def.GroupId > 0 && seenGroups.Add(def.GroupId);
+            string groupLabel = effectiveGroupId == 0
+                ? "Base Game"
+                : config.GetGroupName(effectiveGroupId) ?? (isDlcByPid ? "DLC" : $"DLC {effectiveGroupId}");
+            bool isFirstInDlcGroup = effectiveGroupId > 0 && seenGroups.Add(effectiveGroupId);
 
             // Icon path
             string? iconPath = null;
@@ -440,7 +460,7 @@ public sealed class TrophyFileService : ITrophyFileService
                 Detail = def.Detail,
                 TypeCode = def.Type.ToCode(),
                 IsHidden = def.Hidden,
-                GroupId = def.GroupId,
+                GroupId = effectiveGroupId,
                 GroupLabel = groupLabel,
                 IsFirstInDlcGroup = isFirstInDlcGroup,
                 IconPath = iconPath,

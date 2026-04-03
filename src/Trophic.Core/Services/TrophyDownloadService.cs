@@ -84,14 +84,19 @@ public sealed class TrophyDownloadService
         fileStream.Close();
         progress?.Report(1.0);
 
-        // Extract ZIP (the ZIP already contains the trophy folder)
+        // Extract ZIP (the ZIP already contains the trophy folder, e.g. NPWR00214_00/)
         ZipFile.ExtractToDirectory(zipPath, extractDir, overwriteFiles: true);
 
         // Clean up ZIP file
         try { File.Delete(zipPath); } catch { }
 
-        // Find the trophy folder (look for TROPCONF.SFM)
-        return FindTrophyFolder(extractDir);
+        // The ZIP contains a folder named after the NPWR ID
+        var expectedFolder = Path.Combine(extractDir, npwrId);
+        if (Directory.Exists(expectedFolder) && File.Exists(Path.Combine(expectedFolder, "TROPCONF.SFM")))
+            return expectedFolder;
+
+        // Fallback: search for the trophy folder
+        return FindTrophyFolder(extractDir, npwrId);
     }
 
     /// <summary>
@@ -128,19 +133,26 @@ public sealed class TrophyDownloadService
     /// <summary>
     /// Searches for the trophy folder containing TROPCONF.SFM within the extracted directory.
     /// </summary>
-    private static string FindTrophyFolder(string extractDir)
+    private static string FindTrophyFolder(string extractDir, string npwrId)
     {
         // Check root
         if (File.Exists(Path.Combine(extractDir, "TROPCONF.SFM")))
             return extractDir;
 
-        // Check immediate subdirectories
+        // Prefer subdirectory matching the NPWR ID
+        foreach (var dir in Directory.GetDirectories(extractDir))
+        {
+            if (Path.GetFileName(dir).Contains(npwrId, StringComparison.OrdinalIgnoreCase) &&
+                File.Exists(Path.Combine(dir, "TROPCONF.SFM")))
+                return dir;
+        }
+
+        // Check all subdirectories
         foreach (var dir in Directory.GetDirectories(extractDir))
         {
             if (File.Exists(Path.Combine(dir, "TROPCONF.SFM")))
                 return dir;
 
-            // One more level deep
             foreach (var subDir in Directory.GetDirectories(dir))
             {
                 if (File.Exists(Path.Combine(subDir, "TROPCONF.SFM")))
@@ -148,7 +160,7 @@ public sealed class TrophyDownloadService
             }
         }
 
-        // Fallback: return the first subdirectory or root
+        // Fallback
         var dirs = Directory.GetDirectories(extractDir);
         return dirs.Length > 0 ? dirs[0] : extractDir;
     }

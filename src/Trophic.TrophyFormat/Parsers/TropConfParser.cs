@@ -18,8 +18,16 @@ public sealed class TropConfParser
     public bool HasPlatinum { get; private set; }
 
     private readonly List<TrophyDefinition> _trophies = new();
+    private readonly Dictionary<int, string> _groupNames = new();
     public int Count => _trophies.Count;
     public TrophyDefinition this[int index] => _trophies[index];
+
+    /// <summary>
+    /// Returns the group name for a given group ID, or null if not found.
+    /// Group 0 = base game (no entry in this dictionary).
+    /// </summary>
+    public string? GetGroupName(int groupId) =>
+        _groupNames.TryGetValue(groupId, out var name) ? name : null;
 
     public TropConfParser(string directoryPath, bool isRpcs3Format)
     {
@@ -58,6 +66,17 @@ public sealed class TropConfParser
 
         TitleName = root.Element("title-name")?.Value ?? string.Empty;
 
+        // Parse group names (DLC packs): <group id="001"><name>Far East Tour</name></group>
+        foreach (var groupElem in root.Elements("group"))
+        {
+            if (int.TryParse(groupElem.Attribute("id")?.Value, out var groupId))
+            {
+                var groupName = groupElem.Element("name")?.Value;
+                if (!string.IsNullOrEmpty(groupName))
+                    _groupNames[groupId] = groupName;
+            }
+        }
+
         foreach (var elem in root.Elements("trophy"))
         {
             var trophy = new TrophyDefinition
@@ -66,6 +85,7 @@ public sealed class TropConfParser
                 Hidden = elem.Attribute("hidden")?.Value == "yes",
                 Type = TrophyTypeExtensions.FromCode(elem.Attribute("ttype")?.Value ?? "B"),
                 GroupId = int.TryParse(elem.Attribute("gid")?.Value, out var gid) ? gid : 0,
+                ParentId = int.TryParse(elem.Attribute("pid")?.Value, out var pid) ? pid : 0,
                 Name = elem.Element("name")?.Value ?? string.Empty,
                 Detail = elem.Element("detail")?.Value ?? string.Empty
             };
