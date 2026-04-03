@@ -53,6 +53,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="BackButton" Grid.Column="0" Click="BackButton_Click"
@@ -136,7 +137,37 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Auto"
+                    <Button x:Name="DownloadsButton" Grid.Column="3" Click="DownloadsButton_Click"
+                            Height="32" Cursor="Hand" Margin="4,0,0,0" Padding="8,0"
+                            ToolTip="Downloads"
+                            WindowChrome.IsHitTestVisibleInChrome="True"
+                            AutomationProperties.Name="Go to Downloads">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="Bg" Background="Transparent" CornerRadius="6"
+                                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                                        Padding="8,0">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <TextBlock Text="&#xE896;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Text="Downloads" FontSize="11" Margin="5,0,0,0"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Bg" Property="Background" Value="{StaticResource CardHoverBrush}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="Bg" Property="Background" Value="{StaticResource BorderBrush}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <ScrollViewer Grid.Column="4" HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Disabled" Margin="8,0,0,0"
                                   VerticalAlignment="Center">
                         <StackPanel x:Name="BreadcrumbPanel" Orientation="Horizontal"/>

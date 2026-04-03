@@ -346,6 +346,13 @@ public partial class FileBrowserDialog : Window
         NavigateTo(Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
     }
 
+    private void DownloadsButton_Click(object sender, RoutedEventArgs e)
+    {
+        var downloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+        if (Directory.Exists(downloads))
+            NavigateTo(downloads);
+    }
+
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
         if (_currentPath == null) return;
