@@ -1,6 +1,7 @@
 using System.Windows;
 using Trophic.Core.Interfaces;
 using Trophic.Core.Models;
+using Trophic.Core.Services;
 using Trophic.Views;
 
 namespace Trophic.Infrastructure;
@@ -8,10 +9,12 @@ namespace Trophic.Infrastructure;
 public sealed class DialogService : IDialogService
 {
     private readonly ISettingsService _settings;
+    private readonly CatalogService _catalog;
 
-    public DialogService(ISettingsService settings)
+    public DialogService(ISettingsService settings, CatalogService catalog)
     {
         _settings = settings;
+        _catalog = catalog;
     }
 
     public string? BrowseFolder(string? description = null)
@@ -118,5 +121,15 @@ public sealed class DialogService : IDialogService
         };
 
         return dialog.ShowDialog() == true ? dialog.Settings : null;
+    }
+
+    public CatalogEntry? ShowCatalogDialog()
+    {
+        var dialog = new Views.TrophyCatalogDialog(_catalog)
+        {
+            Owner = Application.Current.MainWindow
+        };
+
+        return dialog.ShowDialog() == true ? dialog.SelectedEntry : null;
     }
 }

@@ -12,4 +12,5 @@ public interface IDialogService
     string? PromptText(string message, string title = "Input", string defaultValue = "");
     DateTime? ShowDateTimePicker(DateTime? initial = null, DateTime? min = null, DateTime? max = null, DateTime? now = null);
     ImportSettings? ShowImportDialog();
+    CatalogEntry? ShowCatalogDialog();
 }

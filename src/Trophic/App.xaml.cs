@@ -21,12 +21,14 @@ public partial class App : Application
         var trophyFile = new TrophyFileService(pfdTool);
         var profiles = new ProfileService();
         var scraper = new WebScraperService();
-        var dialogService = new DialogService(settings);
+        var catalog = new CatalogService(AppDomain.CurrentDomain.BaseDirectory);
+        var downloadService = new TrophyDownloadService();
+        var dialogService = new DialogService(settings, catalog);
 
         _scraper = scraper;
 
         var recentFiles = new RecentFilesService();
-        var viewModel = new MainViewModel(trophyFile, dialogService, scraper, profiles, settings, recentFiles);
+        var viewModel = new MainViewModel(trophyFile, dialogService, scraper, profiles, settings, recentFiles, downloadService);
         var mainWindow = new MainWindow(viewModel);
         mainWindow.Show();
 

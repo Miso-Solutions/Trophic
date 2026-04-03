@@ -85,6 +85,18 @@
   <data name="Hebrew" xml:space="preserve"><value>עברית</value></data>
   <data name="TooltipLanguage" xml:space="preserve"><value>Switch language</value></data>
 
+  <!-- Catalog -->
+  <data name="Catalog" xml:space="preserve"><value>Catalog</value></data>
+  <data name="TooltipCatalog" xml:space="preserve"><value>Search and download PS3 trophy sets</value></data>
+  <data name="CatalogTitle" xml:space="preserve"><value>Trophy Catalog</value></data>
+  <data name="CatalogSearchPlaceholder" xml:space="preserve"><value>Search by game name or NPWR ID...</value></data>
+  <data name="CatalogResultCount" xml:space="preserve"><value>{0} results</value></data>
+  <data name="CatalogDownloadOpen" xml:space="preserve"><value>Download &amp; Open</value></data>
+  <data name="CatalogDownloading" xml:space="preserve"><value>Downloading {0}...</value></data>
+  <data name="CatalogSelectFolder" xml:space="preserve"><value>Select download folder for trophy sets</value></data>
+  <data name="CatalogDownloadFailed" xml:space="preserve"><value>Download failed: {0}</value></data>
+  <data name="CatalogNoResults" xml:space="preserve"><value>No matching games found</value></data>
+
   <!-- Search and filters -->
   <data name="TooltipSearch" xml:space="preserve"><value>Ctrl+F to search</value></data>
   <data name="ClearFilters" xml:space="preserve"><value>Clear filters</value></data>

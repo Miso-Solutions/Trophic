@@ -21,6 +21,8 @@ public sealed partial class MainViewModel : ObservableObject
     private readonly IProfileService _profileService;
     private readonly ISettingsService _settingsService;
     private readonly RecentFilesService _recentFiles;
+    private readonly Core.Services.TrophyDownloadService _downloadService;
+    private string? _catalogDownloadFolder;
 
     public MainViewModel(
         ITrophyFileService trophyFileService,
@@ -28,7 +30,8 @@ public sealed partial class MainViewModel : ObservableObject
         IWebScraperService webScraper,
         IProfileService profileService,
         ISettingsService settingsService,
-        RecentFilesService recentFiles)
+        RecentFilesService recentFiles,
+        Core.Services.TrophyDownloadService downloadService)
     {
         _trophyFileService = trophyFileService;
         _dialogService = dialogService;
@@ -36,6 +39,7 @@ public sealed partial class MainViewModel : ObservableObject
         _profileService = profileService;
         _settingsService = settingsService;
         _recentFiles = recentFiles;
+        _downloadService = downloadService;
 
         Trophies = new ObservableCollection<TrophyRowViewModel>();
         RecentFiles = new ObservableCollection<RecentFileEntry>(_recentFiles.GetEntries());
@@ -311,6 +315,47 @@ public sealed partial class MainViewModel : ObservableObject
         if (folder == null) return;
 
         await OpenTrophyFolderAsync(folder);
+    }
+
+    [RelayCommand]
+    private async Task OpenFromCatalogAsync()
+    {
+        var entry = _dialogService.ShowCatalogDialog();
+        if (entry == null) return;
+
+        // Pick download folder (reuse within session)
+        if (_catalogDownloadFolder == null || !System.IO.Directory.Exists(_catalogDownloadFolder))
+        {
+            var folder = _dialogService.BrowseFolder(Properties.Strings.CatalogSelectFolder);
+            if (folder == null) return;
+            _catalogDownloadFolder = folder;
+        }
+
+        IsBusy = true;
+        BusyMessage = string.Format(Properties.Strings.CatalogDownloading, entry.Name);
+        try
+        {
+            var progress = new Progress<double>(p =>
+            {
+                // Update on UI thread
+                System.Windows.Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    BusyMessage = string.Format(Properties.Strings.CatalogDownloading, entry.Name) +
+                                  $" ({(int)(p * 100)}%)";
+                });
+            });
+
+            var trophyFolder = await _downloadService.DownloadAndExtractAsync(
+                entry.Id, _catalogDownloadFolder, progress);
+
+            IsBusy = false;
+            await OpenTrophyFolderAsync(trophyFolder);
+        }
+        catch (Exception ex)
+        {
+            IsBusy = false;
+            _dialogService.ShowError(string.Format(Properties.Strings.CatalogDownloadFailed, ex.Message));
+        }
     }
 
     public async Task OpenTrophyFolderAsync(string folderPath)

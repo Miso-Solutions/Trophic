@@ -68,6 +68,18 @@
                     </StackPanel>
                 </Button>
 
+                <!-- Catalog Button -->
+                <Button Click="CatalogButton_Click"
+                        Style="{StaticResource ToolbarButton}"
+                        AutomationProperties.Name="{x:Static props:Strings.TooltipCatalog}"
+                        ToolTip="{x:Static props:Strings.TooltipCatalog}" Margin="6,0,0,0">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE71D;" FontFamily="Segoe MDL2 Assets" FontSize="18"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{x:Static props:Strings.Catalog}" FontSize="10" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Button>
+
                 <!-- Save Button (only enabled when there are unsaved changes) -->
                 <Button x:Name="SaveButton" Command="{Binding SaveCommand}"
                         Style="{StaticResource ToolbarButton}"

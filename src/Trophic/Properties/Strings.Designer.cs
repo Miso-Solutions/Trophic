@@ -436,6 +436,46 @@ namespace Trophic.Properties {
         /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
+        public static string Catalog {
+            get { return ResourceManager.GetString("Catalog", resourceCulture); }
+        }
+
+        public static string TooltipCatalog {
+            get { return ResourceManager.GetString("TooltipCatalog", resourceCulture); }
+        }
+
+        public static string CatalogTitle {
+            get { return ResourceManager.GetString("CatalogTitle", resourceCulture); }
+        }
+
+        public static string CatalogSearchPlaceholder {
+            get { return ResourceManager.GetString("CatalogSearchPlaceholder", resourceCulture); }
+        }
+
+        public static string CatalogResultCount {
+            get { return ResourceManager.GetString("CatalogResultCount", resourceCulture); }
+        }
+
+        public static string CatalogDownloadOpen {
+            get { return ResourceManager.GetString("CatalogDownloadOpen", resourceCulture); }
+        }
+
+        public static string CatalogDownloading {
+            get { return ResourceManager.GetString("CatalogDownloading", resourceCulture); }
+        }
+
+        public static string CatalogSelectFolder {
+            get { return ResourceManager.GetString("CatalogSelectFolder", resourceCulture); }
+        }
+
+        public static string CatalogDownloadFailed {
+            get { return ResourceManager.GetString("CatalogDownloadFailed", resourceCulture); }
+        }
+
+        public static string CatalogNoResults {
+            get { return ResourceManager.GetString("CatalogNoResults", resourceCulture); }
+        }
+
         public static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);

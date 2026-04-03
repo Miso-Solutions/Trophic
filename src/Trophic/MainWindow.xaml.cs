@@ -265,6 +265,12 @@ public partial class MainWindow : Window
         menu.IsOpen = true;
     }
 
+    private async void CatalogButton_Click(object sender, RoutedEventArgs e)
+    {
+        try { await _viewModel.OpenFromCatalogCommand.ExecuteAsync(null); }
+        catch (Exception) { /* Handled by command */ }
+    }
+
     private void UnlockDropdown_Click(object sender, RoutedEventArgs e)
     {
         var btn = (Button)sender;
