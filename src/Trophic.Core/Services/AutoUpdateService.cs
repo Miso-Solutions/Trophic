@@ -88,14 +88,15 @@ public sealed class AutoUpdateService
             await fileStream.WriteAsync(buffer.AsMemory(0, read), ct);
             bytesRead += read;
             if (totalBytes > 0)
-                progress?.Report((double)bytesRead / totalBytes * 0.8); // 80% for download
+                progress?.Report((double)bytesRead / totalBytes * 0.7); // 70% for download
         }
         fileStream.Close();
+        progress?.Report(0.75); // Download finished
 
-        // 3. Extract the ZIP
+        // 3. Extract the ZIP (run on background thread so UI stays responsive)
         var extractDir = Path.Combine(updateDir, "extracted");
-        ZipFile.ExtractToDirectory(zipPath, extractDir, overwriteFiles: true);
-        progress?.Report(0.9);
+        await Task.Run(() => ZipFile.ExtractToDirectory(zipPath, extractDir, overwriteFiles: true), ct);
+        progress?.Report(0.95);
 
         // Clean up ZIP
         try { File.Delete(zipPath); } catch { }
