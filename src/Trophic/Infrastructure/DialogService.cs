@@ -104,9 +104,11 @@ public sealed class DialogService : IDialogService
 
     public DateTime? ShowDateTimePicker(DateTime? initial = null, DateTime? min = null, DateTime? max = null, DateTime? now = null)
     {
+        var effectiveNow = now ?? DateTime.Now;
         var dialog = new Views.DateTimePickerDialog
         {
-            SelectedDateTime = initial ?? now ?? DateTime.Now,
+            SelectedDateTime = initial ?? effectiveNow,
+            Now = effectiveNow,
             Owner = Application.Current.MainWindow
         };
 

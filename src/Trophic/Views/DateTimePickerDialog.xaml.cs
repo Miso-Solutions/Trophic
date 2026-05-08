@@ -8,6 +8,7 @@ namespace Trophic.Views;
 public partial class DateTimePickerDialog : Window
 {
     public DateTime SelectedDateTime { get; set; } = DateTime.Now;
+    public DateTime Now { get; set; } = DateTime.Now;
     private DateTime? _previousDate;
 
     public DateTimePickerDialog()
@@ -18,6 +19,7 @@ public partial class DateTimePickerDialog : Window
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
+        FutureDateConverter.ReferenceToday = Now.Date;
         _previousDate = SelectedDateTime.Date;
         DatePickerControl.SelectedDate = SelectedDateTime.Date;
         HourBox.Text = SelectedDateTime.Hour.ToString();
@@ -30,7 +32,7 @@ public partial class DateTimePickerDialog : Window
     private void DatePicker_SelectedDateChanged(object? sender, SelectionChangedEventArgs e)
     {
         var selected = DatePickerControl.SelectedDate;
-        if (selected == null || selected.Value.Date <= DateTime.Today)
+        if (selected == null || selected.Value.Date <= Now.Date)
         {
             _previousDate = selected;
             if (FutureWarning != null) FutureWarning.Visibility = Visibility.Collapsed;
@@ -58,11 +60,10 @@ public partial class DateTimePickerDialog : Window
 
     private void TodayButton_Click(object sender, RoutedEventArgs e)
     {
-        var now = DateTime.Now;
-        DatePickerControl.SelectedDate = now.Date;
-        HourBox.Text = now.Hour.ToString();
-        MinuteBox.Text = now.Minute.ToString();
-        SecondBox.Text = now.Second.ToString();
+        DatePickerControl.SelectedDate = Now.Date;
+        HourBox.Text = Now.Hour.ToString();
+        MinuteBox.Text = Now.Minute.ToString();
+        SecondBox.Text = Now.Second.ToString();
     }
 
     private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -79,10 +80,14 @@ public sealed class FutureDateConverter : IMultiValueConverter
 {
     public static readonly FutureDateConverter Instance = new();
 
+    /// Set by DateTimePickerDialog to the display-timezone's current date so the
+    /// calendar grey-out matches the user-selected timezone, not the system clock.
+    public static DateTime ReferenceToday { get; set; } = DateTime.Today;
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.Length >= 1 && values[0] is DateTime date)
-            return date.Date > DateTime.Today;
+            return date.Date > ReferenceToday;
         return false;
     }
 
