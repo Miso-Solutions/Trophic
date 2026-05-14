@@ -188,8 +188,21 @@ public sealed class TrophyFileService : ITrophyFileService
         var config = _state.Config;
         var trophyType = config[trophyId].Type;
 
+        // Pre-validate TROPTRNS preconditions to avoid leaving TROPUSR modified
+        // when the transaction-log write would throw. A partial write desyncs
+        // TROPUSR/TROPTRNS and causes PSN to reject with 0x80022D00.
+        if (!_state.IsRpcs3)
+        {
+            if (_state.Transactions[trophyId] != null)
+                throw new TrophyAlreadyEarnedException(trophyId);
+            if (utcTime < _state.Transactions.LastSyncTime)
+                throw new TrophySyncTimeException(
+                    $"Cannot add trophy at {utcTime:u} before last synced time {_state.Transactions.LastSyncTime:u}");
+        }
+
         _state.UserState.UnlockTrophy(trophyId, utcTime);
-        _state.Transactions.PutTrophy(trophyId, trophyType, utcTime);
+        if (!_state.IsRpcs3)
+            _state.Transactions.PutTrophy(trophyId, trophyType, utcTime);
 
         _hasUnsavedChanges = true;
     }
@@ -211,8 +224,20 @@ public sealed class TrophyFileService : ITrophyFileService
 
         var utcTime = ConvertDisplayToUtc(newTime);
 
+        // Pre-validate TROPTRNS preconditions to avoid leaving TROPUSR modified
+        // when the transaction-log write would throw (see UnlockTrophy notes).
+        if (!_state.IsRpcs3)
+        {
+            var record = _state.Transactions[trophyId];
+            if (record == null)
+                throw new TrophyNotFoundException(trophyId);
+            if (record.IsSynced)
+                throw new TrophyAlreadySyncException(trophyId);
+        }
+
         _state.UserState.ChangeTrophyTime(trophyId, utcTime);
-        _state.Transactions.ChangeTime(trophyId, utcTime);
+        if (!_state.IsRpcs3)
+            _state.Transactions.ChangeTime(trophyId, utcTime);
 
         _hasUnsavedChanges = true;
     }

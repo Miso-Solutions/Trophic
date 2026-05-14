@@ -652,12 +652,16 @@ public sealed partial class MainViewModel : ObservableObject
             var nameToId = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             var loosenedToId = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             var earnedById = new Dictionary<int, bool>();
+            var syncedById = new Dictionary<int, bool>();
             foreach (var t in trophyList)
             {
                 nameToId[NormalizeTrophyName(t.Name)] = t.Id;
                 loosenedToId[LoosenTrophyName(t.Name)] = t.Id;
                 earnedById[t.Id] = t.IsEarned;
+                syncedById[t.Id] = t.IsSynced;
             }
+
+            var skippedSynced = new List<string>();
 
             int appliedCount = 0;
             var unmatchedNames = new List<string>();
@@ -694,6 +698,14 @@ public sealed partial class MainViewModel : ObservableObject
                     continue;
                 }
 
+                // Skip synced trophies — modifying them desyncs TROPUSR/TROPTRNS
+                // and causes PSN to reject the upload with 0x80022D00.
+                if (syncedById.TryGetValue(trophyId, out bool isSynced) && isSynced)
+                {
+                    skippedSynced.Add(name);
+                    continue;
+                }
+
                 // Text imports: the typed wall-clock time is in the selected display timezone.
                 // Route directly through UnlockTrophy/ChangeTrophyTime which apply DisplayTimeZone -> UTC.
                 try
@@ -726,12 +738,15 @@ public sealed partial class MainViewModel : ObservableObject
                 toast += string.Format(Properties.Strings.UnmatchedSuffix, unmatchedNames.Count);
             ShowToastNotification(toast);
 
-            if (unmatchedNames.Count > 0)
+            if (unmatchedNames.Count > 0 || skippedSynced.Count > 0)
             {
-                _dialogService.ShowInfo(
-                    string.Format(Properties.Strings.ImportCompleteMessage, appliedCount, unmatchedNames.Count) + "\n" +
-                    string.Join("\n", unmatchedNames.Take(20)),
-                    Properties.Strings.ImportComplete);
+                var body = string.Format(Properties.Strings.ImportCompleteMessage, appliedCount, unmatchedNames.Count);
+                if (unmatchedNames.Count > 0)
+                    body += "\n" + string.Join("\n", unmatchedNames.Take(20));
+                if (skippedSynced.Count > 0)
+                    body += $"\n\nSkipped {skippedSynced.Count} already-synced trophies (modifying them would break PSN sync):\n" +
+                            string.Join("\n", skippedSynced.Take(20));
+                _dialogService.ShowInfo(body, Properties.Strings.ImportComplete);
             }
         }
         catch (Exception ex)
