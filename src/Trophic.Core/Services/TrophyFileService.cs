@@ -523,12 +523,42 @@ public sealed class TrophyFileService : ITrophyFileService
 
     /// <summary>
     /// Converts a DateTime in the selected display timezone to UTC.
+    /// Resolves DST edge cases:
+    /// - Invalid spring-forward times (the missing hour) are advanced past the gap.
+    /// - Ambiguous fall-back times default to the earlier (DST) occurrence,
+    ///   which matches the order a user would see the clock pass through them.
     /// </summary>
     private DateTime ConvertDisplayToUtc(DateTime displayDateTime)
     {
         if (displayDateTime == DateTime.MinValue) return DateTime.MinValue;
-        return TimeZoneInfo.ConvertTimeToUtc(
-            DateTime.SpecifyKind(displayDateTime, DateTimeKind.Unspecified),
-            DisplayTimeZone);
+
+        var unspecified = DateTime.SpecifyKind(displayDateTime, DateTimeKind.Unspecified);
+        var tz = DisplayTimeZone;
+
+        if (tz.IsInvalidTime(unspecified))
+        {
+            var delta = GetDaylightDelta(tz, unspecified);
+            unspecified = unspecified.Add(delta);
+        }
+        else if (tz.IsAmbiguousTime(unspecified))
+        {
+            // Two offsets exist for this wall time; take the larger (DST) one,
+            // which corresponds to the first occurrence on the clock.
+            var offsets = tz.GetAmbiguousTimeOffsets(unspecified);
+            TimeSpan chosen = offsets[0];
+            for (int i = 1; i < offsets.Length; i++)
+                if (offsets[i] > chosen) chosen = offsets[i];
+            return DateTime.SpecifyKind(unspecified - chosen, DateTimeKind.Utc);
+        }
+
+        return TimeZoneInfo.ConvertTimeToUtc(unspecified, tz);
+    }
+
+    private static TimeSpan GetDaylightDelta(TimeZoneInfo tz, DateTime dt)
+    {
+        foreach (var rule in tz.GetAdjustmentRules())
+            if (rule.DateStart <= dt && dt <= rule.DateEnd)
+                return rule.DaylightDelta;
+        return TimeSpan.FromHours(1);
     }
 }
