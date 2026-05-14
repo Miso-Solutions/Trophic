@@ -650,10 +650,12 @@ public sealed partial class MainViewModel : ObservableObject
             var lines = await File.ReadAllLinesAsync(filePath);
             var trophyList = _trophyFileService.GetTrophyList();
             var nameToId = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            var loosenedToId = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             var earnedById = new Dictionary<int, bool>();
             foreach (var t in trophyList)
             {
                 nameToId[NormalizeTrophyName(t.Name)] = t.Id;
+                loosenedToId[LoosenTrophyName(t.Name)] = t.Id;
                 earnedById[t.Id] = t.IsEarned;
             }
 
@@ -678,7 +680,8 @@ public sealed partial class MainViewModel : ObservableObject
                 var name = line[..separatorIndex].Trim();
                 var dateStr = line[(separatorIndex + 1)..].Trim();
 
-                if (!nameToId.TryGetValue(NormalizeTrophyName(name), out int trophyId))
+                if (!nameToId.TryGetValue(NormalizeTrophyName(name), out int trophyId) &&
+                    !loosenedToId.TryGetValue(LoosenTrophyName(name), out trophyId))
                 {
                     unmatchedNames.Add(name);
                     continue;
@@ -741,11 +744,25 @@ public sealed partial class MainViewModel : ObservableObject
     /// emit but PS3 trophy files store as ASCII. Lets text-file import match either form.
     private static string NormalizeTrophyName(string name)
     {
-        return name
-            .Replace('‘', '\'').Replace('’', '\'')   // curly single quotes
-            .Replace('“', '"').Replace('”', '"')   // curly double quotes
-            .Replace('–', '-').Replace('—', '-')   // en/em dash
-            .Replace("…", "...");                          // horizontal ellipsis
+        var normalized = name
+            .Replace('‘', '\'').Replace('’', '\'')      // curly single quotes
+            .Replace('“', '"').Replace('”', '"')      // curly double quotes
+            .Replace('–', '-').Replace('—', '-')      // en/em dash
+            .Replace("…", "...")                            // horizontal ellipsis
+            .Replace(' ', ' ')                          // NBSP -> space
+            .Replace('​', ' ').Replace('‌', ' ').Replace('‍', ' ') // zero-width chars
+            .Replace('﻿', ' ');                         // BOM
+        return System.Text.RegularExpressions.Regex.Replace(normalized, @"\s+", " ").Trim();
+    }
+
+    /// Last-resort match key: alphanumerics only, lowercased. Defeats spacing, punctuation,
+    /// and case differences that a strict comparison would miss.
+    private static string LoosenTrophyName(string name)
+    {
+        var sb = new System.Text.StringBuilder(name.Length);
+        foreach (var c in name)
+            if (char.IsLetterOrDigit(c)) sb.Append(char.ToLowerInvariant(c));
+        return sb.ToString();
     }
 
     [RelayCommand]
