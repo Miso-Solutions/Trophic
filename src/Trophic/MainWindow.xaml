@@ -435,18 +435,19 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,2">
                         <ComboBox ItemsSource="{Binding AvailableTimeZones}"
                                   SelectedItem="{Binding SelectedTimeZone}"
-                                  DisplayMemberPath="DisplayName"
                                   FontSize="10" MaxWidth="220" MinWidth="140"
                                   VerticalAlignment="Center"
                                   ToolTip="{x:Static props:Strings.TooltipTimezone}"
-                                  AutomationProperties.Name="Display timezone"/>
-                        <CheckBox IsChecked="{Binding UseDaylightSaving}"
-                                  IsEnabled="{Binding CanApplyDst}"
-                                  Content="{x:Static props:Strings.DST}" FontSize="10"
-                                  Foreground="{StaticResource TextSecondaryBrush}"
-                                  VerticalAlignment="Center" Margin="6,0,0,0"
-                                  ToolTip="{x:Static props:Strings.TooltipDst}"
-                                  AutomationProperties.Name="Daylight saving time adjustment"/>
+                                  AutomationProperties.Name="Display timezone">
+                            <ComboBox.Resources>
+                                <conv:TimeZoneLabelConverter x:Key="TimeZoneLabelConverter"/>
+                            </ComboBox.Resources>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource TimeZoneLabelConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </StackPanel>
                     <Rectangle Width="1" Fill="{StaticResource BorderBrush}" Margin="12,2" VerticalAlignment="Stretch"/>
 

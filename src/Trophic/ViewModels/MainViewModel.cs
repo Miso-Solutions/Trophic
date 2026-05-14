@@ -181,71 +181,24 @@ public sealed partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(UserStatusText))]
     private string _accountId = string.Empty;
     [ObservableProperty] private TimeZoneInfo _selectedTimeZone = TimeZoneInfo.Local;
-    [ObservableProperty] private bool _useDaylightSaving = true;
-    private TimeZoneInfo? _cachedEffectiveTimeZone;
 
     public ReadOnlyCollection<TimeZoneInfo> AvailableTimeZones { get; } = TimeZoneInfo.GetSystemTimeZones();
 
-    public bool CanApplyDst => SelectedTimeZone.SupportsDaylightSavingTime;
-
-    partial void OnSelectedTimeZoneChanged(TimeZoneInfo value)
-    {
-        OnPropertyChanged(nameof(CanApplyDst));
-        ApplyTimeZone();
-    }
-    partial void OnUseDaylightSavingChanged(bool value) => ApplyTimeZone();
+    partial void OnSelectedTimeZoneChanged(TimeZoneInfo value) => ApplyTimeZone();
 
     private void ApplyTimeZone()
     {
-        _cachedEffectiveTimeZone = null;
-        _trophyFileService.DisplayTimeZone = GetEffectiveTimeZone();
+        _trophyFileService.DisplayTimeZone = SelectedTimeZone;
         RefreshTrophyList();
-    }
-
-    private TimeZoneInfo GetEffectiveTimeZone()
-    {
-        if (_cachedEffectiveTimeZone != null)
-            return _cachedEffectiveTimeZone;
-
-        var tz = SelectedTimeZone;
-        if (!tz.SupportsDaylightSavingTime)
-        {
-            _cachedEffectiveTimeZone = tz;
-            return tz;
-        }
-
-        // Use fixed-offset timezones so the DST toggle always has a visible effect
-        // regardless of whether a given trophy was earned in summer or winter.
-        TimeZoneInfo result;
-        if (UseDaylightSaving)
-        {
-            var rules = tz.GetAdjustmentRules();
-            var dstDelta = rules.Length > 0 ? rules.Max(r => r.DaylightDelta) : TimeSpan.Zero;
-            result = TimeZoneInfo.CreateCustomTimeZone(
-                tz.Id + "_DST",
-                tz.BaseUtcOffset + dstDelta,
-                tz.DisplayName + " (DST)",
-                tz.DaylightName);
-        }
-        else
-        {
-            result = TimeZoneInfo.CreateCustomTimeZone(
-                tz.Id + "_NoDST",
-                tz.BaseUtcOffset,
-                tz.DisplayName + " (No DST)",
-                tz.StandardName);
-        }
-
-        _cachedEffectiveTimeZone = result;
-        return result;
     }
 
     /// <summary>
     /// Returns the current moment in the selected display timezone.
+    /// Native DST rules are applied automatically.
     /// </summary>
     private DateTime NowInDisplayTimeZone()
     {
-        return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, GetEffectiveTimeZone());
+        return TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, SelectedTimeZone);
     }
 
     /// <summary>
@@ -257,7 +210,7 @@ public sealed partial class MainViewModel : ObservableObject
         var utc = TimeZoneInfo.ConvertTimeToUtc(
             DateTime.SpecifyKind(localTime, DateTimeKind.Local),
             TimeZoneInfo.Local);
-        return TimeZoneInfo.ConvertTimeFromUtc(utc, GetEffectiveTimeZone());
+        return TimeZoneInfo.ConvertTimeFromUtc(utc, SelectedTimeZone);
     }
 
     public bool IsSaveButtonEnabled => HasUnsavedChanges || SaveSucceeded || HasProfileChange;
