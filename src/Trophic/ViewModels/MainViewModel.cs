@@ -650,10 +650,14 @@ public sealed partial class MainViewModel : ObservableObject
             var lines = await File.ReadAllLinesAsync(filePath);
             var trophyList = _trophyFileService.GetTrophyList();
             var nameToId = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            var earnedById = new Dictionary<int, bool>();
             foreach (var t in trophyList)
+            {
                 nameToId[t.Name] = t.Id;
+                earnedById[t.Id] = t.IsEarned;
+            }
 
-            var timestamps = new List<ScrapedTimestamp>();
+            int appliedCount = 0;
             var unmatchedNames = new List<string>();
 
             foreach (var rawLine in lines)
@@ -687,11 +691,23 @@ public sealed partial class MainViewModel : ObservableObject
                     continue;
                 }
 
-                var unix = new DateTimeOffset(dateTime, TimeSpan.Zero).ToUnixTimeSeconds();
-                timestamps.Add(new ScrapedTimestamp(trophyId, unix));
+                // Text imports: the typed wall-clock time is in the selected display timezone.
+                // Route directly through UnlockTrophy/ChangeTrophyTime which apply DisplayTimeZone -> UTC.
+                try
+                {
+                    if (earnedById.TryGetValue(trophyId, out bool isEarned) && isEarned)
+                        _trophyFileService.ChangeTrophyTime(trophyId, dateTime);
+                    else
+                        _trophyFileService.UnlockTrophy(trophyId, dateTime);
+                    appliedCount++;
+                }
+                catch (Exception ex)
+                {
+                    unmatchedNames.Add($"Failed '{name}': {ex.Message}");
+                }
             }
 
-            if (timestamps.Count == 0)
+            if (appliedCount == 0)
             {
                 var msg = Properties.Strings.NoValidTimestampsInFile;
                 if (unmatchedNames.Count > 0)
@@ -700,10 +716,9 @@ public sealed partial class MainViewModel : ObservableObject
                 return;
             }
 
-            _trophyFileService.ApplyScrapedTimestamps(timestamps);
             RefreshTrophyList();
 
-            var toast = string.Format(Properties.Strings.ImportedFromFile, timestamps.Count);
+            var toast = string.Format(Properties.Strings.ImportedFromFile, appliedCount);
             if (unmatchedNames.Count > 0)
                 toast += string.Format(Properties.Strings.UnmatchedSuffix, unmatchedNames.Count);
             ShowToastNotification(toast);
@@ -711,7 +726,7 @@ public sealed partial class MainViewModel : ObservableObject
             if (unmatchedNames.Count > 0)
             {
                 _dialogService.ShowInfo(
-                    string.Format(Properties.Strings.ImportCompleteMessage, timestamps.Count, unmatchedNames.Count) + "\n" +
+                    string.Format(Properties.Strings.ImportCompleteMessage, appliedCount, unmatchedNames.Count) + "\n" +
                     string.Join("\n", unmatchedNames.Take(20)),
                     Properties.Strings.ImportComplete);
             }
