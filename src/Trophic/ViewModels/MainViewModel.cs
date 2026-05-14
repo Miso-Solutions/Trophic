@@ -653,7 +653,7 @@ public sealed partial class MainViewModel : ObservableObject
             var earnedById = new Dictionary<int, bool>();
             foreach (var t in trophyList)
             {
-                nameToId[t.Name] = t.Id;
+                nameToId[NormalizeTrophyName(t.Name)] = t.Id;
                 earnedById[t.Id] = t.IsEarned;
             }
 
@@ -678,7 +678,7 @@ public sealed partial class MainViewModel : ObservableObject
                 var name = line[..separatorIndex].Trim();
                 var dateStr = line[(separatorIndex + 1)..].Trim();
 
-                if (!nameToId.TryGetValue(name, out int trophyId))
+                if (!nameToId.TryGetValue(NormalizeTrophyName(name), out int trophyId))
                 {
                     unmatchedNames.Add(name);
                     continue;
@@ -735,6 +735,17 @@ public sealed partial class MainViewModel : ObservableObject
         {
             _dialogService.ShowError($"[{ErrorCodes.NetImportFailed}] {Properties.Strings.ErrorFileImportFailed}\n{ex.Message}");
         }
+    }
+
+    /// Normalizes typographic punctuation that web sources (PSNProfiles, Exophase, etc.)
+    /// emit but PS3 trophy files store as ASCII. Lets text-file import match either form.
+    private static string NormalizeTrophyName(string name)
+    {
+        return name
+            .Replace('‘', '\'').Replace('’', '\'')   // curly single quotes
+            .Replace('“', '"').Replace('”', '"')   // curly double quotes
+            .Replace('–', '-').Replace('—', '-')   // en/em dash
+            .Replace("…", "...");                          // horizontal ellipsis
     }
 
     [RelayCommand]
