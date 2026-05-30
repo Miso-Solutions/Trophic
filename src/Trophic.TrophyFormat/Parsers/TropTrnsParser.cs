@@ -29,6 +29,7 @@ public sealed class TropTrnsParser
     private TrnsInitTime? _initTime;
     private readonly List<TrnsRecord> _trophyInfos = new();
     private readonly Dictionary<int, TrnsRecord> _trophyIndex = new();
+    private int _originalRecordCount;
 
     // Raw file data for re-serialization
     private byte[] _rawFileData = Array.Empty<byte>();
@@ -148,6 +149,7 @@ public sealed class TropTrnsParser
             }
         }
 
+        _originalRecordCount = _trophyInfos.Count;
         RebuildIndex();
     }
 
@@ -247,16 +249,16 @@ public sealed class TropTrnsParser
         var type3 = _typeRecords.FirstOrDefault(t => t.Id == 3);
         var type4 = _typeRecords.FirstOrDefault(t => t.Id == 4);
 
-        // Resize type-4 block if the record count changed since parse.
-        // Without this the new records overflow the original block, corrupting
-        // downstream bytes and causing PSN to reject the file or silently drop
-        // the added trophies.
-        if (type4 != null)
+        // Resize type-4 block ONLY when the record count actually changed since
+        // parse. Comparing computed-vs-stored DataSize would falsely trigger on
+        // files whose original block carries trailing padding, shrinking the
+        // file and corrupting it (PSN error 0x80030C25 on next sync).
+        int recordDelta = _trophyInfos.Count - _originalRecordCount;
+        if (type4 != null && recordDelta != 0)
         {
-            int expectedDataSize = BlockHeaderSize + TrnsInitTime.Size
-                                 + _trophyInfos.Count * (BlockHeaderSize + TrnsRecord.Size);
-            if (expectedDataSize != (int)type4.DataSize)
-                ResizeType4Block(type4, expectedDataSize);
+            int newDataSize = (int)type4.DataSize
+                            + recordDelta * (BlockHeaderSize + TrnsRecord.Size);
+            ResizeType4Block(type4, newDataSize);
         }
 
         var data = _rawFileData.AsSpan();
@@ -295,6 +297,7 @@ public sealed class TropTrnsParser
         }
 
         File.WriteAllBytes(_filePath, _rawFileData);
+        _originalRecordCount = _trophyInfos.Count;
     }
 
     /// <summary>
