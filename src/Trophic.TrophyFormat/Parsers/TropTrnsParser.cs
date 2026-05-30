@@ -244,10 +244,22 @@ public sealed class TropTrnsParser
     {
         if (_isRpcs3) return;
 
-        var data = _rawFileData.AsSpan();
-
         var type3 = _typeRecords.FirstOrDefault(t => t.Id == 3);
         var type4 = _typeRecords.FirstOrDefault(t => t.Id == 4);
+
+        // Resize type-4 block if the record count changed since parse.
+        // Without this the new records overflow the original block, corrupting
+        // downstream bytes and causing PSN to reject the file or silently drop
+        // the added trophies.
+        if (type4 != null)
+        {
+            int expectedDataSize = BlockHeaderSize + TrnsInitTime.Size
+                                 + _trophyInfos.Count * (BlockHeaderSize + TrnsRecord.Size);
+            if (expectedDataSize != (int)type4.DataSize)
+                ResizeType4Block(type4, expectedDataSize);
+        }
+
+        var data = _rawFileData.AsSpan();
 
         // Patch type 3 block: update trophy counts
         if (type3 != null)
@@ -283,5 +295,78 @@ public sealed class TropTrnsParser
         }
 
         File.WriteAllBytes(_filePath, _rawFileData);
+    }
+
+    /// <summary>
+    /// Resize the type-4 data block to fit the current record count.
+    /// Allocates a new raw buffer, shifts trailing bytes, updates the type-4
+    /// DataSize field and any following type-record offsets, and uses the first
+    /// existing record's block header as the template for newly-appended slots.
+    /// </summary>
+    private void ResizeType4Block(TypeRecord type4, int newDataSize)
+    {
+        int oldDataSize = (int)type4.DataSize;
+        int delta = newDataSize - oldDataSize;
+        int blockStart = (int)type4.Offset;
+        int blockEndOld = blockStart + oldDataSize;
+        int trailingLen = _rawFileData.Length - blockEndOld;
+
+        // Capture a template block header for new record slots.
+        // Use the first existing record's header if present; otherwise reuse the
+        // init-time block header. Both live inside the type-4 region.
+        byte[] templateHeader = new byte[BlockHeaderSize];
+        int firstRecordHeaderOffset = blockStart + BlockHeaderSize + TrnsInitTime.Size;
+        int fallbackHeaderOffset = blockStart; // init time block header
+        int sourceHeader = oldDataSize >= BlockHeaderSize + TrnsInitTime.Size + BlockHeaderSize
+            ? firstRecordHeaderOffset : fallbackHeaderOffset;
+        _rawFileData.AsSpan(sourceHeader, BlockHeaderSize).CopyTo(templateHeader);
+
+        // Build the new buffer.
+        var newBuffer = new byte[_rawFileData.Length + delta];
+
+        // 1. Copy bytes before the type-4 block as-is (file header + type record table + any earlier blocks).
+        _rawFileData.AsSpan(0, blockStart).CopyTo(newBuffer);
+
+        // 2. Copy the overlapping portion of the original type-4 block (preserves existing block headers
+        //    and record bytes that the upcoming Save loop will repatch).
+        int copyLen = Math.Min(oldDataSize, newDataSize);
+        _rawFileData.AsSpan(blockStart, copyLen).CopyTo(newBuffer.AsSpan(blockStart));
+
+        // 3. For grown blocks: stamp the template header into each newly-appended record slot.
+        //    Record data bytes stay zero — the Save loop will write them via WriteTo.
+        if (delta > 0)
+        {
+            int oldRecordCount = (oldDataSize - BlockHeaderSize - TrnsInitTime.Size)
+                               / (BlockHeaderSize + TrnsRecord.Size);
+            int slotStride = BlockHeaderSize + TrnsRecord.Size;
+            int slotBase = blockStart + BlockHeaderSize + TrnsInitTime.Size;
+            for (int i = oldRecordCount; i < _trophyInfos.Count; i++)
+            {
+                int slotOffset = slotBase + i * slotStride;
+                templateHeader.CopyTo(newBuffer.AsSpan(slotOffset, BlockHeaderSize));
+            }
+        }
+
+        // 4. Copy the trailing bytes (anything after the original type-4 block) to the shifted position.
+        if (trailingLen > 0)
+            _rawFileData.AsSpan(blockEndOld, trailingLen).CopyTo(newBuffer.AsSpan(blockStart + newDataSize));
+
+        // 5. Update the type-4 DataSize in memory and in the type-record table bytes.
+        type4.DataSize = newDataSize;
+        int type4Index = _typeRecords.IndexOf(type4);
+        int type4TableOffset = TrophyFileHeader.Size + type4Index * TypeRecord.Size;
+        type4.WriteTo(newBuffer.AsSpan(type4TableOffset, TypeRecord.Size));
+
+        // 6. Shift any type records whose Offset is after the type-4 block.
+        foreach (var tr in _typeRecords)
+        {
+            if (tr == type4 || tr.Offset <= type4.Offset) continue;
+            tr.Offset += delta;
+            int idx = _typeRecords.IndexOf(tr);
+            int trTableOffset = TrophyFileHeader.Size + idx * TypeRecord.Size;
+            tr.WriteTo(newBuffer.AsSpan(trTableOffset, TypeRecord.Size));
+        }
+
+        _rawFileData = newBuffer;
     }
 }
