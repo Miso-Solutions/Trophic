@@ -6,7 +6,10 @@ namespace Trophic.Core.Services;
 
 public sealed class TrophyDownloadService
 {
-    private const string RepoApiBase = "https://api.github.com/repos/Miso-Solutions/The-Miso-PlayStation-Database";
+    // Hit the current repo name directly. The old name only resolves via a GitHub 301
+    // redirect, and .NET strips the Authorization header on redirects, which 404s
+    // private-repo requests — so old-name calls fail. The direct name avoids that.
+    private const string RepoApiBase = "https://api.github.com/repos/Miso-Solutions/Miso-PS3-Database";
 
     private static string Token
     {
@@ -117,6 +120,8 @@ public sealed class TrophyDownloadService
                 throw new Exception("GitHub API rate limit reached. Please try again in about an hour.");
             throw new Exception("Access denied. The download token may have expired.");
         }
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            throw new Exception("This trophy set isn't available for download yet. Please try another title or check back later.");
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync(ct);
@@ -127,7 +132,7 @@ public sealed class TrophyDownloadService
                 return asset.GetProperty("url").GetString()!;
         }
 
-        throw new Exception($"Asset {zipName} not found in release {npwrId}");
+        throw new Exception("This trophy set isn't available for download yet. Please try another title or check back later.");
     }
 
     /// <summary>
