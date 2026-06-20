@@ -17,9 +17,11 @@ public sealed class ProfileService : IProfileService
         if (!Directory.Exists(_profilesDir))
             return Array.Empty<string>();
 
+        // Exclude transient temp profiles staged by TrophyResignService so they don't
+        // bleed into the user-visible dropdown.
         return Directory.GetFiles(_profilesDir, "*.SFO")
             .Select(Path.GetFileNameWithoutExtension)
-            .Where(n => n != null)
+            .Where(n => n != null && !n.StartsWith(TrophyResignService.TempProfilePrefix, StringComparison.Ordinal))
             .Cast<string>()
             .ToList();
     }

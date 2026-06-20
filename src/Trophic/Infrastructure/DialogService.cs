@@ -1,5 +1,6 @@
 using System.Windows;
 using Trophic.Core.Interfaces;
+using Trophic.Core.Licensing;
 using Trophic.Core.Models;
 using Trophic.Core.Services;
 using Trophic.Views;
@@ -10,11 +11,13 @@ public sealed class DialogService : IDialogService
 {
     private readonly ISettingsService _settings;
     private readonly CatalogService _catalog;
+    private readonly LicenseService _license;
 
-    public DialogService(ISettingsService settings, CatalogService catalog)
+    public DialogService(ISettingsService settings, CatalogService catalog, LicenseService license)
     {
         _settings = settings;
         _catalog = catalog;
+        _license = license;
     }
 
     public string? BrowseFolder(string? description = null)
@@ -133,5 +136,15 @@ public sealed class DialogService : IDialogService
         };
 
         return dialog.ShowDialog() == true ? dialog.SelectedEntry : null;
+    }
+
+    public bool ShowLicenseDialog()
+    {
+        var dialog = new Views.LicenseDialog(_license)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        dialog.ShowDialog();
+        return _license.IsEntitled();
     }
 }

@@ -31,10 +31,13 @@ public sealed class TrophyFileService : ITrophyFileService
 
     public TimeZoneInfo DisplayTimeZone { get; set; } = TimeZoneInfo.Local;
 
-    public TrophyFileService(IPfdToolService pfdTool)
+    public TrophyFileService(IPfdToolService pfdTool, ConsoleKeysService? consoleKeysService = null)
     {
         _pfdTool = pfdTool;
+        _consoleKeysService = consoleKeysService;
     }
+
+    private readonly ConsoleKeysService? _consoleKeysService;
 
     public async Task OpenAsync(string folderPath)
     {
@@ -114,7 +117,16 @@ public sealed class TrophyFileService : ITrophyFileService
         if (!_state.IsRpcs3)
         {
             await _pfdTool.EncryptTrophyAsync(_state.TempPath);
-            await _pfdTool.UpdatePfdAsync(_state.TempPath);
+
+            // When the user has configured Console ID / User ID, the per-user PARAM.SFO
+            // hashes 2 and 3 are computed instead of being preserved from the source file.
+            // This matches Apollo Save Tool's behavior and is required for PSN sync to
+            // accept the file on the user's account.
+            var keys = _consoleKeysService?.GetKeys();
+            if (keys != null && keys.IsConfigured)
+                await _pfdTool.UpdatePfdAsync(_state.TempPath, keys.ConsoleId, keys.UserId, keys.AuthenticationId);
+            else
+                await _pfdTool.UpdatePfdAsync(_state.TempPath);
         }
 
         // Copy back to original location

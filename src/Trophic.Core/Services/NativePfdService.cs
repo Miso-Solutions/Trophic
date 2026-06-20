@@ -43,13 +43,23 @@ public sealed class NativePfdService : IPfdToolService
         }, ct);
     }
 
-    public async Task UpdatePfdAsync(string directoryPath, CancellationToken ct = default)
+    public Task UpdatePfdAsync(string directoryPath, CancellationToken ct = default) =>
+        UpdatePfdAsync(directoryPath, null, null, null, ct);
+
+    public Task UpdatePfdAsync(string directoryPath, byte[]? consoleId, byte[]? userId, byte[]? authenticationId,
+        CancellationToken ct = default) =>
+        UpdatePfdAsync(directoryPath, consoleId, userId, authenticationId, null, null, ct);
+
+    public async Task UpdatePfdAsync(string directoryPath, byte[]? consoleId, byte[]? userId, byte[]? authenticationId,
+        byte[]? discHashKey, Func<string, byte[]?>? secureFileIdLookup, CancellationToken ct = default)
     {
         await Task.Run(() =>
         {
+            ct.ThrowIfCancellationRequested();
             var pfd = ParsePfd(directoryPath);
-            PfdFileHandler.UpdateAllHashes(pfd, directoryPath);
+            PfdFileHandler.UpdateAllHashes(pfd, directoryPath, consoleId, userId, authenticationId, discHashKey, secureFileIdLookup, ct);
 
+            ct.ThrowIfCancellationRequested();
             var pfdPath = Path.Combine(directoryPath, "PARAM.PFD");
             File.WriteAllBytes(pfdPath, PfdFileHandler.Serialize(pfd));
         }, ct);

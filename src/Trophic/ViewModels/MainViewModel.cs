@@ -26,6 +26,7 @@ public sealed partial class MainViewModel : ObservableObject
     private readonly Core.Services.AutoUpdateService _autoUpdater;
     private readonly Core.Services.DiagnosticLogger _logger;
     private readonly Core.Services.BackupService _backupService;
+    private readonly Core.Licensing.LicenseService _licenseService;
     private string? _catalogDownloadFolder;
 
     public static string AppVersion => System.Reflection.Assembly.GetExecutingAssembly()
@@ -44,7 +45,8 @@ public sealed partial class MainViewModel : ObservableObject
         Core.Services.UpdateCheckService updateChecker,
         Core.Services.AutoUpdateService autoUpdater,
         Core.Services.DiagnosticLogger logger,
-        Core.Services.BackupService backupService)
+        Core.Services.BackupService backupService,
+        Core.Licensing.LicenseService licenseService)
     {
         _trophyFileService = trophyFileService;
         _dialogService = dialogService;
@@ -57,6 +59,7 @@ public sealed partial class MainViewModel : ObservableObject
         _autoUpdater = autoUpdater;
         _logger = logger;
         _backupService = backupService;
+        _licenseService = licenseService;
 
         Trophies = new ObservableCollection<TrophyRowViewModel>();
         RecentFiles = new ObservableCollection<RecentFileEntry>(_recentFiles.GetEntries());
@@ -296,6 +299,24 @@ public sealed partial class MainViewModel : ObservableObject
     {
         var entry = _dialogService.ShowCatalogDialog();
         if (entry == null) return;
+
+        // Soft paywall: browsing the catalog is free, downloading requires a license.
+        // Only enforced once catalog licensing is switched on (after the license server
+        // is deployed). Until then the Catalog is free (interim direct-download).
+        if (Core.Licensing.LicensingOptions.Enabled && !_licenseService.IsEntitled())
+        {
+            // A valid license whose offline grace lapsed recovers with a single server
+            // round-trip — try that before prompting for a key, so a still-valid user
+            // isn't asked to re-enter anything just because they were offline a while.
+            try { await _licenseService.RefreshAsync(); }
+            catch { /* offline or transient — fall through to the dialog */ }
+
+            if (!_licenseService.IsEntitled())
+            {
+                var entitled = _dialogService.ShowLicenseDialog();
+                if (!entitled) return;
+            }
+        }
 
         // Pick download folder (reuse within session)
         if (_catalogDownloadFolder == null || !System.IO.Directory.Exists(_catalogDownloadFolder))
