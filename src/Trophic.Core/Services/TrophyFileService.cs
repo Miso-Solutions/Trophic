@@ -185,24 +185,30 @@ public sealed class TrophyFileService : ITrophyFileService
         if (_state == null) return;
 
         var utcTime = ConvertDisplayToUtc(timestamp);
-        var config = _state.Config;
-        var trophyType = config[trophyId].Type;
+        var usrInfo = _state.UserState.TrophyTimeInfos[trophyId];
+        if (usrInfo.IsSynced) throw new TrophyAlreadySyncException(trophyId);
+        if (usrInfo.IsEarned) throw new TrophyAlreadyEarnedException(trophyId);
 
-        // Pre-validate TROPTRNS preconditions to avoid leaving TROPUSR modified
-        // when the transaction-log write would throw. A partial write desyncs
-        // TROPUSR/TROPTRNS and causes PSN to reject with 0x80022D00.
+        // Pre-validate the TROPTRNS write so a failure never leaves TROPUSR half-modified
+        // (a partial write desyncs the files and causes PSN 0x80022D00). Catalog trophy
+        // sets ship with TROPTRNS records but a cleared TROPUSR, so an already-present
+        // (unsynced) record is reconciled — its time is updated — rather than refused.
+        Trophic.TrophyFormat.Models.TrnsRecord? existing = null;
         if (!_state.IsRpcs3)
         {
-            if (_state.Transactions[trophyId] != null)
-                throw new TrophyAlreadyEarnedException(trophyId);
-            if (utcTime < _state.Transactions.LastSyncTime)
+            existing = _state.Transactions[trophyId];
+            if (existing is { IsSynced: true }) throw new TrophyAlreadySyncException(trophyId);
+            if (existing == null && utcTime < _state.Transactions.LastSyncTime)
                 throw new TrophySyncTimeException(
                     $"Cannot add trophy at {utcTime:u} before last synced time {_state.Transactions.LastSyncTime:u}");
         }
 
         _state.UserState.UnlockTrophy(trophyId, utcTime);
         if (!_state.IsRpcs3)
-            _state.Transactions.PutTrophy(trophyId, trophyType, utcTime);
+        {
+            if (existing != null) _state.Transactions.ChangeTime(trophyId, utcTime);
+            else _state.Transactions.PutTrophy(trophyId, _state.Config[trophyId].Type, utcTime);
+        }
 
         _hasUnsavedChanges = true;
     }
