@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Uploads PS3 trophy ZIP files to GitHub Releases on The-Miso-PlayStation-Database repo.
+    Uploads PS3 trophy ZIP files to GitHub Releases on Miso-PS3-Database repo.
 
 .DESCRIPTION
     For each PS3_NPWR*_00.zip file in the source folder:
@@ -13,7 +13,7 @@
     Folder containing PS3_NPWR*_00.zip files. Default: D:\Workbench\PlayStation Trophies\Upload
 
 .PARAMETER Repo
-    GitHub repo in owner/name format. Default: Miso-Solutions/The-Miso-PlayStation-Database
+    GitHub repo in owner/name format. Default: Miso-Solutions/Miso-PS3-Database
 
 .EXAMPLE
     .\upload-trophies.ps1
@@ -22,7 +22,7 @@
 
 param(
     [string]$SourceFolder = "D:\Workbench\PlayStation Trophies\Upload",
-    [string]$Repo = "Miso-Solutions/The-Miso-PlayStation-Database"
+    [string]$Repo = "Miso-Solutions/Miso-PS3-Database"
 )
 
 # Verify gh CLI is available

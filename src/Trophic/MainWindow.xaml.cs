@@ -22,6 +22,28 @@ public partial class MainWindow : Window
         viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
         PreviewKeyDown += MainWindow_PreviewKeyDown;
+        Closing += MainWindow_Closing;
+    }
+
+    private async void MainWindow_Closing(object? sender, CancelEventArgs e)
+    {
+        // If a resign batch is running, give it up to 30 seconds to reach a safe stop
+        // point before the process is torn down. Cancel first so the loop drops out
+        // at the next item boundary.
+        if (_resignWindow == null) return;
+        var wait = _resignWindow.WaitForBatchAsync();
+        if (wait.IsCompleted) return;
+
+        e.Cancel = true;
+        try
+        {
+            await Task.WhenAny(wait, Task.Delay(TimeSpan.FromSeconds(30)));
+        }
+        catch { /* swallow — proceeding to close regardless */ }
+
+        // Re-issue close now that the batch has stopped (or timed out).
+        Closing -= MainWindow_Closing;
+        Close();
     }
 
     private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -328,6 +350,43 @@ public partial class MainWindow : Window
 
     private void ExitMenuItem_Click(object sender, RoutedEventArgs e)
         => _viewModel.ExitCommand.Execute(null);
+
+    private void ConsoleKeys_Click(object sender, RoutedEventArgs e)
+    {
+        var service = (App.Current as App)?.ConsoleKeysService;
+        if (service == null) return;
+        var dialog = new Views.ConsoleKeysDialog(service) { Owner = this };
+        dialog.ShowDialog();
+    }
+
+    private void License_Click(object sender, RoutedEventArgs e)
+    {
+        var service = (App.Current as App)?.LicenseService;
+        if (service == null) return;
+        var dialog = new Views.LicenseDialog(service) { Owner = this };
+        dialog.ShowDialog();
+    }
+
+    private Views.SaveResignWindow? _resignWindow;
+
+    private void ResignSaves_Click(object sender, RoutedEventArgs e)
+    {
+        if (_resignWindow != null)
+        {
+            // Window already exists — bring it forward instead of opening a duplicate.
+            if (_resignWindow.WindowState == WindowState.Minimized)
+                _resignWindow.WindowState = WindowState.Normal;
+            _resignWindow.Activate();
+            return;
+        }
+
+        var app = App.Current as App;
+        if (app?.SaveResignService == null || app.TrophyResignService == null || app.ProfileService == null || app.ConsoleKeysService == null) return;
+        var vm = new ViewModels.SaveResignViewModel(app.SaveResignService, app.TrophyResignService, app.ProfileService, app.ConsoleKeysService, app.GamesConfService);
+        _resignWindow = new Views.SaveResignWindow(vm) { Owner = this };
+        _resignWindow.Closed += (_, _) => _resignWindow = null;
+        _resignWindow.Show();
+    }
 
     private void BackupDropdown_Click(object sender, RoutedEventArgs e)
     {

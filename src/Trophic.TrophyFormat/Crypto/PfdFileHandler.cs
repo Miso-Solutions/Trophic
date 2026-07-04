@@ -140,14 +140,21 @@ public static class PfdFileHandler
 
     /// <summary>
     /// Recomputes all HMAC-SHA1 hashes in the PFD: per-file hashes, Y-table, bottom hash, top hash.
+    /// When <paramref name="consoleId"/>, <paramref name="userId"/>, and <paramref name="authenticationId"/>
+    /// are supplied, the per-user hashes 2 (DHK_CID2) and 3 (AID_UID) on PARAM.SFO are also recomputed
+    /// instead of being preserved from the source file.
     /// </summary>
-    public static void UpdateAllHashes(PfdFile pfd, string directoryPath)
+    public static void UpdateAllHashes(PfdFile pfd, string directoryPath,
+        byte[]? consoleId = null, byte[]? userId = null, byte[]? authenticationId = null,
+        byte[]? discHashKey = null, Func<string, byte[]?>? secureFileIdLookup = null,
+        CancellationToken ct = default)
     {
         // 1. Update per-file HMAC hashes for each entry
         for (int i = 0; i < (int)pfd.NumUsed; i++)
         {
+            ct.ThrowIfCancellationRequested();
             var entry = pfd.Entries[i];
-            UpdateFileHashes(pfd, entry, directoryPath);
+            UpdateFileHashes(pfd, entry, directoryPath, consoleId, userId, authenticationId, discHashKey, secureFileIdLookup);
         }
 
         // 1b. Sync modified fields back to RawBytes so Y-table hashing reads updated data
@@ -172,6 +179,7 @@ public static class PfdFileHandler
         // 3. Compute Y-table entry hashes (entry signature) for used entries
         for (int i = 0; i < (int)pfd.NumUsed; i++)
         {
+            ct.ThrowIfCancellationRequested();
             var entry = pfd.Entries[i];
             int htIndex = pfd.CalculateHashTableIndex(entry.FileName);
 
@@ -202,7 +210,9 @@ public static class PfdFileHandler
     /// For trophy files: hash 0 (FILE), hash 2 (DHK_CID2), hash 3 (AID_UID). Hash 1 (CID) is skipped.
     /// For PARAM.SFO: all 4 hashes in trophy mode use specific keys.
     /// </summary>
-    private static void UpdateFileHashes(PfdFile pfd, PfdEntry entry, string directoryPath)
+    private static void UpdateFileHashes(PfdFile pfd, PfdEntry entry, string directoryPath,
+        byte[]? consoleId = null, byte[]? userId = null, byte[]? authenticationId = null,
+        byte[]? discHashKey = null, Func<string, byte[]?>? secureFileIdLookup = null)
     {
         string filePath = Path.Combine(directoryPath, entry.FileName);
         if (!File.Exists(filePath))
@@ -213,15 +223,16 @@ public static class PfdFileHandler
 
         for (int hashIndex = 0; hashIndex < 4; hashIndex++)
         {
-            // For non-PARAM.SFO files, only hash 0 (FILE) is computed
+            // Apollo's pfd_update only computes hashes 1/2/3 for PARAM.SFO.
+            // Every other file (trophy files and generic save data) uses hash 0 only.
             if (!isParamSfo && hashIndex != 0)
                 continue;
 
-            // For trophy mode, hash 1 (FILE_CID) is skipped
+            // For trophy mode, hash 1 (FILE_CID) is skipped on PARAM.SFO
             if (pfd.IsTrophy && hashIndex == 1)
                 continue;
 
-            byte[]? hashKey = GetEntryHashKey(pfd, entry, hashIndex);
+            byte[]? hashKey = GetEntryHashKey(pfd, entry, hashIndex, consoleId, userId, authenticationId, discHashKey, secureFileIdLookup);
             if (hashKey == null)
                 continue;
 
@@ -234,29 +245,63 @@ public static class PfdFileHandler
     /// Returns the HMAC key for a specific file and hash index.
     /// Hash indices: 0=FILE, 1=FILE_CID, 2=FILE_DHK_CID2, 3=FILE_AID_UID
     /// </summary>
-    private static byte[]? GetEntryHashKey(PfdFile pfd, PfdEntry entry, int hashIndex)
+    private static byte[]? GetEntryHashKey(PfdFile pfd, PfdEntry entry, int hashIndex,
+        byte[]? consoleId, byte[]? userId, byte[]? authenticationId,
+        byte[]? discHashKey = null, Func<string, byte[]?>? secureFileIdLookup = null)
     {
         if (entry.FileName.Equals("PARAM.SFO", StringComparison.OrdinalIgnoreCase))
-            return GetParamSfoHashKey(pfd, hashIndex);
+            return GetParamSfoHashKey(pfd, hashIndex, consoleId, userId, authenticationId,
+                discHashKey ?? Ps3SaveKeys.FallbackDiscHashKey);
 
-        // For all other files, only hash index 0 (FILE) is used
-        if (hashIndex != 0)
+        // Non-PARAM.SFO files only use hash 0 (see UpdateFileHashes).
+        if (hashIndex != PfdSaveCrypto.HashFile)
             return null;
 
-        return Ps3TrophyKeys.GetFileKey(entry.FileName);
+        // Trophy-system files use fixed per-file keys.
+        var trophyFixed = Ps3TrophyKeys.GetFileKey(entry.FileName);
+        if (trophyFixed != null)
+            return trophyFixed;
+
+        // Generic save data file — derive key from the per-file secure_file_id loaded
+        // from the user-supplied games.conf. Without that, the file's hash 0 stays stale.
+        if (secureFileIdLookup == null) return null;
+        var secureId = secureFileIdLookup(entry.FileName);
+        if (secureId == null || secureId.Length < PfdSaveCrypto.SecureFileIdSize) return null;
+        return PfdSaveCrypto.GenerateHashKeyForSecureFileId(secureId);
     }
 
     /// <summary>
     /// Returns the HMAC key for PARAM.SFO at a given hash index.
     /// Trophy mode uses different keys than savegame mode.
+    /// Hashes 2 and 3 are returned only when console_id / user_id / auth_id are supplied.
     /// </summary>
-    private static byte[]? GetParamSfoHashKey(PfdFile pfd, int hashIndex)
+    private static byte[]? GetParamSfoHashKey(PfdFile pfd, int hashIndex,
+        byte[]? consoleId, byte[]? userId, byte[]? authenticationId, byte[]? discHashKey = null)
     {
+        if (pfd.IsTrophy)
+        {
+            return hashIndex switch
+            {
+                PfdSaveCrypto.HashFile => Ps3TrophyKeys.TrophyParamSfoKey,
+                PfdSaveCrypto.HashFileDhkCid2 when consoleId is { Length: >= 16 } =>
+                    PfdSaveCrypto.GenerateTrophyParamSfoHashKey(hashIndex, consoleId, userId ?? new byte[8]),
+                PfdSaveCrypto.HashFileAidUid when userId is { Length: >= 8 } =>
+                    PfdSaveCrypto.GenerateTrophyParamSfoHashKey(hashIndex, consoleId ?? new byte[16], userId),
+                _ => null
+            };
+        }
+
+        // Savegame (non-trophy) mode
+        var dhk = discHashKey ?? Ps3SaveKeys.FallbackDiscHashKey;
         return hashIndex switch
         {
-            0 => Ps3TrophyKeys.TrophyParamSfoKey,
-            // hash 1 (CID) is skipped for trophies
-            // hashes 2,3 require console-specific IDPS/UserId — skip to preserve originals
+            PfdSaveCrypto.HashFile => Ps3SaveKeys.SavegameParamSfoKey,
+            PfdSaveCrypto.HashFileCid when consoleId is { Length: >= 16 } =>
+                PfdSaveCrypto.GenerateSavegameParamSfoHashKey(hashIndex, consoleId, dhk, authenticationId ?? new byte[8]),
+            PfdSaveCrypto.HashFileDhkCid2 =>
+                PfdSaveCrypto.GenerateSavegameParamSfoHashKey(hashIndex, consoleId ?? new byte[16], dhk, authenticationId ?? new byte[8]),
+            PfdSaveCrypto.HashFileAidUid when authenticationId is { Length: >= 8 } =>
+                PfdSaveCrypto.GenerateSavegameParamSfoHashKey(hashIndex, consoleId ?? new byte[16], dhk, authenticationId),
             _ => null
         };
     }
@@ -300,7 +345,7 @@ public static class PfdFileHandler
     /// </summary>
     private static byte[] GetEntryKey(PfdFile pfd, PfdEntry entry)
     {
-        byte[]? fileKey = GetEntryHashKey(pfd, entry, 0);
+        byte[]? fileKey = GetEntryHashKey(pfd, entry, 0, null, null, null);
         if (fileKey == null)
             throw new InvalidOperationException($"No file key for entry: {entry.FileName}");
 

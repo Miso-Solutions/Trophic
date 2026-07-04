@@ -237,6 +237,20 @@
 
                 <Rectangle Width="1" Fill="{StaticResource BorderBrush}" Margin="10,4"/>
 
+                <!-- Resign Saves Button -->
+                <Button Style="{StaticResource ToolbarButton}"
+                        AutomationProperties.Name="Open the batch save resign window"
+                        ToolTip="Resign PS3 save files in batch to a target profile"
+                        Click="ResignSaves_Click">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" FontSize="18"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Resign" FontSize="10" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Rectangle Width="1" Fill="{StaticResource BorderBrush}" Margin="10,4"/>
+
                 <!-- Menu Button (About, Updates, Log, Exit) -->
                 <Button Style="{StaticResource ToolbarButton}"
                         AutomationProperties.Name="Application menu"
@@ -255,6 +269,13 @@
                                      AutomationProperties.Name="Check for updates"/>
                             <MenuItem Header="{x:Static props:Strings.MenuViewLog}" Click="ViewLog_Click"
                                      AutomationProperties.Name="View diagnostic log"/>
+                            <MenuItem Header="Console Keys..." Click="ConsoleKeys_Click"
+                                     AutomationProperties.Name="Configure console keys"/>
+                            <MenuItem Header="Resign Saves..." Click="ResignSaves_Click"
+                                     AutomationProperties.Name="Open the batch save resign window"/>
+                            <Separator/>
+                            <MenuItem Header="License..." Click="License_Click"
+                                     AutomationProperties.Name="Manage license"/>
                             <Separator/>
                             <MenuItem Header="{x:Static props:Strings.Exit}" Click="ExitMenuItem_Click"
                                      AutomationProperties.Name="Exit (Alt+F4)"/>

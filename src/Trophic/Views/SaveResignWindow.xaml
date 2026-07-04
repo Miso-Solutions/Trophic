@@ -1,0 +1,151 @@
+<Window x:Class="Trophic.Views.SaveResignWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Resign Saves"
+        Height="540" Width="780"
+        MinHeight="420" MinWidth="640"
+        WindowStartupLocation="CenterOwner"
+        Background="{StaticResource SurfaceBrush}"
+        FontFamily="Segoe UI Variable Display, Segoe UI"
+        AutomationProperties.Name="Resign Saves">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Batch Resign Saves" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,8"/>
+
+        <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="4"
+                Padding="10,8" Margin="0,0,0,10" Background="{StaticResource MenuBarBrush}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Console keys:" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="missing"/>
+                            <Setter Property="Foreground" Value="{StaticResource DestructiveBrush}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ConsoleKeysConfigured}" Value="True">
+                                    <Setter Property="Text" Value="configured"/>
+                                    <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Text=" — open Menu → Console Keys to set them" FontSize="11"
+                           VerticalAlignment="Center" Margin="6,0,0,0"
+                           Foreground="{StaticResource TextTertiaryBrush}"/>
+                <Rectangle Width="1" Fill="{StaticResource BorderBrush}" Margin="10,2"/>
+                <TextBlock Text="Games database:" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                <TextBlock Text="{Binding GamesConfStatus}" FontSize="11" FontWeight="SemiBold"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextPrimaryBrush}"/>
+                <Button Content="Reload" Padding="6,1" Margin="8,0,0,0" FontSize="11"
+                        Command="{Binding ReloadGamesConfCommand}"
+                        AutomationProperties.Name="Reload games.conf"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Target profile -->
+        <Grid Grid.Row="2" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Target profile" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            <ComboBox Grid.Column="1" ItemsSource="{Binding AvailableProfiles}" SelectedItem="{Binding SelectedProfile}"
+                      Padding="4,2" Margin="0,0,6,0"
+                      AutomationProperties.Name="Target profile dropdown"/>
+            <Button Grid.Column="2" Content="Browse PARAM.SFO..." Padding="8,3" Margin="0,0,6,0"
+                    Command="{Binding BrowseCustomProfileCommand}"
+                    AutomationProperties.Name="Browse PARAM.SFO override"/>
+            <Button Grid.Column="3" Content="Clear" Padding="8,3"
+                    Command="{Binding ClearCustomProfileCommand}"
+                    AutomationProperties.Name="Clear custom profile override"/>
+        </Grid>
+
+        <!-- Output folder + zip option -->
+        <Grid Grid.Row="3" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Output folder" FontWeight="SemiBold" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Text="{Binding OutputFolder}" Padding="4,2" Margin="0,0,6,0"
+                     AutomationProperties.Name="Output folder path"/>
+            <Button Grid.Column="2" Content="Pick..." Padding="8,3" Margin="0,0,10,0"
+                    Command="{Binding BrowseOutputFolderCommand}"
+                    AutomationProperties.Name="Browse for output folder"/>
+            <CheckBox Grid.Column="3" Content="Output as .zip" IsChecked="{Binding OutputAsZip}"
+                      VerticalAlignment="Center" FontSize="11"
+                      AutomationProperties.Name="Output as ZIP per save"/>
+        </Grid>
+
+
+        <!-- Queue -->
+        <Border Grid.Row="4" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8,6">
+                    <Button Content="Add zip / PFD..." Padding="8,3" Margin="0,0,6,0"
+                            Command="{Binding AddSavesCommand}"
+                            AutomationProperties.Name="Add zip archive or PARAM.PFD to the queue"/>
+                    <Button Content="Add folder..." Padding="8,3" Margin="0,0,6,0"
+                            Command="{Binding AddSaveFoldersCommand}"
+                            AutomationProperties.Name="Add one or more save folders to the queue"/>
+                    <Button Content="Clear queue" Padding="8,3"
+                            Command="{Binding ClearQueueCommand}"
+                            AutomationProperties.Name="Clear queue"/>
+                </StackPanel>
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Queue}"
+                          AutoGenerateColumns="False" CanUserAddRows="False"
+                          HeadersVisibility="Column" GridLinesVisibility="None"
+                          Background="Transparent" BorderThickness="0"
+                          AutomationProperties.Name="Resign queue">
+                    <DataGrid.Resources>
+                        <ContextMenu x:Key="RowMenu">
+                            <MenuItem Header="Remove from queue"
+                                      Command="{Binding Path=DataContext.RemoveSelectedCommand,
+                                                RelativeSource={RelativeSource AncestorType=Window}}"
+                                      CommandParameter="{Binding}"
+                                      AutomationProperties.Name="Remove this save from the queue"/>
+                        </ContextMenu>
+                    </DataGrid.Resources>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="ContextMenu" Value="{StaticResource RowMenu}"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Save" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding InputType}" Width="80"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                        <DataGridTextColumn Header="Output / Error" Binding="{Binding OutputPath}" Width="2*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- Action bar -->
+        <Grid Grid.Row="5" Margin="0,10,0,0">
+            <TextBlock Text="{Binding StatusMessage}" VerticalAlignment="Center"
+                       Foreground="{StaticResource TextSecondaryBrush}" FontSize="12"/>
+            <Button Content="Start" Width="100" Padding="6,4" HorizontalAlignment="Right"
+                    Command="{Binding StartBatchCommand}" IsDefault="True"
+                    AutomationProperties.Name="Start batch resign"/>
+        </Grid>
+    </Grid>
+</Window>

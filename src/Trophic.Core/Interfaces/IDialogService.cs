@@ -13,4 +13,10 @@ public interface IDialogService
     DateTime? ShowDateTimePicker(DateTime? initial = null, DateTime? min = null, DateTime? max = null, DateTime? now = null);
     ImportSettings? ShowImportDialog();
     CatalogEntry? ShowCatalogDialog();
+
+    /// <summary>
+    /// Opens the license activation dialog. Returns true if the user holds a valid
+    /// entitlement when the dialog closes (whether already-licensed or just activated).
+    /// </summary>
+    bool ShowLicenseDialog();
 }
