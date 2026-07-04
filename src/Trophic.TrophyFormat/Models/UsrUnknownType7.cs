@@ -24,7 +24,17 @@ public sealed class UsrUnknownType7
         }
     }
 
-    public int SyncTrophyCount { get; set; }
+    private int _syncTrophyCount;
+    public int SyncTrophyCount
+    {
+        get => _syncTrophyCount;
+        set
+        {
+            _syncTrophyCount = value;
+            BinaryPrimitives.WriteInt32BigEndian(RawData.AsSpan(4), value);
+        }
+    }
+
     public int Unknown3 { get; set; }
     public int Unknown4 { get; set; }
     public DateTime LastSyncTime { get; set; }

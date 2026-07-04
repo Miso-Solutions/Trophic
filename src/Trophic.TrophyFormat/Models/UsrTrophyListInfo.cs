@@ -14,7 +14,17 @@ public sealed class UsrTrophyListInfo
     public byte[] RawData { get; set; } = new byte[Size];
 
     public DateTime ListCreateTime { get; set; }
-    public DateTime ListLastUpdateTime { get; set; }
+
+    private DateTime _listLastUpdateTime;
+    public DateTime ListLastUpdateTime
+    {
+        get => _listLastUpdateTime;
+        set
+        {
+            _listLastUpdateTime = value;
+            Ps3Timestamp.ToBytes16(value, RawData.AsSpan(0x20));
+        }
+    }
 
     private DateTime _listLastGetTrophyTime;
     public DateTime ListLastGetTrophyTime

@@ -8,7 +8,7 @@ using Trophic.TrophyFormat.Timestamps;
 
 namespace Trophic.Core.Services;
 
-public sealed class TrophyFileService : ITrophyFileService
+public sealed partial class TrophyFileService : ITrophyFileService
 {
     private const int SfoDataOffsetPosition = 0x0C;
     private const int SfoProfileIdLength = 0x10;
@@ -79,6 +79,8 @@ public sealed class TrophyFileService : ITrophyFileService
             var config = new TropConfParser(tempPath, _isRpcs3Format);
             var trns = new TropTrnsParser(tempPath, _isRpcs3Format);
             var usr = new TropUsrParser(tempPath, _isRpcs3Format);
+
+            ValidateFolderIntegrity(config, usr);
 
             _state = new TrophyFileState
             {
@@ -197,24 +199,35 @@ public sealed class TrophyFileService : ITrophyFileService
         if (_state == null) return;
 
         var utcTime = ConvertDisplayToUtc(timestamp);
-        var config = _state.Config;
-        var trophyType = config[trophyId].Type;
+        var usrInfo = _state.UserState.TrophyTimeInfos[trophyId];
+        if (usrInfo.IsSynced) throw new TrophyAlreadySyncException(trophyId);
+        if (usrInfo.IsEarned) throw new TrophyAlreadyEarnedException(trophyId);
 
-        // Pre-validate TROPTRNS preconditions to avoid leaving TROPUSR modified
-        // when the transaction-log write would throw. A partial write desyncs
-        // TROPUSR/TROPTRNS and causes PSN to reject with 0x80022D00.
+        // Pre-validate the TROPTRNS write so a failure never leaves TROPUSR half-modified
+        // (a partial write desyncs the files and causes PSN 0x80022D00). Catalog trophy
+        // sets ship with TROPTRNS records but a cleared TROPUSR, so an already-present
+        // (unsynced) record is reconciled — its time is updated — rather than refused.
+        Trophic.TrophyFormat.Models.TrnsRecord? existing = null;
         if (!_state.IsRpcs3)
         {
-            if (_state.Transactions[trophyId] != null)
-                throw new TrophyAlreadyEarnedException(trophyId);
-            if (utcTime < _state.Transactions.LastSyncTime)
+            existing = _state.Transactions[trophyId];
+            if (existing is { IsSynced: true }) throw new TrophyAlreadySyncException(trophyId);
+            // PSN rejects a trophy dated before the last sync; TROPUSR and TROPTRNS each
+            // carry their own last-sync time, so the floor is the later of the two.
+            var lastSync = _state.UserState.LastSyncTime > _state.Transactions.LastSyncTime
+                ? _state.UserState.LastSyncTime
+                : _state.Transactions.LastSyncTime;
+            if (existing == null && utcTime < lastSync)
                 throw new TrophySyncTimeException(
-                    $"Cannot add trophy at {utcTime:u} before last synced time {_state.Transactions.LastSyncTime:u}");
+                    $"Cannot add trophy at {utcTime:u} before last synced time {lastSync:u}");
         }
 
         _state.UserState.UnlockTrophy(trophyId, utcTime);
         if (!_state.IsRpcs3)
-            _state.Transactions.PutTrophy(trophyId, trophyType, utcTime);
+        {
+            if (existing != null) _state.Transactions.ChangeTime(trophyId, utcTime);
+            else _state.Transactions.PutTrophy(trophyId, _state.Config[trophyId].Type, utcTime);
+        }
 
         _hasUnsavedChanges = true;
     }
@@ -250,170 +263,6 @@ public sealed class TrophyFileService : ITrophyFileService
         _state.UserState.ChangeTrophyTime(trophyId, utcTime);
         if (!_state.IsRpcs3)
             _state.Transactions.ChangeTime(trophyId, utcTime);
-
-        _hasUnsavedChanges = true;
-    }
-
-    public void InstantPlatinum(DateTime startTime, DateTime endTime)
-    {
-        if (_state == null) return;
-
-        var config = _state.Config;
-        var usr = _state.UserState;
-        int total = config.Count;
-
-        // Generate timestamps in order
-        var times = new DateTime[total];
-        for (int i = 0; i < total; i++)
-        {
-            times[i] = RandomHelper.NextDateTime(startTime, endTime);
-        }
-        Array.Sort(times);
-
-        // Platinum goes last (if exists)
-        int platIndex = -1;
-        if (config.HasPlatinum)
-            platIndex = 0;
-
-        for (int i = 0; i < total; i++)
-        {
-            if (i == platIndex) continue; // Skip platinum for now
-
-            var timeInfo = usr.TrophyTimeInfos[i];
-            if (timeInfo.IsSynced)
-                continue;
-
-            try
-            {
-                if (timeInfo.IsEarned)
-                    ChangeTrophyTime(i, times[i]);
-                else
-                    UnlockTrophy(i, times[i]);
-            }
-            catch (Exception)
-            {
-                // Intentional: batch operations skip individual failures
-                // (e.g., synced trophies, format mismatches) to process remaining trophies
-            }
-        }
-
-        // Unlock platinum last with the latest time
-        if (platIndex >= 0)
-        {
-            var timeInfo = usr.TrophyTimeInfos[platIndex];
-            if (!timeInfo.IsSynced)
-            {
-                try
-                {
-                    if (timeInfo.IsEarned)
-                        ChangeTrophyTime(platIndex, endTime);
-                    else
-                        UnlockTrophy(platIndex, endTime);
-                }
-                catch (Exception) { /* Batch: skip individual failures */ }
-            }
-        }
-
-        _hasUnsavedChanges = true;
-    }
-
-    public void InstantUnlock(DateTime timestamp)
-    {
-        if (_state == null) return;
-
-        var config = _state.Config;
-        var usr = _state.UserState;
-
-        for (int i = 0; i < config.Count; i++)
-        {
-            var timeInfo = usr.TrophyTimeInfos[i];
-
-            if (timeInfo.IsSynced)
-                continue;
-
-            if (timeInfo.IsEarned)
-            {
-                // Overwrite timestamp for already-earned non-synced trophies
-                try
-                {
-                    var utcTime = ConvertDisplayToUtc(timestamp);
-                    _state.UserState.ChangeTrophyTime(i, utcTime);
-                    if (!_state.IsRpcs3)
-                    {
-                        try { _state.Transactions.ChangeTime(i, utcTime); }
-                        catch (Exception) { /* Expected: record may not exist in TROPTRNS */ }
-                    }
-                }
-                catch (Exception) { /* Batch: skip individual failures */ }
-                continue;
-            }
-
-            try { UnlockTrophy(i, timestamp); }
-            catch (Exception) { /* Batch: skip individual failures */ }
-        }
-
-        _hasUnsavedChanges = true;
-    }
-
-    public void ClearAllTrophies(bool includeSynced = false)
-    {
-        if (_state == null) return;
-
-        var usr = _state.UserState;
-
-        for (int i = usr.TrophyTimeInfos.Count - 1; i >= 0; i--)
-        {
-            var timeInfo = usr.TrophyTimeInfos[i];
-
-            bool isEarned = timeInfo.IsEarned || usr.ListInfo.IsTrophyUnlocked(i);
-
-            if (!isEarned) continue;
-            if (!includeSynced && timeInfo.IsSynced) continue;
-
-            try { LockTrophy(i, force: includeSynced); }
-            catch (Exception) { /* Batch: skip individual failures */ }
-        }
-
-        _hasUnsavedChanges = true;
-    }
-
-    public void ApplyScrapedTimestamps(IReadOnlyList<ScrapedTimestamp> timestamps)
-    {
-        if (_state == null) return;
-
-        foreach (var ts in timestamps)
-        {
-            if (ts.TrophyId < 0 || ts.TrophyId >= _state.UserState.TrophyTimeInfos.Count)
-                continue;
-
-            if (ts.UnixTimestamp == 0) continue;
-
-            var utcDateTime = DateTimeOffset.FromUnixTimeSeconds(ts.UnixTimestamp).UtcDateTime;
-
-            var timeInfo = _state.UserState.TrophyTimeInfos[ts.TrophyId];
-            if (timeInfo.IsSynced)
-                continue;
-
-            // Scraped timestamps are correct UTC. Convert to the face value the user
-            // sees on the website (system timezone), then route through UnlockTrophy/
-            // ChangeTrophyTime which converts from the selected display timezone to UTC.
-            // This ensures the website's face value appears in whatever timezone is selected.
-            var faceValue = TimeZoneInfo.ConvertTimeFromUtc(
-                DateTime.SpecifyKind(utcDateTime, DateTimeKind.Utc),
-                TimeZoneInfo.Local);
-
-
-            if (timeInfo.IsEarned)
-            {
-                try { ChangeTrophyTime(ts.TrophyId, faceValue); }
-                catch (Exception) { /* Batch: skip individual failures */ }
-            }
-            else
-            {
-                try { UnlockTrophy(ts.TrophyId, faceValue); }
-                catch (Exception) { /* Batch: skip individual failures */ }
-            }
-        }
 
         _hasUnsavedChanges = true;
     }

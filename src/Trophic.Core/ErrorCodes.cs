@@ -13,6 +13,7 @@ public static class ErrorCodes
     // Format Validation
     public const string FmtDecryptionInvalid = "E-FMT-001";
     public const string FmtInvalidTrophyFile = "E-FMT-002";
+    public const string FmtCountMismatch = "E-FMT-003";
 
     // Trophy State
     public const string TrophyAlreadyEarned = "E-TROPHY-001";

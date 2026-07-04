@@ -2,6 +2,16 @@ namespace Trophic.Core.Models;
 
 public sealed record ScrapedTimestamp(int TrophyId, long UnixTimestamp);
 
+/// <summary>
+/// Outcome of applying scraped/imported timestamps. Distinguishes trophies actually
+/// stamped from those skipped (index out of range, already synced) or that errored,
+/// so the UI can report the real result instead of just the scraped count.
+/// </summary>
+public sealed record ApplyTimestampsResult(int Applied, int OutOfRange, int Synced, int Failed, string? FirstError)
+{
+    public int Skipped => OutOfRange + Synced + Failed;
+}
+
 public enum ImportMode { AsIs, Offset, FixedValues, StartTime }
 
 public sealed class ImportSettings

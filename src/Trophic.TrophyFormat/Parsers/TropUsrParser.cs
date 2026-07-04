@@ -191,8 +191,22 @@ public sealed class TropUsrParser
         if (dateTime > _listInfo.ListLastGetTrophyTime)
             _listInfo.ListLastGetTrophyTime = dateTime;
 
+        // Mark the list as freshly updated (PS3TIG refreshes this on every edit;
+        // a stale value can make the list look untouched to PSN after an unlock).
+        TouchListUpdateTime(dateTime);
+
         // Update type 7
         _type7.TrophyCount++;
+    }
+
+    /// <summary>
+    /// Advances ListLastUpdateTime to reflect that the trophy list changed.
+    /// Never moves it backward, so it always represents the latest edit.
+    /// </summary>
+    private void TouchListUpdateTime(DateTime editTime)
+    {
+        if (editTime > _listInfo.ListLastUpdateTime)
+            _listInfo.ListLastUpdateTime = editTime;
     }
 
     /// <summary>
@@ -228,6 +242,8 @@ public sealed class TropUsrParser
         foreach (var t in _timeInfos)
             if (t.IsEarned && t.GetTime > max) max = t.GetTime;
         _listInfo.ListLastGetTrophyTime = max;
+
+        TouchListUpdateTime(max);
     }
 
     /// <summary>
@@ -247,6 +263,11 @@ public sealed class TropUsrParser
             throw new TrophyAlreadySyncException(trophyId);
 
         timeInfo.GetTime = newTime;
+
+        if (newTime > _listInfo.ListLastGetTrophyTime)
+            _listInfo.ListLastGetTrophyTime = newTime;
+
+        TouchListUpdateTime(newTime);
     }
 
     /// <summary>
@@ -255,6 +276,13 @@ public sealed class TropUsrParser
     /// </summary>
     public void Save()
     {
+        // Recompute the synced-trophy count from the actual time-info state so a stale
+        // value in the source file is corrected (PS3TIG rewrites this on every save).
+        int synced = 0;
+        foreach (var t in _timeInfos)
+            if (t.IsSynced) synced++;
+        _type7.SyncTrophyCount = synced;
+
         var data = _rawFileData.AsSpan();
 
         int timeInfoIndex = 0;

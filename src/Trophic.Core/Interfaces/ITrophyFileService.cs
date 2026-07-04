@@ -21,7 +21,7 @@ public interface ITrophyFileService
     void InstantPlatinum(DateTime startTime, DateTime endTime);
     void InstantUnlock(DateTime timestamp);
     void ClearAllTrophies(bool includeSynced = false);
-    void ApplyScrapedTimestamps(IReadOnlyList<ScrapedTimestamp> timestamps);
+    ApplyTimestampsResult ApplyScrapedTimestamps(IReadOnlyList<ScrapedTimestamp> timestamps);
 
     IReadOnlyList<TrophyRowViewModel> GetTrophyList();
     (int earned, int total, int earnedGrade, int totalGrade) GetCompletionStats();
