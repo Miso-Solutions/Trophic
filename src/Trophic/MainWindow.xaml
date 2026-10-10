@@ -145,6 +145,9 @@
                                 <MenuItem Header="{x:Static props:Strings.FromTextFile}" Click="ImportFromFile_Click"
                                          ToolTip="{x:Static props:Strings.FromTextFileTooltip}"
                                          AutomationProperties.Name="{x:Static props:Strings.AutoImportFromFile}"/>
+                                <Separator/>
+                                <MenuItem Header="Export timestamps to text file" Click="ExportTimestampsToFile_Click"
+                                          AutomationProperties.Name="Export trophy timestamps to text file"/>
                             </ContextMenu>
                         </Button.ContextMenu>
                     </Button>

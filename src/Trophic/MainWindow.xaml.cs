@@ -433,6 +433,12 @@ public partial class MainWindow : Window
         catch (Exception) { /* Handled by command */ }
     }
 
+    private async void ExportTimestampsToFile_Click(object sender, RoutedEventArgs e)
+    {
+        try { await _viewModel.ExportTimestampsToFileCommand.ExecuteAsync(null); }
+        catch (Exception) { /* Handled by command */ }
+    }
+
     private void ImportDropdown_Click(object sender, RoutedEventArgs e)
     {
         var btn = (Button)sender;
