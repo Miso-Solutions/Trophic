@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
+using Microsoft.Win32;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Trophic.Core;
@@ -103,6 +104,51 @@ public sealed partial class MainViewModel
         if (filePath == null) return;
 
         await ImportFromFilePathAsync(filePath);
+    }
+
+    [RelayCommand]
+    private async Task ExportTimestampsToFileAsync()
+    {
+        if (!_trophyFileService.IsOpen) return;
+
+        var trophies = _trophyFileService.GetTrophyList()
+            .Where(t => t.IsEarned && t.EarnedTime.HasValue)
+            .ToList();
+
+        if (trophies.Count == 0)
+        {
+            _dialogService.ShowInfo(
+                "No earned trophies with timestamps were found in the open trophy folder.",
+                "Nothing to export");
+            return;
+        }
+
+        var dialog = new SaveFileDialog
+        {
+            Title = "Export trophy timestamps",
+            Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*",
+            DefaultExt = ".txt",
+            AddExtension = true,
+            FileName = "TrophyTimestamps.txt",
+            OverwritePrompt = true
+        };
+
+        if (dialog.ShowDialog() != true) return;
+
+        try
+        {
+            // EarnedTime is already converted to the selected display timezone.
+            // This is intentionally the same wall-clock format accepted by the TXT importer.
+            var lines = trophies.Select(t =>
+                $"{t.Name} | {t.EarnedTime!.Value.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)}");
+
+            await File.WriteAllLinesAsync(dialog.FileName, lines, new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+            ShowToastNotification($"Exported {trophies.Count} trophy timestamp(s)");
+        }
+        catch (Exception ex)
+        {
+            _dialogService.ShowError($"Could not export trophy timestamps.\n{ex.Message}", "Export failed");
+        }
     }
 
     public async Task ImportFromFilePathAsync(string filePath)
